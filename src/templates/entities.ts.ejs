@@ -1,11 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { RelationalWithoutTenantidEntity } from './metadata/RelationalWithoutTenantidEntity';
 
-@Entity('legacy-system')
-export default class LegacySystem extends RelationalWithoutTenantidEntity {
+@Entity('<%= props.tableName %>')
+export default class <%= props.nameCamelCaseUpperFirst %> extends RelationalWithoutTenantidEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
-
+<% props.properties.strings.forEach((propertie) => { %>
     @Column()
-    description: string;
+    <%= propertie %>: string;
+<%}); %><% props.properties.numbers.forEach((propertie) => { %>
+    @Column()
+    <%= propertie %>: number;<% }); %>
 }

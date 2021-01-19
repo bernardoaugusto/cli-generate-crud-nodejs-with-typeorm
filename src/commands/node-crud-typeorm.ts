@@ -1,4 +1,5 @@
 import { GluegunCommand } from 'gluegun';
+import { camelCase, upperFirst } from 'lodash';
 
 const command: GluegunCommand = {
     name: 'node-crud-typeorm',
@@ -6,11 +7,13 @@ const command: GluegunCommand = {
     run: async toolbox => {
         const { print, parameters, template } = toolbox;
 
-        const name = parameters.first;
-        if (!name) {
+        const tableName = parameters.first;
+        if (!tableName) {
             print.error('Table name must be specified');
             return;
         }
+        const nameCamelCase = camelCase(tableName);
+        const nameCamelCaseUpperFirst = upperFirst(nameCamelCase);
 
         const options = parameters.options as Record<string, string>;
 
@@ -21,17 +24,17 @@ const command: GluegunCommand = {
             return;
         }
 
-        const stringProperties = strings ? strings.split(',') : [];
-        const numbersProperties = numbers ? numbers.split(',') : [];
+        const properties = {
+            strings: strings ? strings.split(',') : [],
+            numbers: numbers ? numbers.split(',') : [],
+        };
 
-        console.log(name);
-        console.log(stringProperties);
-        console.log(numbersProperties);
+        // properties.strings.forEach(string => console.log(string));
 
         await template.generate({
             template: 'entities.ts.ejs',
-            target: `src/database/entities/${name}.ts`,
-            props: { name },
+            target: `src/database/entities/${nameCamelCaseUpperFirst}.ts`,
+            props: { tableName, nameCamelCaseUpperFirst, properties },
         });
 
         print.success(`Generated CRUD.`);
