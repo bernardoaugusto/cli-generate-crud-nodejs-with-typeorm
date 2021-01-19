@@ -2,7 +2,6 @@
   "name": "node-crud-typeorm",
   "version": "0.0.1",
   "description": "node-crud-typeorm CLI",
-  "private": true,
   "types": "build/types/types.d.ts",
   "bin": {
     "node-crud-typeorm": "bin/node-crud-typeorm"
@@ -20,6 +19,10 @@
     "snapupdate": "jest --updateSnapshot",
     "coverage": "jest --coverage"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bernardoaugusto/cli-generate-crud-nodejs-with-typeorm.git"
+},
   "files": [
     "tsconfig.json",
     "tslint.json",
