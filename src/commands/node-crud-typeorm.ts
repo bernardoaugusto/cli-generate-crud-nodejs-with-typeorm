@@ -30,11 +30,15 @@ const command: GluegunCommand = {
             numbers: numbers ? numbers.split(',') : [],
         };
 
-        console.log(`tenant: ${tenantid}`);
-
         await template.generate({
             template: 'entities.ts.ejs',
             target: `src/database/entities/${nameCamelCaseUpperFirst}.ts`,
+            props: { tableName, nameCamelCaseUpperFirst, properties, tenantid },
+        });
+
+        await template.generate({
+            template: 'interface.ts.ejs',
+            target: `src/interfaces/${nameCamelCase}.ts`,
             props: { tableName, nameCamelCaseUpperFirst, properties, tenantid },
         });
 

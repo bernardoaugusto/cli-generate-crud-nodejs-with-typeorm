@@ -1,17 +1,17 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { RelationalWithoutTenantidEntity } from './metadata/RelationalWithoutTenantidEntity';
+import { RelationalTenantidEntity } from './metadata/RelationalTenantidEntity';
 
 @Entity('user')
-export default class User extends RelationalWithoutTenantidEntity {
+export default class User extends RelationalTenantidEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column()
-    bernardo_augusto: string;
+    name: string;
 
     @Column()
-    alice_betania: string;
+    description: string;
 
     @Column()
-    teste: number;
+    code: number;
 }
