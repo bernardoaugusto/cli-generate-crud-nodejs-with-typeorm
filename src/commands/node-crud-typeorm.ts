@@ -18,6 +18,7 @@ const command: GluegunCommand = {
         const options = parameters.options as Record<string, string>;
 
         const { strings, numbers } = options;
+        const tenantid = options.tenantid !== 'false';
 
         if (!strings && !numbers) {
             print.error('parameters must be specified, strings / numbers');
@@ -29,12 +30,12 @@ const command: GluegunCommand = {
             numbers: numbers ? numbers.split(',') : [],
         };
 
-        // properties.strings.forEach(string => console.log(string));
+        console.log(`tenant: ${tenantid}`);
 
         await template.generate({
             template: 'entities.ts.ejs',
             target: `src/database/entities/${nameCamelCaseUpperFirst}.ts`,
-            props: { tableName, nameCamelCaseUpperFirst, properties },
+            props: { tableName, nameCamelCaseUpperFirst, properties, tenantid },
         });
 
         print.success(`Generated CRUD.`);

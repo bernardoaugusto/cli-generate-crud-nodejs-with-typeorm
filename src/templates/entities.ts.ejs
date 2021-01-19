@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { RelationalWithoutTenantidEntity } from './metadata/RelationalWithoutTenantidEntity';
+<% if (props.tenantid) { %>import { RelationalTenantidEntity } from './metadata/RelationalTenantidEntity';<% } else{ %>import { RelationalWithoutTenantidEntity } from './metadata/RelationalWithoutTenantidEntity';<% } %>
 
 @Entity('<%= props.tableName %>')
-export default class <%= props.nameCamelCaseUpperFirst %> extends RelationalWithoutTenantidEntity {
+export default class <%= props.nameCamelCaseUpperFirst %> extends <% if (props.tenantid) { %>RelationalTenantidEntity<% } else{ %>RelationalWithoutTenantidEntity<% } %> {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 <% props.properties.strings.forEach((propertie) => { %>
