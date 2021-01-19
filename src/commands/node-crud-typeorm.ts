@@ -2,16 +2,34 @@ import { GluegunCommand } from 'gluegun'
 
 const command: GluegunCommand = {
     name: 'node-crud-typeorm',
-    run: async toolbox => {
+    description: 'Create CRUD',
+    run: async (toolbox) => {
         const { print, parameters } = toolbox
-        const { options } = parameters
 
-        const strings = options.strings as string
+        const name = parameters.first
+        if (!name) {
+            print.error('Table name must be specified')
+            return
+        }
 
-        console.log(parameters)
+        const options = parameters.options as Record<string, string>
 
-        print.info('Welcome to your CLI')
-    }
+        const { strings, numbers } = options
+
+        if (!strings && !numbers) {
+            print.error('parameters must be specified, strings / numbers')
+            return
+        }
+
+        const stringProperties = strings ? strings.split(',') : []
+        const numbersProperties = numbers ? numbers.split(',') : []
+
+        console.log(name)
+        console.log(stringProperties)
+        console.log(numbersProperties)
+
+        print.success(`Generated CRUD.`)
+    },
 }
 
 module.exports = command
