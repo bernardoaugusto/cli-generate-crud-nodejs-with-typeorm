@@ -4,7 +4,7 @@ const command: GluegunCommand = {
     name: 'node-crud-typeorm',
     description: 'Create CRUD',
     run: async (toolbox) => {
-        const { print, parameters } = toolbox
+        const { print, parameters, template } = toolbox
 
         const name = parameters.first
         if (!name) {
@@ -27,6 +27,12 @@ const command: GluegunCommand = {
         console.log(name)
         console.log(stringProperties)
         console.log(numbersProperties)
+
+        await template.generate({
+            template: 'entities.ts.ejs',
+            target: `src/database/entities/${name}.ts`,
+            props: { name },
+        })
 
         print.success(`Generated CRUD.`)
     },
