@@ -10,6 +10,7 @@ import { PaginateResponseProperties } from '../interfaces/pagination';
 import {
     buildActivationWithUser,
     buildCreateWithUser,
+    buildInactivationWithUser,
     buildUpdateWithUser,
 } from '../utils/builders/dynamicBuilders';
 
@@ -99,6 +100,21 @@ export default class <%= props.nameCamelCaseUpperFirst %>Service {
             userRequestData,
             <%= props.nameCamelCase %>Id,
             <% if (props.tenantid) { %>tenantid,<% }%>
+        ) as <%= props.nameCamelCaseUpperFirst %>Interface;
+
+        return this.<%= props.nameCamelCase %>Repository.createAndSave(buildInactivate<%= props.nameCamelCaseUpperFirst %>);
+    }
+
+    public async inactivation(
+        userRequestData: UserRequestInterface,
+        <%= props.nameCamelCase %>Id: string,
+        <% if (props.tenantid) { %>tenantid: string,<% }%>
+    ): Promise<<%= props.nameCamelCaseUpperFirst %>Interface> {
+        await this.findById(<%= props.nameCamelCase %>Id<% if (props.tenantid) { %>, tenantid<% }%>);
+
+        const buildInactivate<%= props.nameCamelCaseUpperFirst %> = buildInactivationWithUser(
+            userRequestData,
+            <%= props.nameCamelCase %>Id,
         ) as <%= props.nameCamelCaseUpperFirst %>Interface;
 
         return this.<%= props.nameCamelCase %>Repository.createAndSave(buildInactivate<%= props.nameCamelCaseUpperFirst %>);

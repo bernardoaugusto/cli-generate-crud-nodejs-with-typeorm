@@ -10,6 +10,7 @@ import { PaginateResponseProperties } from '../interfaces/pagination';
 import {
     buildActivationWithUser,
     buildCreateWithUser,
+    buildInactivationWithUser,
     buildUpdateWithUser,
 } from '../utils/builders/dynamicBuilders';
 
@@ -99,6 +100,21 @@ export default class UserService {
             userRequestData,
             userId,
             tenantid,
+        ) as UserInterface;
+
+        return this.userRepository.createAndSave(buildInactivateUser);
+    }
+
+    public async inactivation(
+        userRequestData: UserRequestInterface,
+        userId: string,
+        tenantid: string,
+    ): Promise<UserInterface> {
+        await this.findById(userId, tenantid);
+
+        const buildInactivateUser = buildInactivationWithUser(
+            userRequestData,
+            userId,
         ) as UserInterface;
 
         return this.userRepository.createAndSave(buildInactivateUser);
