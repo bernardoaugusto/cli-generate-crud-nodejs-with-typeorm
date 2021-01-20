@@ -5,6 +5,7 @@ import { UserInterface } from '../../interfaces/user';
 import UserRepository from '../../repositories/UserRepository';
 import { deleteFileDatabase } from '../deleteFileDatabase';
 import UserBuilder from '../testBuilders/UserBuilder';
+import makeSut from './makeSuts/user';
 
 describe('User Repository context', () => {
     let userRepository: UserRepository;
@@ -20,7 +21,7 @@ describe('User Repository context', () => {
         await deleteFileDatabase(context);
     });
 
-    it('should be able to insert a new user', async () => {
+    it('should be able to insert a new User', async () => {
         const userBuild = new UserBuilder()
             .withTenantId(uuid())
             .withNameId('name_id')
@@ -52,11 +53,37 @@ describe('User Repository context', () => {
         expect(updated_at).not.toBeUndefined();
     });
 
-    it('Should be able to find a user', async () => {
-        //const sut = await makeSut();
+    it('Should be able to find a User', async () => {
+        const sut = await makeSut();
 
-        //const userFinded = await userRepository.findById(sut.id, sut.tenantid);
+        const userFinded = await userRepository.findById(sut.id, sut.tenantid);
 
-        //expect(userFinded).toEqual(sut);
+        expect(userFinded).toEqual(sut);
+    });
+
+    it('Should be able to update a User', async () => {
+        const sut = await makeSut();
+
+        const updates: UserInterface = {
+            ...sut,
+            active: false,
+            name_id: 'update name_id',
+            description: 'update description',
+            oi: 'update oi',
+            code: 999,
+            test: 999,
+            menor: 999,
+        };
+
+        const cashierUpdated = await userRepository.createAndSave(updates);
+
+        expect(cashierUpdated.id).toBe(sut.id);
+        expect(cashierUpdated.active).toBe(false);
+        expect(cashierUpdated.name_id).toBe('update name_id');
+        expect(cashierUpdated.description).toBe('update description');
+        expect(cashierUpdated.oi).toBe('update oi');
+        expect(cashierUpdated.code).toBe(999);
+        expect(cashierUpdated.test).toBe(999);
+        expect(cashierUpdated.menor).toBe(999);
     });
 });
