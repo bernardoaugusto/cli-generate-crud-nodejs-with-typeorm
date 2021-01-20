@@ -1,0 +1,10 @@
+coverage/
+.vscode/
+.editorconfig
+.eslintignore
+.eslintrc
+.gitignore
+.prettierrc.json
+jest.config.js
+yarn.lock
+.git

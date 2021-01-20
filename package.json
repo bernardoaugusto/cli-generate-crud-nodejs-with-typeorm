@@ -1,59 +1,49 @@
 {
-  "name": "node-crud-typeorm",
-  "version": "0.0.1",
-  "description": "node-crud-typeorm CLI",
-  "types": "build/types/types.d.ts",
-  "bin": {
-    "node-crud-typeorm": "bin/node-crud-typeorm"
-  },
-  "scripts": {
-    "format": "prettier --write **/*.{js,ts,tsx,json}",
-    "lint": "tslint -p .",
-    "clean-build": "rm -rf ./build",
-    "compile": "tsc -p .",
-    "copy-templates": "if [ -e ./src/templates ]; then cp -a ./src/templates ./build/; fi",
-    "build": "yarn format && yarn lint && yarn clean-build && yarn compile && yarn copy-templates",
-    "prepublishOnly": "yarn build",
-    "test": "jest",
-    "watch": "jest --watch",
-    "snapupdate": "jest --updateSnapshot",
-    "coverage": "jest --coverage"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bernardoaugusto/cli-generate-crud-nodejs-with-typeorm.git"
-},
-  "files": [
-    "tsconfig.json",
-    "tslint.json",
-    "build",
-    "LICENSE",
-    "readme.md",
-    "docs",
-    "bin"
-  ],
-  "license": "MIT",
-  "dependencies": {
-    "gluegun": "latest",
-    "lodash": "^4.17.20"
-  },
-  "devDependencies": {
-    "@types/jest": "^26.0.15",
-    "@types/lodash": "^4.14.168",
-    "@types/node": "^12.7.11",
-    "@typescript-eslint/eslint-plugin": "^4.5.0",
-    "@typescript-eslint/parser": "^4.5.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-prettier": "^6.13.0",
-    "eslint-import-resolver-typescript": "^2.3.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-prettier": "^3.1.4",
-    "jest": "^26.6.1",
-    "prettier": "^2.1.2",
-    "ts-jest": "^26.1.2",
-    "ts-node": "^9.0.0",
-    "typeorm": "^0.2.28",
-    "typescript": "^4.0.3"
-  }
+    "name": "node-crud-typeorm",
+    "version": "0.0.10",
+    "description": "node-crud-typeorm CLI",
+    "bin": {
+        "node-crud-typeorm": "bin/node-crud-typeorm"
+    },
+    "scripts": {
+        "clean-build": "rm -rf ./build",
+        "compile": "tsc -p .",
+        "copy-templates": "if [ -e ./src/templates ]; then cp -a ./src/templates ./build/; fi",
+        "build": "yarn clean-build && yarn compile && yarn copy-templates-seidor",
+        "prepublishOnly": "yarn build",
+        "test": "jest",
+        "watch": "jest --watch",
+        "snapupdate": "jest --updateSnapshot",
+        "coverage": "jest --coverage",
+        "copy-templates-seidor": "cp -r ./src/templates ./dist/templates",
+        "build-seidor": "tsc && npm run copy-templates"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bernardoaugusto/cli-generate-crud-nodejs-with-typeorm.git"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "gluegun": "latest",
+        "lodash": "^4.17.20"
+    },
+    "devDependencies": {
+        "@types/jest": "^26.0.15",
+        "@types/lodash": "^4.14.168",
+        "@types/node": "^12.7.11",
+        "@typescript-eslint/eslint-plugin": "^4.5.0",
+        "@typescript-eslint/parser": "^4.5.0",
+        "eslint": "^6.8.0",
+        "eslint-config-airbnb-base": "^14.2.0",
+        "eslint-config-prettier": "^6.13.0",
+        "eslint-import-resolver-typescript": "^2.3.0",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-prettier": "^3.1.4",
+        "jest": "^26.6.1",
+        "prettier": "^2.1.2",
+        "ts-jest": "^26.1.2",
+        "ts-node": "^9.0.0",
+        "typeorm": "^0.2.28",
+        "typescript": "^4.0.3"
+    }
 }
