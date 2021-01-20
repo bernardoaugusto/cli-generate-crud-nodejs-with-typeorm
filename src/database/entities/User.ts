@@ -13,5 +13,15 @@ export default class User extends RelationalTenantidEntity {
     description: string;
 
     @Column()
+    oi: string;
+
+    @Column()
     code: number;
+
+    @Column()
+    test: number;
+
+    @Column()
+    menor: number;
+
 }

@@ -10,5 +10,6 @@ export default class <%= props.nameCamelCaseUpperFirst %> extends <% if (props.t
     <%= propertie %>: string;
 <%}); %><% props.properties.numbers.forEach((propertie) => { %>
     @Column()
-    <%= propertie %>: number;<% }); %>
+    <%= propertie %>: number;
+<% }); %>
 }

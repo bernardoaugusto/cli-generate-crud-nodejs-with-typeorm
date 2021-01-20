@@ -3,5 +3,8 @@ import { RelationalWithTenantidInterface } from './metadata/RelationalWithoutTen
 export interface UserInterface extends RelationalWithTenantidInterface {
     name: string;
     description: string;
+    oi: string;
     code: number;
+    test: number;
+    menor: number;
 }
