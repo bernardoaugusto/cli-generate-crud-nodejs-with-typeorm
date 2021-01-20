@@ -16,15 +16,19 @@ export default class FakeUserRepository implements IUser {
         if (!userData.id) {
             const userCreated = Object.assign(new User(), userData);
             userCreated.id = uuid();
-            userCreated.created_at = new Date();
             userCreated.active = true;
+            userCreated.created_at = new Date();
+            userCreated.updated_at = new Date();
             this.arrayUser.push(userCreated);
             return userCreated;
         }
 
         const index = this.arrayUser.findIndex(item => item.id === userData.id);
 
-        this.arrayUser[index] = userData as User;
+        this.arrayUser[index] = {
+            ...userData,
+            updated_at: new Date(),
+        } as User;
 
         return this.arrayUser[index];
     }

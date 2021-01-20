@@ -1,0 +1,50 @@
+import { v4 as uuid } from 'uuid';
+
+import FiscalHeaderMovementService from '../../services/FiscalHeaderMovementService';
+import FiscalHeaderMovementBuilder from '../testBuilders/FiscalHeaderMovementBuilder';
+import { makeFiscalHeaderMovementService } from './makeInstance/fiscalHeaderMovementService';
+
+describe('Fiscal Header Movement Service', () => {
+    let fiscalHeaderMovementService: FiscalHeaderMovementService;
+
+    beforeAll(async () => {
+        fiscalHeaderMovementService = makeFiscalHeaderMovementService;
+    });
+
+    it('should be able to create a new Fiscal Header Movement', async () => {
+        const tenantid = uuid();
+        const sut = new FiscalHeaderMovementBuilder()
+            .withClientId(uuid())
+            .withCNPJ('cnpj')
+            .withCPF('cpf')
+            .withStateRegistration('test state registration')
+            .withMunicipalRegistration('test Municipal registration')
+            .withCorporateOrCustomerName('test CorporateOrCustomerName')
+            .withGeneralHeaderMovementId(uuid())
+            .build();
+
+        const userData = {
+            username: 'Teste',
+            useremail: 'teste@teste.com.br',
+        };
+
+        const expectedRes = {
+            ...sut,
+            tenantid,
+            created_by_name: userData.username,
+            created_by_email: userData.useremail,
+            updated_by_name: userData.username,
+            updated_by_email: userData.useremail,
+        };
+
+        const {
+            id,
+            created_at,
+            ...entityProps
+        } = await fiscalHeaderMovementService.create(sut, userData, tenantid);
+
+        expect(entityProps).toEqual(expectedRes);
+        expect(id).not.toBeUndefined();
+        expect(created_at).not.toBeUndefined();
+    });
+});

@@ -101,6 +101,12 @@ const command: GluegunCommand = {
             props: { nameCamelCase, nameCamelCaseUpperFirst, properties, tenantid },
         });
 
+        await template.generate({
+            template: 'tests-templates/service/makeInstance.ts.ejs',
+            target: `src/tests/services/makeInstance/${nameCamelCase}.ts`,
+            props: { nameCamelCase, nameCamelCaseUpperFirst, properties, tenantid },
+        });
+
         print.success(`Successfully generated CRUD.`);
     },
 };

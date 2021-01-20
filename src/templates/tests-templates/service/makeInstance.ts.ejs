@@ -1,0 +1,6 @@
+import <%= props.nameCamelCaseUpperFirst %>Service from '../../../services/<%= props.nameCamelCaseUpperFirst %>Service';
+import Fake<%= props.nameCamelCaseUpperFirst %>Repository from '../../repositories/fakes/Fake<%= props.nameCamelCaseUpperFirst %>Repository';
+
+const fake<%= props.nameCamelCaseUpperFirst %>Repository = new Fake<%= props.nameCamelCaseUpperFirst %>Repository();
+
+export const make<%= props.nameCamelCaseUpperFirst %>Service = new <%= props.nameCamelCaseUpperFirst %>Service(fake<%= props.nameCamelCaseUpperFirst %>Repository);

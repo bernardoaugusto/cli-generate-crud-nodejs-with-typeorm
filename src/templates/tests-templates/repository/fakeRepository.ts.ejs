@@ -16,15 +16,19 @@ export default class Fake<%= props.nameCamelCaseUpperFirst %>Repository implemen
         if (!<%= props.nameCamelCase %>Data.id) {
             const <%= props.nameCamelCase %>Created = Object.assign(new <%= props.nameCamelCaseUpperFirst %>(), <%= props.nameCamelCase %>Data);
             <%= props.nameCamelCase %>Created.id = uuid();
-            <%= props.nameCamelCase %>Created.created_at = new Date();
             <%= props.nameCamelCase %>Created.active = true;
+            <%= props.nameCamelCase %>Created.created_at = new Date();
+            <%= props.nameCamelCase %>Created.updated_at = new Date();
             this.array<%= props.nameCamelCaseUpperFirst %>.push(<%= props.nameCamelCase %>Created);
             return <%= props.nameCamelCase %>Created;
         }
 
         const index = this.array<%= props.nameCamelCaseUpperFirst %>.findIndex(item => item.id === <%= props.nameCamelCase %>Data.id);
 
-        this.array<%= props.nameCamelCaseUpperFirst %>[index] = <%= props.nameCamelCase %>Data as <%= props.nameCamelCaseUpperFirst %>;
+        this.array<%= props.nameCamelCaseUpperFirst %>[index] = {
+            ...<%= props.nameCamelCase %>Data,
+            updated_at: new Date(),
+        } as <%= props.nameCamelCaseUpperFirst %>;
 
         return this.array<%= props.nameCamelCaseUpperFirst %>[index];
     }
