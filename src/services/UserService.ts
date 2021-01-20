@@ -5,9 +5,12 @@ import User from '../database/entities/User';
 import { UserRequestInterface } from '../interfaces/metadata/RelationalWithoutTenantid';
 import { UserInterface, UserRequestGetAllInterface } from '../interfaces/user';
 import IUserRepository from '../interfaces/repositories/IUserRepository';
-import { buildCreateWithUser } from '../utils/builders/dynamicBuilders';
 import { HttpError } from '../utils/errors/HttpError';
 import { PaginateResponseProperties } from '../interfaces/pagination';
+import {
+    buildCreateWithUser,
+    buildUpdateWithUser,
+} from '../utils/builders/dynamicBuilders';
 
 @injectable()
 export default class UserService {
@@ -62,5 +65,25 @@ export default class UserService {
         }
 
         return this.userRepository.getAllWithoutPagination(options);
+    }
+
+    public async update(
+        userId: string,
+        userDataUpdates: UserInterface,
+        userRequestData: UserRequestInterface,
+        tenantid: string,
+    ): Promise<User> {
+        const findUser = await this.findById(userId, tenantid);
+
+        const updates = { ...findUser, ...userDataUpdates };
+
+        const buildUpdateUser = buildUpdateWithUser(
+            updates,
+            userRequestData,
+            userId,
+            tenantid,
+        );
+
+        return this.userRepository.createAndSave(buildUpdateUser);
     }
 }

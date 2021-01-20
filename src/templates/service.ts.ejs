@@ -5,9 +5,12 @@ import <%= props.nameCamelCaseUpperFirst %> from '../database/entities/<%= props
 import { <%= props.nameCamelCaseUpperFirst %>RequestInterface } from '../interfaces/metadata/RelationalWithoutTenantid';
 import { <%= props.nameCamelCaseUpperFirst %>Interface, <%= props.nameCamelCaseUpperFirst %>RequestGetAllInterface } from '../interfaces/<%= props.nameCamelCase %>';
 import I<%= props.nameCamelCaseUpperFirst %>Repository from '../interfaces/repositories/I<%= props.nameCamelCaseUpperFirst %>Repository';
-import { buildCreateWithUser } from '../utils/builders/dynamicBuilders';
 import { HttpError } from '../utils/errors/HttpError';
 import { PaginateResponseProperties } from '../interfaces/pagination';
+import {
+    buildCreateWithUser,
+    buildUpdateWithUser,
+} from '../utils/builders/dynamicBuilders';
 
 @injectable()
 export default class <%= props.nameCamelCaseUpperFirst %>Service {
@@ -62,5 +65,25 @@ export default class <%= props.nameCamelCaseUpperFirst %>Service {
         }
 
         return this.<%= props.nameCamelCase %>Repository.getAllWithoutPagination(options);
+    }
+
+    public async update(
+        <%= props.nameCamelCase %>Id: string,
+        <%= props.nameCamelCase %>DataUpdates: <%= props.nameCamelCaseUpperFirst %>Interface,
+        userRequestData: UserRequestInterface,
+        <% if (props.tenantid) { %>tenantid: string,<% }%>
+    ): Promise<<%= props.nameCamelCaseUpperFirst %>> {
+        const find<%= props.nameCamelCaseUpperFirst %> = await this.findById(<%= props.nameCamelCase %>Id<% if (props.tenantid) { %>, tenantid<% }%>);
+
+        const updates = { ...find<%= props.nameCamelCaseUpperFirst %>, ...<%= props.nameCamelCase %>DataUpdates };
+
+        const buildUpdate<%= props.nameCamelCaseUpperFirst %> = buildUpdateWithUser(
+            updates,
+            userRequestData,
+            <%= props.nameCamelCase %>Id,
+            <% if (props.tenantid) { %>tenantid,<% }%>
+        );
+
+        return this.<%= props.nameCamelCase %>Repository.createAndSave(buildUpdate<%= props.nameCamelCaseUpperFirst %>);
     }
 }
