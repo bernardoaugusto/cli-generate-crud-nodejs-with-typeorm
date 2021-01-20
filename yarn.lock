@@ -486,6 +486,11 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
+"@seidor-cloud-produtos/lib-seidor-common@0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@seidor-cloud-produtos/lib-seidor-common/-/lib-seidor-common-0.0.1.tgz#a74b93a16fb72ff97291a661cf4f9abcb20f30db"
+  integrity sha512-degw1BMHzwilE+Dqsdui3Hw/PS6f2fP4goXybQXv+LMPHjpS2rarmtr6yFjoogqgQ2BSaJPzLz4vTOVETk3h7A==
+
 "@sinonjs/commons@^1.7.0":
   version "1.8.2"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.2.tgz#858f5c4b48d80778fde4b9d541f27edc0d56488b"

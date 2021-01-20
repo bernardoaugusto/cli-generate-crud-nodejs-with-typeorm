@@ -1,0 +1,20 @@
+import { Repository, getRepository } from 'typeorm';
+import <%= props.nameCamelCaseUpperFirst %> from '../database/entities/<%= props.nameCamelCaseUpperFirst %>';
+import { <%= props.nameCamelCaseUpperFirst %>Interface } from '../interfaces/<%= props.nameCamelCase %>';
+import I<%= props.nameCamelCaseUpperFirst %> from '../interfaces/repositories/I<%= props.nameCamelCaseUpperFirst %>';
+
+export default class <%= props.nameCamelCaseUpperFirst %>Repository implements I<%= props.nameCamelCaseUpperFirst %> {
+    private ormRepository: Repository<<%= props.nameCamelCaseUpperFirst %>>;
+
+    constructor() {
+        this.ormRepository = getRepository(<%= props.nameCamelCaseUpperFirst %>);
+    }
+
+    public async createAndSave(
+        <%= props.nameCamelCase %>Data: <%= props.nameCamelCaseUpperFirst %>Interface,
+    ): Promise<<%= props.nameCamelCaseUpperFirst %>> {
+        const <%= props.nameCamelCase %> = this.ormRepository.create(<%= props.nameCamelCase %>Data);
+
+        return this.ormRepository.save(<%= props.nameCamelCase %>);
+    }
+}

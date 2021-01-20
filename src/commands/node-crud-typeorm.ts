@@ -42,6 +42,18 @@ const command: GluegunCommand = {
             props: { tableName, nameCamelCaseUpperFirst, properties, tenantid },
         });
 
+        await template.generate({
+            template: 'repositoryInterface.ts.ejs',
+            target: `src/interfaces/repositories/I${nameCamelCaseUpperFirst}.ts`,
+            props: { nameCamelCase, nameCamelCaseUpperFirst, properties, tenantid },
+        });
+
+        await template.generate({
+            template: 'repository.ts.ejs',
+            target: `src/repositories/${nameCamelCaseUpperFirst}.ts`,
+            props: { nameCamelCase, nameCamelCaseUpperFirst, properties, tenantid },
+        });
+
         print.success(`Generated CRUD.`);
     },
 };
