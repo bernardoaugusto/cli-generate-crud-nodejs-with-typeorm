@@ -1,27 +1,51 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { uuid } from 'uuidv4';
+import {
+    GetAllWithoutPagination,
+    OptionsTypeOrmGetAll,
+} from '@seidor-cloud-produtos/lib-seidor-common/dist/packages/typeorm/lib/interfaces';
 
 import User from '../../../database/entities/User';
 import { UserInterface } from '../../../interfaces/user';
 import IUser from '../../../interfaces/repositories/IUser';
 
 export default class FakeUserRepository implements IUser {
-    private fiscalDatasMovements: User[] = [];
+    private arrayUser: User[] = [];
 
     public async createAndSave(userData: UserInterface): Promise<User> {
         if (!userData.id) {
             const userCreated = Object.assign(new User(), userData);
             userCreated.id = uuid();
             userCreated.created_at = new Date();
-            this.fiscalDatasMovements.push(userCreated);
+            userCreated.active = true;
+            this.arrayUser.push(userCreated);
             return userCreated;
         }
 
-        const index = this.fiscalDatasMovements.findIndex(
-            item => item.id === userData.id,
+        const index = this.arrayUser.findIndex(item => item.id === userData.id);
+
+        this.arrayUser[index] = userData as User;
+
+        return this.arrayUser[index];
+    }
+
+    public async findById(id: string, tenantid: string): Promise<User | undefined> {
+        return this.arrayUser.find(
+            user => user.id === id && user.tenantid === tenantid,
         );
+    }
 
-        this.fiscalDatasMovements[index] = userData as User;
+    public async getAllWithoutPagination(
+        options: OptionsTypeOrmGetAll,
+    ): Promise<User[]> {
+        return this.arrayUser;
+    }
 
-        return this.fiscalDatasMovements[index];
+    public async getAllWithPagination(
+        options: GetAllWithoutPagination,
+    ): Promise<{ data: User[]; count: number }> {
+        const { arrayUser } = this;
+
+        return { data: arrayUser, count: arrayUser.length };
     }
 }

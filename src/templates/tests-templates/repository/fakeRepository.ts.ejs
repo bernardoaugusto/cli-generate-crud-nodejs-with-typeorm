@@ -1,35 +1,51 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { uuid } from 'uuidv4';
+import {
+    GetAllWithoutPagination,
+    OptionsTypeOrmGetAll,
+} from '@seidor-cloud-produtos/lib-seidor-common/dist/packages/typeorm/lib/interfaces';
 
 import <%= props.nameCamelCaseUpperFirst %> from '../../../database/entities/<%= props.nameCamelCaseUpperFirst %>';
 import { <%= props.nameCamelCaseUpperFirst %>Interface } from '../../../interfaces/<%= props.nameCamelCase %>';
 import I<%= props.nameCamelCaseUpperFirst %> from '../../../interfaces/repositories/I<%= props.nameCamelCaseUpperFirst %>';
 
-export default class Fake<%= props.nameCamelCaseUpperFirst %>Repository
-    implements I<%= props.nameCamelCaseUpperFirst %> {
-    private fiscalDatasMovements: <%= props.nameCamelCaseUpperFirst %>[] = [];
+export default class Fake<%= props.nameCamelCaseUpperFirst %>Repository implements I<%= props.nameCamelCaseUpperFirst %> {
+    private array<%= props.nameCamelCaseUpperFirst %>: <%= props.nameCamelCaseUpperFirst %>[] = [];
 
-    public async createAndSave(
-        <%= props.nameCamelCase %>Data: <%= props.nameCamelCaseUpperFirst %>Interface,
-    ): Promise<<%= props.nameCamelCaseUpperFirst %>> {
+    public async createAndSave(<%= props.nameCamelCase %>Data: <%= props.nameCamelCaseUpperFirst %>Interface): Promise<<%= props.nameCamelCaseUpperFirst %>> {
         if (!<%= props.nameCamelCase %>Data.id) {
-            const <%= props.nameCamelCase %>Created = Object.assign(
-                new <%= props.nameCamelCaseUpperFirst %>(),
-                <%= props.nameCamelCase %>Data,
-            );
+            const <%= props.nameCamelCase %>Created = Object.assign(new <%= props.nameCamelCaseUpperFirst %>(), <%= props.nameCamelCase %>Data);
             <%= props.nameCamelCase %>Created.id = uuid();
             <%= props.nameCamelCase %>Created.created_at = new Date();
-            this.fiscalDatasMovements.push(<%= props.nameCamelCase %>Created);
+            <%= props.nameCamelCase %>Created.active = true;
+            this.array<%= props.nameCamelCaseUpperFirst %>.push(<%= props.nameCamelCase %>Created);
             return <%= props.nameCamelCase %>Created;
         }
 
-        const index = this.fiscalDatasMovements.findIndex(
-            item => item.id === <%= props.nameCamelCase %>Data.id,
+        const index = this.array<%= props.nameCamelCaseUpperFirst %>.findIndex(item => item.id === <%= props.nameCamelCase %>Data.id);
+
+        this.array<%= props.nameCamelCaseUpperFirst %>[index] = <%= props.nameCamelCase %>Data as <%= props.nameCamelCaseUpperFirst %>;
+
+        return this.array<%= props.nameCamelCaseUpperFirst %>[index];
+    }
+
+    public async findById(id: string<% if (props.tenantid) { %>, tenantid: string<% }%>): Promise<<%= props.nameCamelCaseUpperFirst %> | undefined> {
+        return this.array<%= props.nameCamelCaseUpperFirst %>.find(
+            <%= props.nameCamelCase %> => <%= props.nameCamelCase %>.id === id <% if (props.tenantid) { %>&& <%= props.nameCamelCase %>.tenantid === tenantid,<% }%>
         );
+    }
 
-        this.fiscalDatasMovements[
-            index
-        ] = <%= props.nameCamelCase %>Data as <%= props.nameCamelCaseUpperFirst %>;
+    public async getAllWithoutPagination(
+        options: OptionsTypeOrmGetAll,
+    ): Promise<<%= props.nameCamelCaseUpperFirst %>[]> {
+        return this.array<%= props.nameCamelCaseUpperFirst %>;
+    }
 
-        return this.fiscalDatasMovements[index];
+    public async getAllWithPagination(
+        options: GetAllWithoutPagination,
+    ): Promise<{ data: <%= props.nameCamelCaseUpperFirst %>[]; count: number }> {
+        const { array<%= props.nameCamelCaseUpperFirst %> } = this;
+
+        return { data: array<%= props.nameCamelCaseUpperFirst %>, count: array<%= props.nameCamelCaseUpperFirst %>.length };
     }
 }
