@@ -25,8 +25,8 @@ export default class <%= props.nameCamelCaseUpperFirst %>Service {
         <%= props.nameCamelCase %>Data: <%= props.nameCamelCaseUpperFirst %>Interface,
         userRequestData: UserRequestInterface,
         <% if (props.tenantid) { %>tenantid: string,<% }%>
-    ): Promise<<%= props.nameCamelCaseUpperFirst %>Interface> {
-        const builded<%= props.nameCamelCaseUpperFirst %> = buildCreateWithUser(<%= props.nameCamelCase %>Data, userRequestData, tenantid);
+    ): Promise<<%= props.nameCamelCaseUpperFirst %>> {
+        const builded<%= props.nameCamelCaseUpperFirst %> = buildCreateWithUser(<%= props.nameCamelCase %>Data, userRequestData<% if (props.tenantid) { %>, tenantid<% }%>);
 
         return this.<%= props.nameCamelCase %>Repository.createAndSave(builded<%= props.nameCamelCaseUpperFirst %>);
     }

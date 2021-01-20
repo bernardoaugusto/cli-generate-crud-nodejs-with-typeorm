@@ -1,4 +1,4 @@
-import { uuid } from 'uuidv4';
+
 
 import connect from '../../database/connection/connection';
 import { UserInterface } from '../../interfaces/user';
@@ -23,8 +23,7 @@ describe('User Repository context', () => {
 
     it('should be able to insert a new User', async () => {
         const userBuild = new UserBuilder()
-            .withTenantId(uuid())
-            .withNameId('name_id')
+            .withMovimentId('moviment_id')
             .withDescription('description')
             .withOi('oi')
             .withCode(123)
@@ -56,7 +55,7 @@ describe('User Repository context', () => {
     it('Should be able to find a User', async () => {
         const sut = await makeSut();
 
-        const userFinded = await userRepository.findById(sut.id, sut.tenantid);
+        const userFinded = await userRepository.findById(sut.id);
 
         expect(userFinded).toEqual(sut);
     });
@@ -67,7 +66,7 @@ describe('User Repository context', () => {
         const updates: UserInterface = {
             ...sut,
             active: false,
-            name_id: 'update name_id',
+            moviment_id: 'update moviment_id',
             description: 'update description',
             oi: 'update oi',
             code: 999,
@@ -77,10 +76,10 @@ describe('User Repository context', () => {
 
         const cashierUpdated = await userRepository.createAndSave(updates);
 
-        expect(cashierUpdated.tenantid).toBe(sut.tenantid);
+        
         expect(cashierUpdated.id).toBe(sut.id);
         expect(cashierUpdated.active).toBe(false);
-        expect(cashierUpdated.name_id).toBe('update name_id');
+        expect(cashierUpdated.moviment_id).toBe('update moviment_id');
         expect(cashierUpdated.description).toBe('update description');
         expect(cashierUpdated.oi).toBe('update oi');
         expect(cashierUpdated.code).toBe(999);

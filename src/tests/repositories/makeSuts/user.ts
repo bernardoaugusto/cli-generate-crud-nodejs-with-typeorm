@@ -1,4 +1,4 @@
-import { uuid } from 'uuidv4';
+
 
 import User from '../../../database/entities/User';
 import { UserInterface } from '../../../interfaces/user';
@@ -8,8 +8,7 @@ import UserBuilder from '../../testBuilders/UserBuilder';
 export default async (userData?: Partial<UserInterface>): Promise<User> => {
     const userRepository = new UserRepository();
     const userBuild = new UserBuilder()
-        .withTenantId(uuid())
-        .withNameId('name_id')
+        .withMovimentId('moviment_id')
         .withDescription('description')
         .withOi('oi')
         .withCode(123)

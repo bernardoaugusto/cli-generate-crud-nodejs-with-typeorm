@@ -1,18 +1,38 @@
 import { uuid } from 'uuidv4';
 
+import <%= props.nameCamelCaseUpperFirst %> from '../../database/entities/<%= props.nameCamelCaseUpperFirst %>';
 import <%= props.nameCamelCaseUpperFirst %>Service from '../../services/<%= props.nameCamelCaseUpperFirst %>Service';
 import <%= props.nameCamelCaseUpperFirst %>Builder from '../testBuilders/<%= props.nameCamelCaseUpperFirst %>Builder';
 import { make<%= props.nameCamelCaseUpperFirst %>Service } from './makeInstance/<%= props.nameCamelCase %>';
+import { <%= props.nameCamelCaseUpperFirst %>Interface } from '../../interfaces/<%= props.nameCamelCase %>';
 
-describe('<%= props.nameCamelCaseUpperFirst %> Movement Service', () => {
+describe('<%= props.nameCamelCaseUpperFirst %> Service', () => {
     let <%= props.nameCamelCase %>Service: <%= props.nameCamelCaseUpperFirst %>Service;
 
     beforeAll(async () => {
         <%= props.nameCamelCase %>Service = make<%= props.nameCamelCaseUpperFirst %>Service;
     });
 
-    it('should be able to create a new <%= props.nameCamelCaseUpperFirst %> Movement', async () => {
-        const tenantid = uuid();
+    const makeSut = (<%= props.nameCamelCase %>Data?: Partial<<%= props.nameCamelCaseUpperFirst %>Interface>): Promise<<%= props.nameCamelCaseUpperFirst %>> => {
+        const <%= props.nameCamelCase %> = new <%= props.nameCamelCaseUpperFirst %>Builder()<% if (props.tenantid) { %>
+            .withTenantId(uuid())<% }%><% for(let i=0; i<props.properties.original.strings.length; i++) { %>
+            .with<%= props.properties.camelCaseUpperFirst.strings[i] %>('<%= props.properties.original.strings[i] %>')<%}; %><% for(let i=0; i<props.properties.original.numbers.length; i++) { %>
+            .with<%= props.properties.camelCaseUpperFirst.numbers[i] %>(123)<%}; %>
+            .build();
+
+        const userRequestData = {
+            username: 'Teste',
+            useremail: 'teste@teste.com.br',
+        };
+
+        return <%= props.nameCamelCase %>Service.create(
+            Object.assign(<%= props.nameCamelCase %>, <%= props.nameCamelCase %>Data),
+            userRequestData,
+            <% if (props.tenantid) { %><%= props.nameCamelCase %>.tenantid!,<% }%>
+        );
+    };
+
+    it('should be able to create a new <%= props.nameCamelCaseUpperFirst %>', async () => {
         const sut = new <%= props.nameCamelCaseUpperFirst %>Builder()<% if (props.tenantid) { %>
             .withTenantId(uuid())<% }%><% for(let i=0; i<props.properties.original.strings.length; i++) { %>
             .with<%= props.properties.camelCaseUpperFirst.strings[i] %>('<%= props.properties.original.strings[i] %>')<%}; %><% for(let i=0; i<props.properties.original.numbers.length; i++) { %>
@@ -26,7 +46,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Movement Service', () => {
 
         const expectedRes = {
             ...sut,
-            tenantid,
+            <% if (props.tenantid) { %>tenantid: sut.tenantid,<% }%>
             created_by_name: userRequestData.username,
             created_by_email: userRequestData.useremail,
             updated_by_name: userRequestData.username,
@@ -39,7 +59,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Movement Service', () => {
             updated_at,
             active,
             ...entityProps
-        } = await <%= props.nameCamelCase %>Service.create(sut, userRequestData, tenantid);
+        } = await <%= props.nameCamelCase %>Service.create(sut, userRequestData<% if (props.tenantid) { %>, sut.tenantid!<% }%>);
 
         expect(entityProps).toEqual(expectedRes);
         expect(id).not.toBeUndefined();
