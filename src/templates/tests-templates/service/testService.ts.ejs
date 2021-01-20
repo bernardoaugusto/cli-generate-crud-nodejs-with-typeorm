@@ -1,29 +1,25 @@
-import { v4 as uuid } from 'uuid';
+import { uuid } from 'uuidv4';
 
-import FiscalHeaderMovementService from '../../services/FiscalHeaderMovementService';
-import FiscalHeaderMovementBuilder from '../testBuilders/FiscalHeaderMovementBuilder';
-import { makeFiscalHeaderMovementService } from './makeInstance/fiscalHeaderMovementService';
+import <%= props.nameCamelCaseUpperFirst %>Service from '../../services/<%= props.nameCamelCaseUpperFirst %>Service';
+import <%= props.nameCamelCaseUpperFirst %>Builder from '../testBuilders/<%= props.nameCamelCaseUpperFirst %>Builder';
+import { make<%= props.nameCamelCaseUpperFirst %>Service } from './makeInstance/<%= props.nameCamelCase %>';
 
-describe('Fiscal Header Movement Service', () => {
-    let fiscalHeaderMovementService: FiscalHeaderMovementService;
+describe('<%= props.nameCamelCaseUpperFirst %> Movement Service', () => {
+    let <%= props.nameCamelCase %>Service: <%= props.nameCamelCaseUpperFirst %>Service;
 
     beforeAll(async () => {
-        fiscalHeaderMovementService = makeFiscalHeaderMovementService;
+        <%= props.nameCamelCase %>Service = make<%= props.nameCamelCaseUpperFirst %>Service;
     });
 
-    it('should be able to create a new Fiscal Header Movement', async () => {
+    it('should be able to create a new <%= props.nameCamelCaseUpperFirst %> Movement', async () => {
         const tenantid = uuid();
-        const sut = new FiscalHeaderMovementBuilder()
-            .withClientId(uuid())
-            .withCNPJ('cnpj')
-            .withCPF('cpf')
-            .withStateRegistration('test state registration')
-            .withMunicipalRegistration('test Municipal registration')
-            .withCorporateOrCustomerName('test CorporateOrCustomerName')
-            .withGeneralHeaderMovementId(uuid())
+        const sut = new <%= props.nameCamelCaseUpperFirst %>Builder()<% if (props.tenantid) { %>
+            .withTenantId(uuid())<% }%><% for(let i=0; i<props.properties.original.strings.length; i++) { %>
+            .with<%= props.properties.camelCaseUpperFirst.strings[i] %>('<%= props.properties.original.strings[i] %>')<%}; %><% for(let i=0; i<props.properties.original.numbers.length; i++) { %>
+            .with<%= props.properties.camelCaseUpperFirst.numbers[i] %>(123)<%}; %>
             .build();
 
-        const userData = {
+        const userRequestData = {
             username: 'Teste',
             useremail: 'teste@teste.com.br',
         };
@@ -31,20 +27,24 @@ describe('Fiscal Header Movement Service', () => {
         const expectedRes = {
             ...sut,
             tenantid,
-            created_by_name: userData.username,
-            created_by_email: userData.useremail,
-            updated_by_name: userData.username,
-            updated_by_email: userData.useremail,
+            created_by_name: userRequestData.username,
+            created_by_email: userRequestData.useremail,
+            updated_by_name: userRequestData.username,
+            updated_by_email: userRequestData.useremail,
         };
 
         const {
             id,
             created_at,
+            updated_at,
+            active,
             ...entityProps
-        } = await fiscalHeaderMovementService.create(sut, userData, tenantid);
+        } = await <%= props.nameCamelCase %>Service.create(sut, userRequestData, tenantid);
 
         expect(entityProps).toEqual(expectedRes);
         expect(id).not.toBeUndefined();
+        expect(active).toBe(true);
         expect(created_at).not.toBeUndefined();
+        expect(updated_at).not.toBeUndefined();
     });
 });

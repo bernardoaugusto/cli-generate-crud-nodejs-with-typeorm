@@ -50,6 +50,8 @@
         "uuidv4": "^6.2.5",
         "dotenv": "^8.2.0",
         "tsyringe": "^4.3.0",
-        "sqlite3": "5.0.0"
+        "sqlite3": "5.0.0",
+        "moment": "^2.29.1",
+        "reflect-metadata": "^0.1.13"
     }
 }
