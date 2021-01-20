@@ -1,0 +1,72 @@
+import { <%= props.nameCamelCaseUpperFirst %>Interface } from '../../interfaces/<%= props.nameCamelCase %>';
+
+export default class <%= props.nameCamelCaseUpperFirst %>Builder {
+    <%= props.nameCamelCase %>: <%= props.nameCamelCaseUpperFirst %>Interface;
+
+    constructor() {
+        this.<%= props.nameCamelCase %> = {} as <%= props.nameCamelCaseUpperFirst %>Interface;
+    }
+
+    <% if (props.tenantid) { %>
+    public withTenantId(tenantid: string): <%= props.nameCamelCaseUpperFirst %>Builder {
+        this.<%= props.nameCamelCase %>.tenantid = tenantid;
+        return this;
+    }
+    <% }%>
+
+    public withId(id: string): <%= props.nameCamelCaseUpperFirst %>Builder {
+        this.<%= props.nameCamelCase %>.id = id;
+        return this;
+    }
+
+    <% for(let i=0; i<props.properties.original.strings.length; i++) { %>
+    public with<%= props.properties.camelCaseUpperFirst.strings[i] %>(<%= props.properties.original.strings[i] %>: string): <%= props.nameCamelCaseUpperFirst %>Builder {
+        this.<%= props.nameCamelCase %>.<%= props.properties.original.strings[i] %> = <%= props.properties.original.strings[i] %>;
+        return this;
+    }
+    <%}; %>
+
+    public withActive(active: boolean): <%= props.nameCamelCaseUpperFirst %>Builder {
+        this.<%= props.nameCamelCase %>.active = active;
+        return this;
+    }
+
+    public withInactivationDate(inactivationDate: Date | null): <%= props.nameCamelCaseUpperFirst %>Builder {
+        this.<%= props.nameCamelCase %>.inactivation_date = <any>inactivationDate;
+        return this;
+    }
+
+    public withCreatedAt(created_at: Date): <%= props.nameCamelCaseUpperFirst %>Builder {
+        this.<%= props.nameCamelCase %>.created_at = created_at;
+        return this;
+    }
+
+    public withUpdatedAt(updated_at: Date): <%= props.nameCamelCaseUpperFirst %>Builder {
+        this.<%= props.nameCamelCase %>.updated_at = updated_at;
+        return this;
+    }
+
+    public withCreatedByName(createdByName: string): <%= props.nameCamelCaseUpperFirst %>Builder {
+        this.<%= props.nameCamelCase %>.created_by_name = createdByName;
+        return this;
+    }
+
+    public withCreatedByEmail(createdByEmail: string): <%= props.nameCamelCaseUpperFirst %>Builder {
+        this.<%= props.nameCamelCase %>.created_by_email = createdByEmail;
+        return this;
+    }
+
+    public withUpdatedByName(updatedByName: string): <%= props.nameCamelCaseUpperFirst %>Builder {
+        this.<%= props.nameCamelCase %>.updated_by_name = updatedByName;
+        return this;
+    }
+
+    public withUpdatedByEmail(updatedByEmail: string): <%= props.nameCamelCaseUpperFirst %>Builder {
+        this.<%= props.nameCamelCase %>.updated_by_email = updatedByEmail;
+        return this;
+    }
+
+    public build(): <%= props.nameCamelCaseUpperFirst %>Interface {
+        return this.<%= props.nameCamelCase %>;
+    }
+}

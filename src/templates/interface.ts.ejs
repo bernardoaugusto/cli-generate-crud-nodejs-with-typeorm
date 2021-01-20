@@ -1,6 +1,6 @@
 <% if (props.tenantid) { %>import { RelationalWithTenantidInterface } from './metadata/RelationalWithoutTenantid';<% } else{ %>import { RelationalWithoutTenantidInterface } from './metadata/RelationalWithoutTenantid';<% } %>
 
-export interface <%= props.nameCamelCaseUpperFirst %>Interface extends <% if (props.tenantid) { %>RelationalWithTenantidInterface<% } else{ %>RelationalWithoutTenantidInterface<% } %> {<% props.properties.strings.forEach((propertie) => { %>
-    <%= propertie %>: string;<%}); %><% props.properties.numbers.forEach((propertie) => { %>
+export interface <%= props.nameCamelCaseUpperFirst %>Interface extends <% if (props.tenantid) { %>RelationalWithTenantidInterface<% } else{ %>RelationalWithoutTenantidInterface<% } %> {<% props.properties.original.strings.forEach((propertie) => { %>
+    <%= propertie %>: string;<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
     <%= propertie %>: number;<% }); %>
 }

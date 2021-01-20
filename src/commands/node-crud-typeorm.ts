@@ -1,5 +1,10 @@
 import { GluegunCommand } from 'gluegun';
-import { camelCase, upperFirst } from 'lodash';
+import {
+    generateCamelCase,
+    generateCamelCaseArray,
+    generateCamelCaseUpperFirst,
+    generateCamelCaseUpperFirstArray,
+} from '../utils-cli/common';
 
 const command: GluegunCommand = {
     name: 'node-crud-typeorm',
@@ -12,8 +17,8 @@ const command: GluegunCommand = {
             print.error('Table name must be specified');
             return;
         }
-        const nameCamelCase = camelCase(tableName);
-        const nameCamelCaseUpperFirst = upperFirst(nameCamelCase);
+        const nameCamelCase = generateCamelCase(tableName);
+        const nameCamelCaseUpperFirst = generateCamelCaseUpperFirst(nameCamelCase);
 
         const options = parameters.options as Record<string, string>;
 
@@ -25,9 +30,21 @@ const command: GluegunCommand = {
             return;
         }
 
-        const properties = {
+        const props = {
             strings: strings ? strings.split(',') : [],
             numbers: numbers ? numbers.split(',') : [],
+        };
+
+        const properties = {
+            original: props,
+            camelCase: {
+                strings: generateCamelCaseArray(props.strings),
+                numbers: generateCamelCaseArray(props.numbers),
+            },
+            camelCaseUpperFirst: {
+                strings: generateCamelCaseUpperFirstArray(props.strings),
+                numbers: generateCamelCaseUpperFirstArray(props.numbers),
+            },
         };
 
         await template.generate({
@@ -40,6 +57,12 @@ const command: GluegunCommand = {
             template: 'interface.ts.ejs',
             target: `src/interfaces/${nameCamelCase}.ts`,
             props: { tableName, nameCamelCaseUpperFirst, properties, tenantid },
+        });
+
+        await template.generate({
+            template: 'tests-templates/testBuilder.ts.ejs',
+            target: `src/tests/testBuilders/${nameCamelCaseUpperFirst}Builder.ts`,
+            props: { nameCamelCase, nameCamelCaseUpperFirst, properties, tenantid },
         });
 
         await template.generate({

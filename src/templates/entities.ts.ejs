@@ -5,10 +5,10 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 export default class <%= props.nameCamelCaseUpperFirst %> extends <% if (props.tenantid) { %>RelationalTenantidEntity<% } else{ %>RelationalWithoutTenantidEntity<% } %> {
     @PrimaryGeneratedColumn('uuid')
     id: string;
-<% props.properties.strings.forEach((propertie) => { %>
+<% props.properties.original.strings.forEach((propertie) => { %>
     @Column()
     <%= propertie %>: string;
-<%}); %><% props.properties.numbers.forEach((propertie) => { %>
+<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
     @Column()
     <%= propertie %>: number;
 <% }); %>

@@ -7,7 +7,7 @@ export default class User extends RelationalTenantidEntity {
     id: string;
 
     @Column()
-    name: string;
+    name_id: string;
 
     @Column()
     description: string;
