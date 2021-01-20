@@ -1,0 +1,21 @@
+<% if (props.tenantid) { %>import { uuid } from 'uuidv4';<% }%>
+
+import <%= props.nameCamelCaseUpperFirst %> from '../../../database/entities/<%= props.nameCamelCaseUpperFirst %>';
+import { <%= props.nameCamelCaseUpperFirst %>Interface } from '../../../interfaces/<%= props.nameCamelCase %>';
+import <%= props.nameCamelCaseUpperFirst %>Repository from '../../../repositories/<%= props.nameCamelCaseUpperFirst %>Repository';
+import <%= props.nameCamelCaseUpperFirst %>Builder from '../../testBuilders/<%= props.nameCamelCaseUpperFirst %>Builder';
+
+export default async (<%= props.nameCamelCase %>Data?: Partial<<%= props.nameCamelCaseUpperFirst %>Interface>): Promise<<%= props.nameCamelCaseUpperFirst %>> => {
+    const <%= props.nameCamelCase %>Repository = new <%= props.nameCamelCaseUpperFirst %>Repository();
+    const <%= props.nameCamelCase %>Build = new <%= props.nameCamelCaseUpperFirst %>Builder()<% if (props.tenantid) { %>
+        .withTenantId(uuid())<% }%><% for(let i=0; i<props.properties.original.strings.length; i++) { %>
+        .with<%= props.properties.camelCaseUpperFirst.strings[i] %>('<%= props.properties.original.strings[i] %>')<%}; %><% for(let i=0; i<props.properties.original.numbers.length; i++) { %>
+        .with<%= props.properties.camelCaseUpperFirst.numbers[i] %>(123)<%}; %>
+        .withCreatedByName('Create')
+        .withCreatedByEmail('test@create.com')
+        .withUpdatedByName('Update')
+        .withUpdatedByEmail('test@update.com.br')
+        .build();
+
+    return <%= props.nameCamelCase %>Repository.createAndSave(Object.assign(<%= props.nameCamelCase %>Build, <%= props.nameCamelCase %>Data));
+};

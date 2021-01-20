@@ -51,4 +51,12 @@ describe('User Repository context', () => {
         expect(created_at).not.toBeUndefined();
         expect(updated_at).not.toBeUndefined();
     });
+
+    it('Should be able to find a user', async () => {
+        //const sut = await makeSut();
+
+        //const userFinded = await userRepository.findById(sut.id, sut.tenantid);
+
+        //expect(userFinded).toEqual(sut);
+    });
 });
