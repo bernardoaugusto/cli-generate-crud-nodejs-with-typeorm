@@ -67,11 +67,31 @@ describe('<%= props.nameCamelCaseUpperFirst %> Repository context', () => {
             <%= props.properties.original.numbers[i] %>: 999,<%}; %>
         };
 
-        const cashierUpdated = await userRepository.createAndSave(updates);
+        const cashierUpdated = await <%= props.nameCamelCase %>Repository.createAndSave(updates);
 
+        <% if (props.tenantid) { %>expect(cashierUpdated.tenantid).toBe(sut.tenantid);<% }%>
         expect(cashierUpdated.id).toBe(sut.id);
         expect(cashierUpdated.active).toBe(false);<% for(let i=0; i<props.properties.original.strings.length; i++) { %>
         expect(cashierUpdated.<%= props.properties.original.strings[i] %>).toBe('update <%= props.properties.original.strings[i] %>');<%}; %><% for(let i=0; i<props.properties.original.strings.length; i++) { %>
         expect(cashierUpdated.<%= props.properties.original.numbers[i] %>).toBe(999);<%}; %>
+    });
+
+    it('Should return a paginated list of <%= props.nameCamelCaseUpperFirst %> with inactivation', async () => {
+        const sut = await makeSut({ active: false });
+
+        const res = await <%= props.nameCamelCase %>Repository.getAllWithPagination(<any>{});
+
+        expect(
+            res.data.findIndex(<%= props.nameCamelCase %> => <%= props.nameCamelCase %>.id === sut.id),
+        ).toBeGreaterThanOrEqual(0);
+        expect(res.count).toBeGreaterThan(0);
+    });
+
+    it('Should return a list of <%= props.nameCamelCaseUpperFirst %> with inactivation', async () => {
+        const sut = await makeSut({ active: false });
+
+        const res = await <%= props.nameCamelCase %>Repository.getAllWithoutPagination(<any>{});
+
+        expect(res.findIndex(<%= props.nameCamelCase %> => <%= props.nameCamelCase %>.id === sut.id)).toBeGreaterThanOrEqual(0);
     });
 });

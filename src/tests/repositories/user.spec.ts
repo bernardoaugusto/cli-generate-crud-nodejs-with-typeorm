@@ -77,6 +77,7 @@ describe('User Repository context', () => {
 
         const cashierUpdated = await userRepository.createAndSave(updates);
 
+        expect(cashierUpdated.tenantid).toBe(sut.tenantid);
         expect(cashierUpdated.id).toBe(sut.id);
         expect(cashierUpdated.active).toBe(false);
         expect(cashierUpdated.name_id).toBe('update name_id');
@@ -85,5 +86,24 @@ describe('User Repository context', () => {
         expect(cashierUpdated.code).toBe(999);
         expect(cashierUpdated.test).toBe(999);
         expect(cashierUpdated.menor).toBe(999);
+    });
+
+    it('Should return a paginated list of User with inactivation', async () => {
+        const sut = await makeSut({ active: false });
+
+        const res = await userRepository.getAllWithPagination(<any>{});
+
+        expect(
+            res.data.findIndex(user => user.id === sut.id),
+        ).toBeGreaterThanOrEqual(0);
+        expect(res.count).toBeGreaterThan(0);
+    });
+
+    it('Should return a list of User with inactivation', async () => {
+        const sut = await makeSut({ active: false });
+
+        const res = await userRepository.getAllWithoutPagination(<any>{});
+
+        expect(res.findIndex(user => user.id === sut.id)).toBeGreaterThanOrEqual(0);
     });
 });
