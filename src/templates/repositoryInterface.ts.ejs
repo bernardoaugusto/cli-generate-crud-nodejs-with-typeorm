@@ -11,8 +11,6 @@ export default interface I<%= props.nameCamelCaseUpperFirst %> {
     getAllWithPagination(
         options: OptionsTypeOrmGetAll,
     ): Promise<{ data: <%= props.nameCamelCaseUpperFirst %>[]; count: number }>;
-    getAllWithoutPagination(
-        options: GetAllWithoutPagination<% if (props.tenantid) { %>, tenantid: string<% }%>
-    ): Promise<<%= props.nameCamelCaseUpperFirst %>[]>;
+    getAllWithoutPagination(options: GetAllWithoutPagination): Promise<<%= props.nameCamelCaseUpperFirst %>[]>;
 }
 
