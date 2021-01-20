@@ -26,6 +26,13 @@ export default class <%= props.nameCamelCaseUpperFirst %>Builder {
     }
     <%}; %>
 
+    <% for(let i=0; i<props.properties.original.numbers.length; i++) { %>
+    public with<%= props.properties.camelCaseUpperFirst.numbers[i] %>(<%= props.properties.original.numbers[i] %>: number): <%= props.nameCamelCaseUpperFirst %>Builder {
+        this.<%= props.nameCamelCase %>.<%= props.properties.original.numbers[i] %> = <%= props.properties.original.numbers[i] %>;
+        return this;
+    }
+    <%}; %>
+
     public withActive(active: boolean): <%= props.nameCamelCaseUpperFirst %>Builder {
         this.<%= props.nameCamelCase %>.active = active;
         return this;

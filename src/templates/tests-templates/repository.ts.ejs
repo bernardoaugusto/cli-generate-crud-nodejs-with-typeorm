@@ -1,0 +1,50 @@
+import { uuid } from 'uuidv4';
+
+import connect from '../../database/connection/connection';
+import { <%= props.nameCamelCaseUpperFirst %>Interface } from '../../interfaces/<%= props.nameCamelCase %>';
+import <%= props.nameCamelCaseUpperFirst %>Repository from '../../repositories/<%= props.nameCamelCaseUpperFirst %>Repository';
+import { deleteFileDatabase } from '../deleteFileDatabase';
+import <%= props.nameCamelCaseUpperFirst %>Builder from '../testBuilders/<%= props.nameCamelCaseUpperFirst %>Builder';
+
+describe('<%= props.nameCamelCaseUpperFirst %> Repository context', () => {
+    let <%= props.nameCamelCase %>Repository: <%= props.nameCamelCaseUpperFirst %>Repository;
+
+    const context = `${Date.now()}`;
+
+    beforeAll(async () => {
+        await connect(true, context);
+        <%= props.nameCamelCase %>Repository = new <%= props.nameCamelCaseUpperFirst %>Repository();
+    });
+
+    afterAll(async () => {
+        await deleteFileDatabase(context);
+    });
+
+    it('should be able to insert a new <%= props.nameCamelCase %>', async () => {
+        const <%= props.nameCamelCase %>Build = new <%= props.nameCamelCaseUpperFirst %>Builder()<% if (props.tenantid) { %>
+            .withTenantId(uuid())<% }%><% for(let i=0; i<props.properties.original.strings.length; i++) { %>
+            .with<%= props.properties.camelCaseUpperFirst.strings[i] %>('<%= props.properties.original.strings[i] %>')<%}; %><% for(let i=0; i<props.properties.original.numbers.length; i++) { %>
+            .with<%= props.properties.camelCaseUpperFirst.numbers[i] %>(123)<%}; %>
+            .withCreatedByName('Create')
+            .withCreatedByEmail('test@create.com')
+            .withUpdatedByName('Update')
+            .withUpdatedByEmail('test@update.com.br')
+            .build();
+
+        const {
+            id,
+            active,
+            created_at,
+            updated_at,
+            inactivation_date,
+            ...entityProps
+        } = await <%= props.nameCamelCase %>Repository.createAndSave(<%= props.nameCamelCase %>Build as <%= props.nameCamelCaseUpperFirst %>Interface);
+
+        expect(entityProps).toEqual(<%= props.nameCamelCase %>Build);
+        expect(active).toBe(true);
+        expect(id).not.toBeUndefined();
+        expect(inactivation_date).not.toBeUndefined();
+        expect(created_at).not.toBeUndefined();
+        expect(updated_at).not.toBeUndefined();
+    });
+});

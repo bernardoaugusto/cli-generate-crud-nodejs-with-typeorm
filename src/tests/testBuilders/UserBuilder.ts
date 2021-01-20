@@ -7,30 +7,51 @@ export default class UserBuilder {
         this.user = {} as UserInterface;
     }
 
+    
     public withTenantId(tenantid: string): UserBuilder {
         this.user.tenantid = tenantid;
         return this;
     }
+    
 
     public withId(id: string): UserBuilder {
         this.user.id = id;
         return this;
     }
 
+    
     public withNameId(name_id: string): UserBuilder {
         this.user.name_id = name_id;
         return this;
     }
-
+    
     public withDescription(description: string): UserBuilder {
         this.user.description = description;
         return this;
     }
-
+    
     public withOi(oi: string): UserBuilder {
         this.user.oi = oi;
         return this;
     }
+    
+
+    
+    public withCode(code: number): UserBuilder {
+        this.user.code = code;
+        return this;
+    }
+    
+    public withTest(test: number): UserBuilder {
+        this.user.test = test;
+        return this;
+    }
+    
+    public withMenor(menor: number): UserBuilder {
+        this.user.menor = menor;
+        return this;
+    }
+    
 
     public withActive(active: boolean): UserBuilder {
         this.user.active = active;

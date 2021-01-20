@@ -73,11 +73,17 @@ const command: GluegunCommand = {
 
         await template.generate({
             template: 'repository.ts.ejs',
-            target: `src/repositories/${nameCamelCaseUpperFirst}.ts`,
+            target: `src/repositories/${nameCamelCaseUpperFirst}Repository.ts`,
             props: { nameCamelCase, nameCamelCaseUpperFirst, properties, tenantid },
         });
 
-        print.success(`Generated CRUD.`);
+        await template.generate({
+            template: 'tests-templates/repository.ts.ejs',
+            target: `src/tests/repositories/${nameCamelCase}.spec.ts`,
+            props: { nameCamelCase, nameCamelCaseUpperFirst, properties, tenantid },
+        });
+
+        print.success(`Successfully generated CRUD.`);
     },
 };
 
