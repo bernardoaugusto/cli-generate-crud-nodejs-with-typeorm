@@ -3,10 +3,11 @@ import { typeorm } from '@seidor-cloud-produtos/lib-seidor-common';
 
 import User from '../database/entities/User';
 import { UserRequestInterface } from '../interfaces/metadata/RelationalWithoutTenantid';
-import { UserInterface } from '../interfaces/user';
+import { UserInterface, UserRequestGetAllInterface } from '../interfaces/user';
 import IUserRepository from '../interfaces/repositories/IUserRepository';
 import { buildCreateWithUser } from '../utils/builders/dynamicBuilders';
 import { HttpError } from '../utils/errors/HttpError';
+import { PaginateResponseProperties } from '../interfaces/pagination';
 
 @injectable()
 export default class UserService {
@@ -23,5 +24,43 @@ export default class UserService {
         const buildedUser = buildCreateWithUser(userData, userRequestData, tenantid);
 
         return this.userRepository.createAndSave(buildedUser);
+    }
+
+    public async findById(id: string, tenantid: string): Promise<User> {
+        const findedUser = await this.userRepository.findById(id, tenantid);
+
+        if (!findedUser) {
+            throw new HttpError(404, 'User not found');
+        }
+
+        return findedUser;
+    }
+
+    public async getAll(
+        queryParams: UserRequestGetAllInterface,
+        withPagination: boolean,
+        showInactive: boolean,
+        tenantid: string,
+    ): Promise<
+        | User[]
+        | ({
+              data: User[];
+          } & PaginateResponseProperties)
+    > {
+        const options = typeorm.formatParamsToTypeOrmOptionsWithPaginate(
+            queryParams,
+            showInactive,
+            tenantid,
+        );
+
+        if (withPagination) {
+            const arrayUser = await this.userRepository.getAllWithPagination(
+                options,
+            );
+
+            return typeorm.formatPaginateDataToResponse(queryParams, arrayUser);
+        }
+
+        return this.userRepository.getAllWithoutPagination(options);
     }
 }
