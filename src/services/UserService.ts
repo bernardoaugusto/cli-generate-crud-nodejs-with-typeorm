@@ -8,6 +8,7 @@ import IUserRepository from '../interfaces/repositories/IUserRepository';
 import { HttpError } from '../utils/errors/HttpError';
 import { PaginateResponseProperties } from '../interfaces/pagination';
 import {
+    buildActivationWithUser,
     buildCreateWithUser,
     buildUpdateWithUser,
 } from '../utils/builders/dynamicBuilders';
@@ -85,5 +86,21 @@ export default class UserService {
         );
 
         return this.userRepository.createAndSave(buildUpdateUser);
+    }
+
+    public async activation(
+        userRequestData: UserRequestInterface,
+        userId: string,
+        tenantid: string,
+    ): Promise<UserInterface> {
+        await this.findById(userId, tenantid);
+
+        const buildInactivateUser = buildActivationWithUser(
+            userRequestData,
+            userId,
+            tenantid,
+        ) as UserInterface;
+
+        return this.userRepository.createAndSave(buildInactivateUser);
     }
 }
