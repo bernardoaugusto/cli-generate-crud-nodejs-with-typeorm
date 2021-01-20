@@ -90,6 +90,12 @@ const command: GluegunCommand = {
         });
 
         await template.generate({
+            template: 'tests-templates/repository/fakeRepository.ts.ejs',
+            target: `src/tests/repositories/fakes/Fake${nameCamelCaseUpperFirst}Repository.ts`,
+            props: { nameCamelCase, nameCamelCaseUpperFirst, properties, tenantid },
+        });
+
+        await template.generate({
             template: 'service.ts.ejs',
             target: `src/services/${nameCamelCaseUpperFirst}Service.ts`,
             props: { nameCamelCase, nameCamelCaseUpperFirst, properties, tenantid },

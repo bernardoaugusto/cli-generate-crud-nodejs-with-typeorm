@@ -1,0 +1,35 @@
+import { uuid } from 'uuidv4';
+
+import <%= props.nameCamelCaseUpperFirst %> from '../../../database/entities/<%= props.nameCamelCaseUpperFirst %>';
+import { <%= props.nameCamelCaseUpperFirst %>Interface } from '../../../interfaces/<%= props.nameCamelCase %>';
+import I<%= props.nameCamelCaseUpperFirst %> from '../../../interfaces/repositories/I<%= props.nameCamelCaseUpperFirst %>';
+
+export default class Fake<%= props.nameCamelCaseUpperFirst %>Repository
+    implements I<%= props.nameCamelCaseUpperFirst %> {
+    private fiscalDatasMovements: <%= props.nameCamelCaseUpperFirst %>[] = [];
+
+    public async createAndSave(
+        <%= props.nameCamelCase %>Data: <%= props.nameCamelCaseUpperFirst %>Interface,
+    ): Promise<<%= props.nameCamelCaseUpperFirst %>> {
+        if (!<%= props.nameCamelCase %>Data.id) {
+            const <%= props.nameCamelCase %>Created = Object.assign(
+                new <%= props.nameCamelCaseUpperFirst %>(),
+                <%= props.nameCamelCase %>Data,
+            );
+            <%= props.nameCamelCase %>Created.id = uuid();
+            <%= props.nameCamelCase %>Created.created_at = new Date();
+            this.fiscalDatasMovements.push(<%= props.nameCamelCase %>Created);
+            return <%= props.nameCamelCase %>Created;
+        }
+
+        const index = this.fiscalDatasMovements.findIndex(
+            item => item.id === <%= props.nameCamelCase %>Data.id,
+        );
+
+        this.fiscalDatasMovements[
+            index
+        ] = <%= props.nameCamelCase %>Data as <%= props.nameCamelCaseUpperFirst %>;
+
+        return this.fiscalDatasMovements[index];
+    }
+}
