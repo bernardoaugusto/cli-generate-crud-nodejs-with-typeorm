@@ -1,0 +1,27 @@
+import { inject, injectable } from 'tsyringe';
+import { typeorm } from '@seidor-cloud-produtos/lib-seidor-common';
+
+import <%= props.nameCamelCaseUpperFirst %> from '../database/entities/<%= props.nameCamelCaseUpperFirst %>';
+import { UserRequestInterface } from '../interfaces/metadata/RelationalWithoutTenantid';
+import { <%= props.nameCamelCaseUpperFirst %>Interface } from '../interfaces/<%= props.nameCamelCase %>';
+import I<%= props.nameCamelCaseUpperFirst %>Repository from '../interfaces/repositories/I<%= props.nameCamelCaseUpperFirst %>Repository';
+import { buildCreateWithUser } from '../utils/builders/dynamicBuilders';
+import { HttpError } from '../utils/errors/HttpError';
+
+@injectable()
+export default class <%= props.nameCamelCaseUpperFirst %>Service {
+    constructor(
+        @inject('<%= props.nameCamelCaseUpperFirst %>Repository')
+        private <%= props.nameCamelCase %>Repository: I<%= props.nameCamelCaseUpperFirst %>Repository,
+    ) {}
+
+    public async create(
+        <%= props.nameCamelCase %>Data: <%= props.nameCamelCaseUpperFirst %>Interface,
+        userRequestData: UserRequestInterface,
+        tenantid: string,
+    ): Promise<<%= props.nameCamelCaseUpperFirst %>Interface> {
+        const builded<%= props.nameCamelCaseUpperFirst %> = buildCreateWithUser(<%= props.nameCamelCase %>Data, userRequestData, tenantid);
+
+        return this.<%= props.nameCamelCase %>Repository.createAndSave(builded<%= props.nameCamelCaseUpperFirst %>);
+    }
+}

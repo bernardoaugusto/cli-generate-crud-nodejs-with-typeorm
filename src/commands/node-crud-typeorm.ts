@@ -67,7 +67,7 @@ const command: GluegunCommand = {
 
         await template.generate({
             template: 'repositoryInterface.ts.ejs',
-            target: `src/interfaces/repositories/I${nameCamelCaseUpperFirst}.ts`,
+            target: `src/interfaces/repositories/I${nameCamelCaseUpperFirst}Repository.ts`,
             props: { nameCamelCase, nameCamelCaseUpperFirst, properties, tenantid },
         });
 
@@ -86,6 +86,12 @@ const command: GluegunCommand = {
         await template.generate({
             template: 'tests-templates/repository/testRepository.ts.ejs',
             target: `src/tests/repositories/${nameCamelCase}.spec.ts`,
+            props: { nameCamelCase, nameCamelCaseUpperFirst, properties, tenantid },
+        });
+
+        await template.generate({
+            template: 'service.ts.ejs',
+            target: `src/services/${nameCamelCaseUpperFirst}Service.ts`,
             props: { nameCamelCase, nameCamelCaseUpperFirst, properties, tenantid },
         });
 

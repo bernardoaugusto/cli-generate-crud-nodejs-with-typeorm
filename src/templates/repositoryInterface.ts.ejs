@@ -3,7 +3,7 @@ import { OptionsTypeOrmGetAll, GetAllWithoutPagination, } from '@seidor-cloud-pr
 import <%= props.nameCamelCaseUpperFirst %> from '../../database/entities/<%= props.nameCamelCaseUpperFirst %>';
 import { <%= props.nameCamelCaseUpperFirst %>Interface } from '../<%= props.nameCamelCase %>';
 
-export default interface I<%= props.nameCamelCaseUpperFirst %> {
+export default interface I<%= props.nameCamelCaseUpperFirst %>Repository {
     createAndSave(
         <%= props.nameCamelCase %>Data: <%= props.nameCamelCaseUpperFirst %>Interface,
     ): Promise<<%= props.nameCamelCaseUpperFirst %>>;
