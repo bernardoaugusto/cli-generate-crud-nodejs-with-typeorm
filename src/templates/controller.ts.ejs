@@ -22,30 +22,31 @@ export const create = async (req: Request, res: Response): Promise<Response> => 
 
 export const findOne = async (req: Request, res: Response): Promise<Response> => {
     const <%= props.nameCamelCase %>Id = req.params.id;
+    <% if (props.tenantid) { %>const tenantid = req.headers.tenantid as string;<% }%>
 
     const <%= props.nameCamelCase %>Service = container.resolve(<%= props.nameCamelCaseUpperFirst %>Service);
-    const response = await <%= props.nameCamelCase %>Service.findOne(<%= props.nameCamelCase %>Id);
+    const response = await <%= props.nameCamelCase %>Service.findById(<%= props.nameCamelCase %>Id<% if (props.tenantid) { %>, tenantid<% }%>);
 
     return res.status(200).json(response);
 };
 
 export const findAll = async (req: Request, res: Response): Promise<Response> => {
+    <% if (props.tenantid) { %>const tenantid = req.headers.tenantid as string;<% }%>
     const query = (await getAll<%= props.nameCamelCaseUpperFirst %>Schema.validate(req.query, {
         stripUnknown: true,
     })) as <%= props.nameCamelCaseUpperFirst %>RequestGetAllInterface;
 
-    const filterOptions: FilterOptionsInterface = {
-        withPagination: JSON.parse(query.withPagination || 'true'),
-        showInactive: JSON.parse(query.showInactive || 'false'),
-    };
+    const withPagination = JSON.parse(query.withPagination || 'true');
+    const showInactive = JSON.parse(query.showInactive || 'false');
 
     const <%= props.nameCamelCase %>Service = container.resolve(<%= props.nameCamelCaseUpperFirst %>Service);
-    const response = await <%= props.nameCamelCase %>Service.getAll(query, filterOptions);
+    const response = await <%= props.nameCamelCase %>Service.getAll(query, withPagination, showInactive<% if (props.tenantid) { %>, tenantid<% }%>);
 
     return res.status(200).json(response);
 };
 
 export const update = async (req: Request, res: Response): Promise<Response> => {
+    <% if (props.tenantid) { %>const tenantid = req.headers.tenantid as string;<% }%>
     const updates = req.body;
     const <%= props.nameCamelCase %>Id = req.params.id;
     const userRequestData: UserRequestInterface = {
@@ -56,15 +57,17 @@ export const update = async (req: Request, res: Response): Promise<Response> => 
     const <%= props.nameCamelCase %>Service = container.resolve(<%= props.nameCamelCaseUpperFirst %>Service);
 
     const response = await <%= props.nameCamelCase %>Service.update(
+        <%= props.nameCamelCase %>Id,
         updates,
         userRequestData,
-        <%= props.nameCamelCase %>Id,
+        <% if (props.tenantid) { %>tenantid,<% }%>
     );
 
     return res.status(201).json(response);
 };
 
 export const activation = async (req: Request, res: Response): Promise<Response> => {
+    <% if (props.tenantid) { %>const tenantid = req.headers.tenantid as string;<% }%>
     const <%= props.nameCamelCase %>Id = req.params.id;
     const userRequestData: UserRequestInterface = {
         username: req.headers.username as string,
@@ -72,7 +75,7 @@ export const activation = async (req: Request, res: Response): Promise<Response>
     };
 
     const <%= props.nameCamelCase %>Service = container.resolve(<%= props.nameCamelCaseUpperFirst %>Service);
-    await <%= props.nameCamelCase %>Service.activation(userRequestData, <%= props.nameCamelCase %>Id);
+    await <%= props.nameCamelCase %>Service.activation(userRequestData, <%= props.nameCamelCase %>Id<% if (props.tenantid) { %>, tenantid<% }%>);
 
     return res.status(204).json();
 };
@@ -81,6 +84,7 @@ export const inactivation = async (
     req: Request,
     res: Response,
 ): Promise<Response> => {
+    <% if (props.tenantid) { %>const tenantid = req.headers.tenantid as string;<% }%>
     const <%= props.nameCamelCase %>Id = req.params.id;
     const userRequestData: UserRequestInterface = {
         username: req.headers.username as string,
@@ -88,7 +92,7 @@ export const inactivation = async (
     };
 
     const <%= props.nameCamelCase %>Service = container.resolve(<%= props.nameCamelCaseUpperFirst %>Service);
-    await <%= props.nameCamelCase %>Service.inactivation(userRequestData, <%= props.nameCamelCase %>Id);
+    await <%= props.nameCamelCase %>Service.inactivation(userRequestData, <%= props.nameCamelCase %>Id<% if (props.tenantid) { %>, tenantid<% }%>);
 
     return res.status(204).json();
 };
