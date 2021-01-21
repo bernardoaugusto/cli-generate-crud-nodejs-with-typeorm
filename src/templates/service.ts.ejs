@@ -115,6 +115,7 @@ export default class <%= props.nameCamelCaseUpperFirst %>Service {
         const buildInactivate<%= props.nameCamelCaseUpperFirst %> = buildInactivationWithUser(
             userRequestData,
             <%= props.nameCamelCase %>Id,
+            <% if (props.tenantid) { %>tenantid,<% }%>
         ) as <%= props.nameCamelCaseUpperFirst %>Interface;
 
         return this.<%= props.nameCamelCase %>Repository.createAndSave(buildInactivate<%= props.nameCamelCaseUpperFirst %>);

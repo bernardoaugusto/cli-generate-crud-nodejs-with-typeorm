@@ -115,6 +115,7 @@ export default class UserService {
         const buildInactivateUser = buildInactivationWithUser(
             userRequestData,
             userId,
+            tenantid,
         ) as UserInterface;
 
         return this.userRepository.createAndSave(buildInactivateUser);

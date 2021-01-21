@@ -190,4 +190,31 @@ describe('User Service', () => {
         expect(entityProps).toEqual(expectedRes);
         expect(updated_at).not.toBeUndefined();
     });
+
+    it('should update a User to inactivation', async () => {
+        const sut = await makeSut();
+
+        const userRequestData = {
+            username: 'Teste inactivation',
+            useremail: 'inactivation@teste.com.br',
+        };
+
+        const expectedRes = {
+            active: false,
+            id: sut.id,
+            tenantid: sut.tenantid,
+            updated_by_name: 'Teste inactivation',
+            updated_by_email: 'inactivation@teste.com.br',
+        };
+
+        const {
+            updated_at,
+            inactivation_date,
+            ...entityProps
+        } = await userService.inactivation(userRequestData, sut.id, sut.tenantid);
+
+        expect(entityProps).toEqual(expectedRes);
+        expect(updated_at).not.toBeUndefined();
+        expect(inactivation_date).not.toBeUndefined();
+    });
 });
