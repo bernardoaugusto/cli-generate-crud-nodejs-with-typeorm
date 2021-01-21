@@ -1,4 +1,4 @@
-import { uuid } from 'uuidv4';
+
 
 import connect from '../../database/connection/connection';
 import { UserInterface } from '../../interfaces/user';
@@ -23,7 +23,6 @@ describe('User Repository context', () => {
 
     it('should be able to insert a new User', async () => {
         const userBuild = new UserBuilder()
-            .withTenantId(uuid())
             .withMovimentId('moviment_id')
             .withDescription('description')
             .withOi('oi')
@@ -56,7 +55,7 @@ describe('User Repository context', () => {
     it('Should be able to find a User', async () => {
         const sut = await makeSut();
 
-        const userFinded = await userRepository.findById(sut.id, sut.tenantid);
+        const userFinded = await userRepository.findById(sut.id);
 
         expect(userFinded).toEqual(sut);
     });
@@ -77,7 +76,7 @@ describe('User Repository context', () => {
 
         const cashierUpdated = await userRepository.createAndSave(updates);
 
-        expect(cashierUpdated.tenantid).toBe(sut.tenantid);
+        
         expect(cashierUpdated.id).toBe(sut.id);
         expect(cashierUpdated.active).toBe(false);
         expect(cashierUpdated.moviment_id).toBe('update moviment_id');

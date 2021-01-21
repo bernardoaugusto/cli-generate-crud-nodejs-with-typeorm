@@ -7,7 +7,7 @@ export default interface IUserRepository {
     createAndSave(
         userData: UserInterface,
     ): Promise<User>;
-    findById(id: string, tenantid: string): Promise<User | undefined>;
+    findById(id: string): Promise<User | undefined>;
     getAllWithPagination(
         options: OptionsTypeOrmGetAll,
     ): Promise<{ data: User[]; count: number }>;

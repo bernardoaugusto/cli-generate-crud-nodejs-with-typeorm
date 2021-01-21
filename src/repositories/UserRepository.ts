@@ -24,8 +24,8 @@ export default class UserRepository implements IUser {
     }
 
     public async findById(
-        id: string, tenantid: string): Promise<User | undefined> {
-        return this.ormRepository.findOne({ where: { id, tenantid } });
+        id: string): Promise<User | undefined> {
+        return this.ormRepository.findOne({ where: { id } });
     }
 
     public async getAllWithPagination(

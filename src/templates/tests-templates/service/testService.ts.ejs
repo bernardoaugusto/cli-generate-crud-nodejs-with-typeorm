@@ -121,7 +121,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Service', () => {
         const expectedRes: <%= props.nameCamelCaseUpperFirst %>Interface = {
             ...updates,
             id: sut.id,
-            tenantid: sut.tenantid,
+            <% if (props.tenantid) { %>tenantid: sut.tenantid,<% }%>
             created_at: sut.created_at,
             created_by_name: sut.created_by_name,
             created_by_email: sut.created_by_email,
@@ -133,7 +133,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Service', () => {
             sut.id,
             updates,
             userRequestData,
-            sut.tenantid,
+            <% if (props.tenantid) { %>sut.tenantid,<% }%>
         );
 
         expect(entityProps).toEqual(expectedRes);
@@ -152,7 +152,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Service', () => {
             sut.id,
             <any>{ active: false, inactivation_date: new Date() },
             userRequestData,
-            sut.tenantid,
+            <% if (props.tenantid) { %>sut.tenantid,<% }%>
         );
 
         userRequestData = {
@@ -164,15 +164,15 @@ describe('<%= props.nameCamelCaseUpperFirst %> Service', () => {
             active: true,
             id: sut.id,
             inactivation_date: null,
-            tenantid: sut.tenantid,
             updated_by_name: 'Teste activation',
             updated_by_email: 'activation@teste.com.br',
+            <% if (props.tenantid) { %>tenantid: sut.tenantid,<% }%>
         };
 
         const { updated_at, ...entityProps } = await <%= props.nameCamelCase %>Service.activation(
             userRequestData,
             sut.id,
-            sut.tenantid,
+            <% if (props.tenantid) { %>sut.tenantid,<% }%>
         );
 
         expect(entityProps).toEqual(expectedRes);
@@ -190,16 +190,16 @@ describe('<%= props.nameCamelCaseUpperFirst %> Service', () => {
         const expectedRes = {
             active: false,
             id: sut.id,
-            tenantid: sut.tenantid,
             updated_by_name: 'Teste inactivation',
             updated_by_email: 'inactivation@teste.com.br',
+            <% if (props.tenantid) { %>tenantid: sut.tenantid,<% }%>
         };
 
         const {
             updated_at,
             inactivation_date,
             ...entityProps
-        } = await <%= props.nameCamelCase %>Service.inactivation(userRequestData, sut.id, sut.tenantid);
+        } = await <%= props.nameCamelCase %>Service.inactivation(userRequestData, sut.id, <% if (props.tenantid) { %>sut.tenantid,<% }%>);
 
         expect(entityProps).toEqual(expectedRes);
         expect(updated_at).not.toBeUndefined();

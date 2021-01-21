@@ -15,7 +15,6 @@ describe('User Service', () => {
 
     const makeSut = (userData?: Partial<UserInterface>): Promise<User> => {
         const user = new UserBuilder()
-            .withTenantId(uuid())
             .withMovimentId('moviment_id')
             .withDescription('description')
             .withOi('oi')
@@ -29,16 +28,11 @@ describe('User Service', () => {
             useremail: 'teste@teste.com.br',
         };
 
-        return userService.create(
-            Object.assign(user, userData),
-            userRequestData,
-            user.tenantid!,
-        );
+        return userService.create(Object.assign(user, userData), userRequestData);
     };
 
     it('should be able to create a new User', async () => {
         const sut = new UserBuilder()
-            .withTenantId(uuid())
             .withMovimentId('moviment_id')
             .withDescription('description')
             .withOi('oi')
@@ -54,7 +48,7 @@ describe('User Service', () => {
 
         const expectedRes = {
             ...sut,
-            tenantid: sut.tenantid,
+
             created_by_name: userRequestData.username,
             created_by_email: userRequestData.useremail,
             updated_by_name: userRequestData.username,
@@ -67,7 +61,7 @@ describe('User Service', () => {
             updated_at,
             active,
             ...entityProps
-        } = await userService.create(sut, userRequestData, sut.tenantid!);
+        } = await userService.create(sut, userRequestData);
 
         expect(entityProps).toEqual(expectedRes);
         expect(id).not.toBeUndefined();
@@ -79,7 +73,7 @@ describe('User Service', () => {
     it('Should be able to find a User by id', async () => {
         const sut = await makeSut();
 
-        const userFinded = await userService.findById(sut.id!, sut.tenantid,);
+        const userFinded = await userService.findById(sut.id!);
 
         expect(userFinded).toEqual(sut);
     });
@@ -87,24 +81,14 @@ describe('User Service', () => {
     it('Shoud return a User list without paginated', async () => {
         const sut = await makeSut();
 
-        const res = (await userService.getAll(
-            {},
-            false,
-            false,
-            sut.tenantid,
-        )) as User[];
+        const res = (await userService.getAll({}, false, false)) as User[];
 
         expect(res.findIndex(user => user.id === sut.id)).toBeGreaterThanOrEqual(0);
     });
 
     it('Shoud return a User List with paged', async () => {
         const sut = await makeSut();
-        const { data } = (await userService.getAll(
-            {},
-            true,
-            false,
-            sut.tenantid,
-        )) as {
+        const { data } = (await userService.getAll({}, true, false)) as {
             data: User[];
             count: number;
         };
@@ -133,7 +117,7 @@ describe('User Service', () => {
         const expectedRes: UserInterface = {
             ...updates,
             id: sut.id,
-            tenantid: sut.tenantid,
+
             created_at: sut.created_at,
             created_by_name: sut.created_by_name,
             created_by_email: sut.created_by_email,
@@ -145,7 +129,6 @@ describe('User Service', () => {
             sut.id,
             updates,
             userRequestData,
-            sut.tenantid,
         );
 
         expect(entityProps).toEqual(expectedRes);
@@ -164,7 +147,6 @@ describe('User Service', () => {
             sut.id,
             <any>{ active: false, inactivation_date: new Date() },
             userRequestData,
-            sut.tenantid,
         );
 
         userRequestData = {
@@ -176,7 +158,6 @@ describe('User Service', () => {
             active: true,
             id: sut.id,
             inactivation_date: null,
-            tenantid: sut.tenantid,
             updated_by_name: 'Teste activation',
             updated_by_email: 'activation@teste.com.br',
         };
@@ -184,7 +165,6 @@ describe('User Service', () => {
         const { updated_at, ...entityProps } = await userService.activation(
             userRequestData,
             sut.id,
-            sut.tenantid,
         );
 
         expect(entityProps).toEqual(expectedRes);
@@ -202,7 +182,6 @@ describe('User Service', () => {
         const expectedRes = {
             active: false,
             id: sut.id,
-            tenantid: sut.tenantid,
             updated_by_name: 'Teste inactivation',
             updated_by_email: 'inactivation@teste.com.br',
         };
@@ -211,7 +190,7 @@ describe('User Service', () => {
             updated_at,
             inactivation_date,
             ...entityProps
-        } = await userService.inactivation(userRequestData, sut.id, sut.tenantid);
+        } = await userService.inactivation(userRequestData, sut.id);
 
         expect(entityProps).toEqual(expectedRes);
         expect(updated_at).not.toBeUndefined();

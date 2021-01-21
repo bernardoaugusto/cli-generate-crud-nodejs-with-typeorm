@@ -33,9 +33,9 @@ export default class FakeUserRepository implements IUser {
         return this.arrayUser[index];
     }
 
-    public async findById(id: string, tenantid: string): Promise<User | undefined> {
+    public async findById(id: string): Promise<User | undefined> {
         return this.arrayUser.find(
-            user => user.id === id && user.tenantid === tenantid,
+            user => user.id === id 
         );
     }
 
