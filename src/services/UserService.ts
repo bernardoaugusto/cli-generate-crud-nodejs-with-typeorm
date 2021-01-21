@@ -24,14 +24,15 @@ export default class UserService {
     public async create(
         userData: UserInterface,
         userRequestData: UserRequestInterface,
+        tenantid: string,
     ): Promise<User> {
-        const buildedUser = buildCreateWithUser(userData, userRequestData);
+        const buildedUser = buildCreateWithUser(userData, userRequestData, tenantid);
 
         return this.userRepository.createAndSave(buildedUser);
     }
 
-    public async findById(id: string): Promise<User> {
-        const findedUser = await this.userRepository.findById(id);
+    public async findById(id: string, tenantid: string): Promise<User> {
+        const findedUser = await this.userRepository.findById(id, tenantid);
 
         if (!findedUser) {
             throw new HttpError(404, 'User not found');
@@ -44,6 +45,7 @@ export default class UserService {
         queryParams: UserRequestGetAllInterface,
         withPagination: boolean,
         showInactive: boolean,
+        tenantid: string,
     ): Promise<
         | User[]
         | ({
@@ -53,6 +55,7 @@ export default class UserService {
         const options = typeorm.formatParamsToTypeOrmOptionsWithPaginate(
             queryParams,
             showInactive,
+            tenantid,
         );
 
         if (withPagination) {
@@ -70,8 +73,9 @@ export default class UserService {
         userId: string,
         userDataUpdates: UserInterface,
         userRequestData: UserRequestInterface,
+        tenantid: string,
     ): Promise<User> {
-        const findUser = await this.findById(userId);
+        const findUser = await this.findById(userId, tenantid);
 
         const updates = { ...findUser, ...userDataUpdates };
 
@@ -79,6 +83,7 @@ export default class UserService {
             updates,
             userRequestData,
             userId,
+            tenantid,
         );
 
         return this.userRepository.createAndSave(buildUpdateUser);
@@ -87,12 +92,14 @@ export default class UserService {
     public async activation(
         userRequestData: UserRequestInterface,
         userId: string,
+        tenantid: string,
     ): Promise<UserInterface> {
-        await this.findById(userId);
+        await this.findById(userId, tenantid);
 
         const buildInactivateUser = buildActivationWithUser(
             userRequestData,
             userId,
+            tenantid,
         ) as UserInterface;
 
         return this.userRepository.createAndSave(buildInactivateUser);
@@ -101,8 +108,9 @@ export default class UserService {
     public async inactivation(
         userRequestData: UserRequestInterface,
         userId: string,
+        tenantid: string,
     ): Promise<UserInterface> {
-        await this.findById(userId);
+        await this.findById(userId, tenantid);
 
         const buildInactivateUser = buildInactivationWithUser(
             userRequestData,

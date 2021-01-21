@@ -8,6 +8,11 @@ export default class UserBuilder {
     }
 
     
+    public withTenantId(tenantid: string): UserBuilder {
+        this.user.tenantid = tenantid;
+        return this;
+    }
+    
 
     public withId(id: string): UserBuilder {
         this.user.id = id;
