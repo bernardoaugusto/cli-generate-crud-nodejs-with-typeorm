@@ -152,4 +152,42 @@ describe('User Service', () => {
         expect(updated_at).not.toBeUndefined();
     });
 
+    it('should update a User to active', async () => {
+        const sut = await makeSut();
+
+        let userRequestData = {
+            username: 'Teste update',
+            useremail: 'update@teste.com.br',
+        };
+
+        await userService.update(
+            sut.id,
+            <any>{ active: false, inactivation_date: new Date() },
+            userRequestData,
+            sut.tenantid,
+        );
+
+        userRequestData = {
+            username: 'Teste activation',
+            useremail: 'activation@teste.com.br',
+        };
+
+        const expectedRes = {
+            active: true,
+            id: sut.id,
+            inactivation_date: null,
+            tenantid: sut.tenantid,
+            updated_by_name: 'Teste activation',
+            updated_by_email: 'activation@teste.com.br',
+        };
+
+        const { updated_at, ...entityProps } = await userService.activation(
+            userRequestData,
+            sut.id,
+            sut.tenantid,
+        );
+
+        expect(entityProps).toEqual(expectedRes);
+        expect(updated_at).not.toBeUndefined();
+    });
 });
