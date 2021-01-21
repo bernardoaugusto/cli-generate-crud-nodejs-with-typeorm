@@ -76,16 +76,68 @@ describe('<%= props.nameCamelCaseUpperFirst %> Service', () => {
         expect(<%= props.nameCamelCase %>Finded).toEqual(sut);
     });
 
-    it('Shoud return a <%= props.nameCamelCaseUpperFirst %> without paginated', async () => {
+    it('Shoud return a <%= props.nameCamelCaseUpperFirst %> list without paginated', async () => {
         const sut = await makeSut();
 
-        const res = (await userService.getAll(
+        const res = (await <%= props.nameCamelCase %>Service.getAll(
             {},
             false,
             false,
             <% if (props.tenantid) { %>sut.tenantid,<% }%>
-        )) as User[];
+        )) as <%= props.nameCamelCaseUpperFirst %>[];
 
         expect(res.findIndex(<%= props.nameCamelCase %> => <%= props.nameCamelCase %>.id === sut.id)).toBeGreaterThanOrEqual(0);
     });
+
+    it('Shoud return a <%= props.nameCamelCaseUpperFirst %> List with paged', async () => {
+        const sut = await makeSut();
+        const { data } = (await <%= props.nameCamelCase %>Service.getAll(
+            {},
+            true,
+            false,
+            <% if (props.tenantid) { %>sut.tenantid,<% }%>
+        )) as {
+            data: <%= props.nameCamelCaseUpperFirst %>[];
+            count: number;
+        };
+
+        expect(data.findIndex(<%= props.nameCamelCase %> => <%= props.nameCamelCase %>.id === sut.id)).toBeGreaterThanOrEqual(0);
+    });
+
+    it('Shoud return a update <%= props.nameCamelCaseUpperFirst %>', async () => {
+        const sut = await makeSut();
+
+        const updates: <%= props.nameCamelCaseUpperFirst %>Interface = {
+            active: false,<% for(let i=0; i<props.properties.original.strings.length; i++) { %>
+            <%= props.properties.original.strings[i] %>: 'update <%= props.properties.original.strings[i] %>',<%}; %><% for(let i=0; i<props.properties.original.numbers.length; i++) { %>
+            <%= props.properties.original.numbers[i] %>: 999,<%}; %>
+        };
+
+        const userRequestData = {
+            username: 'Teste update',
+            useremail: 'update@teste.com.br',
+        };
+
+        const expectedRes: <%= props.nameCamelCaseUpperFirst %>Interface = {
+            ...updates,
+            id: sut.id,
+            tenantid: sut.tenantid,
+            created_at: sut.created_at,
+            created_by_name: sut.created_by_name,
+            created_by_email: sut.created_by_email,
+            updated_by_name: userRequestData.username,
+            updated_by_email: userRequestData.useremail,
+        };
+
+        const { updated_at, ...entityProps } = await <%= props.nameCamelCase %>Service.update(
+            sut.id,
+            updates,
+            userRequestData,
+            sut.tenantid,
+        );
+
+        expect(entityProps).toEqual(expectedRes);
+        expect(updated_at).not.toBeUndefined();
+    });
+
 });

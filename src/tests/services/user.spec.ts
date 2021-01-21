@@ -84,7 +84,7 @@ describe('User Service', () => {
         expect(userFinded).toEqual(sut);
     });
 
-    it('Shoud return a User without paginated', async () => {
+    it('Shoud return a User list without paginated', async () => {
         const sut = await makeSut();
 
         const res = (await userService.getAll(
@@ -96,4 +96,60 @@ describe('User Service', () => {
 
         expect(res.findIndex(user => user.id === sut.id)).toBeGreaterThanOrEqual(0);
     });
+
+    it('Shoud return a User List with paged', async () => {
+        const sut = await makeSut();
+        const { data } = (await userService.getAll(
+            {},
+            true,
+            false,
+            sut.tenantid,
+        )) as {
+            data: User[];
+            count: number;
+        };
+
+        expect(data.findIndex(user => user.id === sut.id)).toBeGreaterThanOrEqual(0);
+    });
+
+    it('Shoud return a update User', async () => {
+        const sut = await makeSut();
+
+        const updates: UserInterface = {
+            active: false,
+            moviment_id: 'update moviment_id',
+            description: 'update description',
+            oi: 'update oi',
+            code: 999,
+            test: 999,
+            menor: 999,
+        };
+
+        const userRequestData = {
+            username: 'Teste update',
+            useremail: 'update@teste.com.br',
+        };
+
+        const expectedRes: UserInterface = {
+            ...updates,
+            id: sut.id,
+            tenantid: sut.tenantid,
+            created_at: sut.created_at,
+            created_by_name: sut.created_by_name,
+            created_by_email: sut.created_by_email,
+            updated_by_name: userRequestData.username,
+            updated_by_email: userRequestData.useremail,
+        };
+
+        const { updated_at, ...entityProps } = await userService.update(
+            sut.id,
+            updates,
+            userRequestData,
+            sut.tenantid,
+        );
+
+        expect(entityProps).toEqual(expectedRes);
+        expect(updated_at).not.toBeUndefined();
+    });
+
 });
