@@ -6,3 +6,11 @@ coverage
 dist
 build
 .vscode
+src/controllers/
+src/database/entities/*.ts
+src/interfaces/repositories/
+src/repositories/
+src/services/
+src/tests/repositories/
+src/tests/services/
+src/tests/testBuilders/

@@ -1,31 +1,24 @@
 import * as yup from 'yup';
 import { getAllRequestSchema } from '../validation/common';
 
-export const createLegacySystemSchema = yup.object().shape({
-    description: yup
+export const create<%= props.nameCamelCaseUpperFirst %>Schema = yup.object().shape({<% props.properties.original.strings.forEach((propertie) => { %>
+    <%= propertie %>: yup
         .string()
         .strict(true)
-        .required('The property description is required'),
-    phone_number: yup
-        .string()
+        .required('The property <%= propertie %> is required'),<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
+    <%= propertie %>: yup
+        .number()
         .strict(true)
-        .required('The property phone_number is required'),
-    mail: yup
-        .string()
-        .strict(true)
-        .email()
-        .required('The property mail is required'),
+        .required('The property <%= propertie %> is required'),<% }); %>
 });
 
-export const updateLegacySystemSchema = yup.object().shape({
-    description: yup.string().strict(true).optional(),
-    phone_number: yup.string().strict(true).optional(),
-    mail: yup.string().strict(true).optional(),
+export const update<%= props.nameCamelCaseUpperFirst %>Schema = yup.object().shape({<% props.properties.original.strings.forEach((propertie) => { %>
+    <%= propertie %>: yup.string().strict(true).optional(),<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
+    <%= propertie %>: yup.number().strict(true).optional(),<% }); %>
 });
 
-export const getAllLegacySystemSchema = yup.object().shape({
-    description: yup.string().strict(true),
-    phone_number: yup.string().strict(true),
-    mail: yup.string().strict(true),
+export const getAll<%= props.nameCamelCaseUpperFirst %>Schema = yup.object().shape({<% props.properties.original.strings.forEach((propertie) => { %>
+    <%= propertie %>: yup.string().strict(true),<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
+    <%= propertie %>: yup.number().strict(true),<% }); %>
     ...getAllRequestSchema.fields,
 });
