@@ -1,8 +1,5 @@
 import { Repository, getRepository } from 'typeorm';
-import {
-    OptionsTypeOrmGetAll,
-    GetAllWithoutPagination,
-} from '@seidor-cloud-produtos/lib-seidor-common/dist/packages/typeorm/lib/interfaces';
+import { typeorm } from '@seidor-cloud-produtos/lib-seidor-common';
 
 import <%= props.nameCamelCaseUpperFirst %> from '../database/entities/<%= props.nameCamelCaseUpperFirst %>';
 import { <%= props.nameCamelCaseUpperFirst %>Interface } from '../interfaces/<%= props.nameCamelCase %>';
@@ -29,7 +26,7 @@ export default class <%= props.nameCamelCaseUpperFirst %>Repository implements I
     }
 
     public async getAllWithPagination(
-        options: OptionsTypeOrmGetAll,
+        options: typeorm.OptionsTypeOrmGetAllWithPagination,
     ): Promise<{ data: <%= props.nameCamelCaseUpperFirst %>[]; count: number }> {
         const [data, count] = await this.ormRepository.findAndCount(options);
 
@@ -37,7 +34,7 @@ export default class <%= props.nameCamelCaseUpperFirst %>Repository implements I
     }
 
     public async getAllWithoutPagination(
-        options: GetAllWithoutPagination,
+        options: typeorm.OptionsTypeOrmGetAllWithoutPagination,
     ): Promise<<%= props.nameCamelCaseUpperFirst %>[]> {
         return this.ormRepository.find(options);
     }

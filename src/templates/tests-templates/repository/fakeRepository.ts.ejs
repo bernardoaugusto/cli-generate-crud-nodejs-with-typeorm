@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { uuid } from 'uuidv4';
-import {
-    GetAllWithoutPagination,
-    OptionsTypeOrmGetAll,
-} from '@seidor-cloud-produtos/lib-seidor-common/dist/packages/typeorm/lib/interfaces';
+import { typeorm } from '@seidor-cloud-produtos/lib-seidor-common';
 
 import <%= props.nameCamelCaseUpperFirst %> from '../../../database/entities/<%= props.nameCamelCaseUpperFirst %>';
 import { <%= props.nameCamelCaseUpperFirst %>Interface } from '../../../interfaces/<%= props.nameCamelCase %>';
@@ -40,13 +37,13 @@ export default class Fake<%= props.nameCamelCaseUpperFirst %>Repository implemen
     }
 
     public async getAllWithoutPagination(
-        options: OptionsTypeOrmGetAll,
+        options: typeorm.OptionsTypeOrmGetAllWithoutPagination,
     ): Promise<<%= props.nameCamelCaseUpperFirst %>[]> {
         return this.array<%= props.nameCamelCaseUpperFirst %>;
     }
 
     public async getAllWithPagination(
-        options: GetAllWithoutPagination,
+        options: typeorm.OptionsTypeOrmGetAllWithPagination,
     ): Promise<{ data: <%= props.nameCamelCaseUpperFirst %>[]; count: number }> {
         const { array<%= props.nameCamelCaseUpperFirst %> } = this;
 

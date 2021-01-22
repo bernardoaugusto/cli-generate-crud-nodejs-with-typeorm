@@ -500,10 +500,10 @@
   dependencies:
     yup "^0.29.3"
 
-"@seidor-cloud-produtos/lib-seidor-common@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@seidor-cloud-produtos/lib-seidor-common/-/lib-seidor-common-0.0.5.tgz#e532f86ffe968ece223df8ab9cb9981d185bad95"
-  integrity sha512-Q62Gc3ABhXmbbhhgjtXMJeY/IK9+f5xXk6/sYpnF4JjGRw9IrdZhPVc3CsmNdcnp/WfwTRhNLYGdKQcmjJdLMg==
+"@seidor-cloud-produtos/lib-seidor-common@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@seidor-cloud-produtos/lib-seidor-common/-/lib-seidor-common-0.0.6.tgz#aa5140cacdc318a21283808461f50daaaacdbf3e"
+  integrity sha512-5FBS71X17/oMlrkr6zKGKq804iBa0P6YxV0s+fP5UDozzLLFHVCI9XbE2/8KoZOeE2L4Vq5Kef6/gxYXtAViuA==
   dependencies:
     "@seidor-cloud-produtos/error" "*"
     "@seidor-cloud-produtos/middleware" "*"

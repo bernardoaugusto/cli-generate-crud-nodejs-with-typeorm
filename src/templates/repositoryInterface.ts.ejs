@@ -1,4 +1,4 @@
-import { OptionsTypeOrmGetAll, GetAllWithoutPagination, } from '@seidor-cloud-produtos/lib-seidor-common/dist/packages/typeorm/lib/interfaces';
+import { typeorm } from '@seidor-cloud-produtos/lib-seidor-common';
 
 import <%= props.nameCamelCaseUpperFirst %> from '../../database/entities/<%= props.nameCamelCaseUpperFirst %>';
 import { <%= props.nameCamelCaseUpperFirst %>Interface } from '../<%= props.nameCamelCase %>';
@@ -9,8 +9,8 @@ export default interface I<%= props.nameCamelCaseUpperFirst %>Repository {
     ): Promise<<%= props.nameCamelCaseUpperFirst %>>;
     findById(id: string<% if (props.tenantid) { %>, tenantid: string<% }%>): Promise<<%= props.nameCamelCaseUpperFirst %> | undefined>;
     getAllWithPagination(
-        options: OptionsTypeOrmGetAll,
+        options: typeorm.OptionsTypeOrmGetAllWithPagination,
     ): Promise<{ data: <%= props.nameCamelCaseUpperFirst %>[]; count: number }>;
-    getAllWithoutPagination(options: GetAllWithoutPagination): Promise<<%= props.nameCamelCaseUpperFirst %>[]>;
+    getAllWithoutPagination(options: typeorm.OptionsTypeOrmGetAllWithoutPagination): Promise<<%= props.nameCamelCaseUpperFirst %>[]>;
 }
 

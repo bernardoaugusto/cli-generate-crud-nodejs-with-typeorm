@@ -148,7 +148,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Service', () => {
             useremail: 'update@teste.com.br',
         };
 
-        await userService.update(
+        await <%= props.nameCamelCase %>Service.update(
             sut.id,
             <any>{ active: false, inactivation_date: new Date() },
             userRequestData,

@@ -1,4 +1,4 @@
-import { RequestGetAllInterface } from '@seidor-cloud-produtos/lib-seidor-common/dist/packages/typeorm/lib/interfaces';
+import { typeorm } from '@seidor-cloud-produtos/lib-seidor-common';
 import { RelationalWithTenantidInterface } from './metadata/RelationalWithoutTenantid';
 
 export interface SchoolInterface extends RelationalWithTenantidInterface {
@@ -8,7 +8,7 @@ export interface SchoolInterface extends RelationalWithTenantidInterface {
     telephone: number;
 }
 
-export interface SchoolRequestGetAllInterface extends RequestGetAllInterface {
+export interface SchoolRequestGetAllInterface extends typeorm.RequestGetAllInterface {
     name?: string;
     address?: string;
     director?: string;

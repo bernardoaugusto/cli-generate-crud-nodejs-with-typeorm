@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { middleware } from '@seidor-cloud-produtos/lib-seidor-common';
 
 import * as SchoolController from '../controllers/schoolController';
 import {
@@ -6,7 +7,6 @@ import {
     getAllSchoolSchema,
     updateSchoolSchema,
 } from '../utils/school/validators';
-import validatorMiddleware from '../utils/middleware/validator';
 import { idParamSchema, tenantidSchema } from '../utils/validation/common';
 
 const router = Router();
@@ -46,7 +46,10 @@ const router = Router();
 
 router.post(
     '/',
-    validatorMiddleware({ body: createSchoolSchema, headers: tenantidSchema }),
+    middleware.validatorMiddleware({
+        body: createSchoolSchema,
+        headers: tenantidSchema,
+    }),
     SchoolController.create,
 );
 
@@ -83,7 +86,10 @@ router.post(
 
 router.get(
     '/:id',
-    validatorMiddleware({ params: idParamSchema, headers: tenantidSchema }),
+    middleware.validatorMiddleware({
+        params: idParamSchema,
+        headers: tenantidSchema,
+    }),
     SchoolController.findOne,
 );
 
@@ -187,7 +193,10 @@ router.get(
 
 router.get(
     '/',
-    validatorMiddleware({ headers: tenantidSchema, query: getAllSchoolSchema }),
+    middleware.validatorMiddleware({
+        headers: tenantidSchema,
+        query: getAllSchoolSchema,
+    }),
     SchoolController.findAll,
 );
 
@@ -231,7 +240,7 @@ router.get(
 
 router.put(
     '/:id',
-    validatorMiddleware({
+    middleware.validatorMiddleware({
         body: updateSchoolSchema,
         params: idParamSchema,
         headers: tenantidSchema,
@@ -268,7 +277,10 @@ router.put(
 
 router.post(
     '/activation/:id',
-    validatorMiddleware({ params: idParamSchema, headers: tenantidSchema }),
+    middleware.validatorMiddleware({
+        params: idParamSchema,
+        headers: tenantidSchema,
+    }),
     SchoolController.activation,
 );
 
@@ -301,7 +313,10 @@ router.post(
 
 router.post(
     '/inactivation/:id',
-    validatorMiddleware({ params: idParamSchema, headers: tenantidSchema }),
+    middleware.validatorMiddleware({
+        params: idParamSchema,
+        headers: tenantidSchema,
+    }),
     SchoolController.inactivation,
 );
 

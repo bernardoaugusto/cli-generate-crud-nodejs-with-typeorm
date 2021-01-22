@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as yup from 'yup';
-import { ValidateError } from '../errors/ValidateError';
+import { error as libError } from '@seidor-cloud-produtos/lib-seidor-common';
 
 const extractErrors = (
     validationErrors: { property: string; message: string }[],
@@ -33,7 +33,7 @@ export const validateSchemaData = async <T>(
     try {
         await schema.validate(data, { abortEarly: false });
     } catch (err) {
-        throw new ValidateError(err);
+        throw new libError.ValidateError(err);
     }
 };
 
@@ -43,7 +43,7 @@ export const validateManySchemaData = async <T>(
         schema: yup.ObjectSchema<yup.Shape<object | undefined, object>, object>;
     }[],
 ): Promise<void> => {
-    const errors: ValidateError[] = [];
+    const errors: libError.ValidateError[] = [];
 
     for (let i = 0; i < validations.length; i += 1) {
         const validation = validations[i];
