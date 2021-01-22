@@ -125,6 +125,18 @@ const command: GluegunCommand = {
             props: { nameCamelCase, nameCamelCaseUpperFirst, properties, tenantid },
         });
 
+        await template.generate({
+            template: 'routes.ts.ejs',
+            target: `src/routes/${nameCamelCase}.routes.ts`,
+            props: {
+                tableName,
+                nameCamelCase,
+                nameCamelCaseUpperFirst,
+                properties,
+                tenantid,
+            },
+        });
+
         print.success(`Successfully generated CRUD.`);
     },
 };

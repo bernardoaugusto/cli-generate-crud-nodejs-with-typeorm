@@ -2,8 +2,14 @@ import * as yup from 'yup';
 import { getAllRequestSchema } from '../validation/common';
 
 export const createSchoolSchema = yup.object().shape({
-    name: yup.string().strict(true).required('The property name is required'),
-    address: yup.string().strict(true).required('The property address is required'),
+    name: yup
+        .string()
+        .strict(true)
+        .required('The property name is required'),
+    address: yup
+        .string()
+        .strict(true)
+        .required('The property address is required'),
     director: yup
         .string()
         .strict(true)
