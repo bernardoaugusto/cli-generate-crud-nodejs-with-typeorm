@@ -114,6 +114,12 @@ const command: GluegunCommand = {
         });
 
         await template.generate({
+            template: 'validators.ts.ejs',
+            target: `src/utils/${nameCamelCase}/validators.ts`,
+            props: { nameCamelCase, nameCamelCaseUpperFirst, properties, tenantid },
+        });
+
+        await template.generate({
             template: 'controller.ts.ejs',
             target: `src/controllers/${nameCamelCase}Controller.ts`,
             props: { nameCamelCase, nameCamelCaseUpperFirst, properties, tenantid },

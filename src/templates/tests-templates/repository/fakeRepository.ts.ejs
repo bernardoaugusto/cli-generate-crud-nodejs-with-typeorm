@@ -7,9 +7,9 @@ import {
 
 import <%= props.nameCamelCaseUpperFirst %> from '../../../database/entities/<%= props.nameCamelCaseUpperFirst %>';
 import { <%= props.nameCamelCaseUpperFirst %>Interface } from '../../../interfaces/<%= props.nameCamelCase %>';
-import I<%= props.nameCamelCaseUpperFirst %> from '../../../interfaces/repositories/I<%= props.nameCamelCaseUpperFirst %>';
+import I<%= props.nameCamelCaseUpperFirst %>Repository from '../../../interfaces/repositories/I<%= props.nameCamelCaseUpperFirst %>Repository';
 
-export default class Fake<%= props.nameCamelCaseUpperFirst %>Repository implements I<%= props.nameCamelCaseUpperFirst %> {
+export default class Fake<%= props.nameCamelCaseUpperFirst %>Repository implements I<%= props.nameCamelCaseUpperFirst %>Repository {
     private array<%= props.nameCamelCaseUpperFirst %>: <%= props.nameCamelCaseUpperFirst %>[] = [];
 
     public async createAndSave(<%= props.nameCamelCase %>Data: <%= props.nameCamelCaseUpperFirst %>Interface): Promise<<%= props.nameCamelCaseUpperFirst %>> {

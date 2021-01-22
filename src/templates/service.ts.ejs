@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import { typeorm } from '@seidor-cloud-produtos/lib-seidor-common';
 
 import <%= props.nameCamelCaseUpperFirst %> from '../database/entities/<%= props.nameCamelCaseUpperFirst %>';
-import { <%= props.nameCamelCaseUpperFirst %>RequestInterface } from '../interfaces/metadata/RelationalWithoutTenantid';
+import { UserRequestInterface } from '../interfaces/metadata/RelationalWithoutTenantid';
 import { <%= props.nameCamelCaseUpperFirst %>Interface, <%= props.nameCamelCaseUpperFirst %>RequestGetAllInterface } from '../interfaces/<%= props.nameCamelCase %>';
 import I<%= props.nameCamelCaseUpperFirst %>Repository from '../interfaces/repositories/I<%= props.nameCamelCaseUpperFirst %>Repository';
 import { HttpError } from '../utils/errors/HttpError';

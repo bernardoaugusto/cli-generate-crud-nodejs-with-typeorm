@@ -60,20 +60,20 @@ describe('<%= props.nameCamelCaseUpperFirst %> Repository context', () => {
     it('Should be able to update a <%= props.nameCamelCaseUpperFirst %>', async () => {
         const sut = await makeSut();
 
-        const updates: UserInterface = {
+        const updates: <%= props.nameCamelCaseUpperFirst %>Interface = {
             ...sut,
             active: false,<% for(let i=0; i<props.properties.original.strings.length; i++) { %>
             <%= props.properties.original.strings[i] %>: 'update <%= props.properties.original.strings[i] %>',<%}; %><% for(let i=0; i<props.properties.original.numbers.length; i++) { %>
             <%= props.properties.original.numbers[i] %>: 999,<%}; %>
         };
 
-        const cashierUpdated = await <%= props.nameCamelCase %>Repository.createAndSave(updates);
+        const <%= props.nameCamelCase %>Updated = await <%= props.nameCamelCase %>Repository.createAndSave(updates);
 
-        <% if (props.tenantid) { %>expect(cashierUpdated.tenantid).toBe(sut.tenantid);<% }%>
-        expect(cashierUpdated.id).toBe(sut.id);
-        expect(cashierUpdated.active).toBe(false);<% for(let i=0; i<props.properties.original.strings.length; i++) { %>
-        expect(cashierUpdated.<%= props.properties.original.strings[i] %>).toBe('update <%= props.properties.original.strings[i] %>');<%}; %><% for(let i=0; i<props.properties.original.strings.length; i++) { %>
-        expect(cashierUpdated.<%= props.properties.original.numbers[i] %>).toBe(999);<%}; %>
+        <% if (props.tenantid) { %>expect(<%= props.nameCamelCase %>Updated.tenantid).toBe(sut.tenantid);<% }%>
+        expect(<%= props.nameCamelCase %>Updated.id).toBe(sut.id);
+        expect(<%= props.nameCamelCase %>Updated.active).toBe(false);<% for(let i=0; i<props.properties.original.strings.length; i++) { %>
+        expect(<%= props.nameCamelCase %>Updated.<%= props.properties.original.strings[i] %>).toBe('update <%= props.properties.original.strings[i] %>');<%}; %><% for(let i=0; i<props.properties.original.numbers.length; i++) { %>
+        expect(<%= props.nameCamelCase %>Updated.<%= props.properties.original.numbers[i] %>).toBe(999);<%}; %>
     });
 
     it('Should return a paginated list of <%= props.nameCamelCaseUpperFirst %> with inactivation', async () => {

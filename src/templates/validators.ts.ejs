@@ -1,0 +1,31 @@
+import * as yup from 'yup';
+import { getAllRequestSchema } from '../validation/common';
+
+export const createLegacySystemSchema = yup.object().shape({
+    description: yup
+        .string()
+        .strict(true)
+        .required('The property description is required'),
+    phone_number: yup
+        .string()
+        .strict(true)
+        .required('The property phone_number is required'),
+    mail: yup
+        .string()
+        .strict(true)
+        .email()
+        .required('The property mail is required'),
+});
+
+export const updateLegacySystemSchema = yup.object().shape({
+    description: yup.string().strict(true).optional(),
+    phone_number: yup.string().strict(true).optional(),
+    mail: yup.string().strict(true).optional(),
+});
+
+export const getAllLegacySystemSchema = yup.object().shape({
+    description: yup.string().strict(true),
+    phone_number: yup.string().strict(true),
+    mail: yup.string().strict(true),
+    ...getAllRequestSchema.fields,
+});

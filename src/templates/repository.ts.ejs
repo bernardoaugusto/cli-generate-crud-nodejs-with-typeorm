@@ -6,9 +6,9 @@ import {
 
 import <%= props.nameCamelCaseUpperFirst %> from '../database/entities/<%= props.nameCamelCaseUpperFirst %>';
 import { <%= props.nameCamelCaseUpperFirst %>Interface } from '../interfaces/<%= props.nameCamelCase %>';
-import I<%= props.nameCamelCaseUpperFirst %> from '../interfaces/repositories/I<%= props.nameCamelCaseUpperFirst %>';
+import I<%= props.nameCamelCaseUpperFirst %>Repository from '../interfaces/repositories/I<%= props.nameCamelCaseUpperFirst %>Repository';
 
-export default class <%= props.nameCamelCaseUpperFirst %>Repository implements I<%= props.nameCamelCaseUpperFirst %> {
+export default class <%= props.nameCamelCaseUpperFirst %>Repository implements I<%= props.nameCamelCaseUpperFirst %>Repository {
     private ormRepository: Repository<<%= props.nameCamelCaseUpperFirst %>>;
 
     constructor() {
