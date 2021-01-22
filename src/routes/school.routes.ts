@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { middleware } from '@seidor-cloud-produtos/lib-seidor-common';
+import { middleware, validation } from '@seidor-cloud-produtos/lib-seidor-common';
 
 import * as SchoolController from '../controllers/schoolController';
 import {
@@ -7,7 +7,6 @@ import {
     getAllSchoolSchema,
     updateSchoolSchema,
 } from '../utils/school/validators';
-import { idParamSchema, tenantidSchema } from '../utils/validation/common';
 
 const router = Router();
 
@@ -46,10 +45,7 @@ const router = Router();
 
 router.post(
     '/',
-    middleware.validatorMiddleware({
-        body: createSchoolSchema,
-        headers: tenantidSchema,
-    }),
+    middleware.validatorMiddleware({ body: createSchoolSchema, headers: validation.commomValidators.tenantidSchema }),
     SchoolController.create,
 );
 
@@ -86,10 +82,7 @@ router.post(
 
 router.get(
     '/:id',
-    middleware.validatorMiddleware({
-        params: idParamSchema,
-        headers: tenantidSchema,
-    }),
+    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.tenantidSchema }),
     SchoolController.findOne,
 );
 
@@ -193,10 +186,7 @@ router.get(
 
 router.get(
     '/',
-    middleware.validatorMiddleware({
-        headers: tenantidSchema,
-        query: getAllSchoolSchema,
-    }),
+    middleware.validatorMiddleware({ headers: validation.commomValidators.tenantidSchema, query: getAllSchoolSchema }),
     SchoolController.findAll,
 );
 
@@ -242,8 +232,8 @@ router.put(
     '/:id',
     middleware.validatorMiddleware({
         body: updateSchoolSchema,
-        params: idParamSchema,
-        headers: tenantidSchema,
+        params: validation.commomValidators.idParamSchema,
+        headers: validation.commomValidators.tenantidSchema,
     }),
     SchoolController.update,
 );
@@ -277,10 +267,7 @@ router.put(
 
 router.post(
     '/activation/:id',
-    middleware.validatorMiddleware({
-        params: idParamSchema,
-        headers: tenantidSchema,
-    }),
+    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.tenantidSchema }),
     SchoolController.activation,
 );
 
@@ -313,10 +300,7 @@ router.post(
 
 router.post(
     '/inactivation/:id',
-    middleware.validatorMiddleware({
-        params: idParamSchema,
-        headers: tenantidSchema,
-    }),
+    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.tenantidSchema }),
     SchoolController.inactivation,
 );
 

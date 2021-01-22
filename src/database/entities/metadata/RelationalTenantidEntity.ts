@@ -1,5 +1,5 @@
 import { Column } from 'typeorm';
-import { HttpError } from '../../../utils/errors/HttpError';
+import { error as libError } from '@seidor-cloud-produtos/lib-seidor-common';
 import { RelationalWithoutTenantidEntity } from './RelationalWithoutTenantidEntity';
 
 type Relation = { tenantid: string } & unknown;
@@ -23,7 +23,10 @@ export class RelationalTenantidEntity extends RelationalWithoutTenantidEntity {
 
     private static checkRelationsExists(relation: Relation, name: string): boolean {
         if (!this.existsRelation(relation)) {
-            throw new HttpError(400, `Doesnt exists a ${name} with this id`);
+            throw new libError.HttpError(
+                400,
+                `Doesnt exists a ${name} with this id`,
+            );
         }
 
         return true;
@@ -31,7 +34,7 @@ export class RelationalTenantidEntity extends RelationalWithoutTenantidEntity {
 
     private checkTenantConsistence(relation: Relation, name: string): boolean {
         if (!this.isTenantEquals(relation)) {
-            throw new HttpError(400, `Different tenantid between ${name}`);
+            throw new libError.HttpError(400, `Different tenantid between ${name}`);
         }
 
         return true;

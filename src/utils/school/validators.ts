@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { getAllRequestSchema } from '../validation/common';
+import { validation } from '@seidor-cloud-produtos/lib-seidor-common';
 
 export const createSchoolSchema = yup.object().shape({
     name: yup
@@ -32,5 +32,5 @@ export const getAllSchoolSchema = yup.object().shape({
     address: yup.string().strict(true),
     director: yup.string().strict(true),
     telephone: yup.number().strict(true),
-    ...getAllRequestSchema.fields,
+    ...validation.commomValidators.getAllRequestSchema.fields,
 });

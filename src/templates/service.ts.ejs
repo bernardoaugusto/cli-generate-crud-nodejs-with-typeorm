@@ -1,18 +1,14 @@
 import { inject, injectable } from 'tsyringe';
-import { typeorm } from '@seidor-cloud-produtos/lib-seidor-common';
+import {
+    typeorm,
+    error as libError,
+} from '@seidor-cloud-produtos/lib-seidor-common';
 
 import <%= props.nameCamelCaseUpperFirst %> from '../database/entities/<%= props.nameCamelCaseUpperFirst %>';
 import { UserRequestInterface } from '../interfaces/metadata/RelationalWithoutTenantid';
 import { <%= props.nameCamelCaseUpperFirst %>Interface, <%= props.nameCamelCaseUpperFirst %>RequestGetAllInterface } from '../interfaces/<%= props.nameCamelCase %>';
 import I<%= props.nameCamelCaseUpperFirst %>Repository from '../interfaces/repositories/I<%= props.nameCamelCaseUpperFirst %>Repository';
-import { HttpError } from '../utils/errors/HttpError';
 import { PaginateResponseProperties } from '../interfaces/pagination';
-import {
-    buildActivationWithUser,
-    buildCreateWithUser,
-    buildInactivationWithUser,
-    buildUpdateWithUser,
-} from '../utils/builders/dynamicBuilders';
 
 @injectable()
 export default class <%= props.nameCamelCaseUpperFirst %>Service {
@@ -26,7 +22,7 @@ export default class <%= props.nameCamelCaseUpperFirst %>Service {
         userRequestData: UserRequestInterface,
         <% if (props.tenantid) { %>tenantid: string,<% }%>
     ): Promise<<%= props.nameCamelCaseUpperFirst %>> {
-        const builded<%= props.nameCamelCaseUpperFirst %> = buildCreateWithUser(<%= props.nameCamelCase %>Data, userRequestData<% if (props.tenantid) { %>, tenantid<% }%>);
+        const builded<%= props.nameCamelCaseUpperFirst %> = typeorm.dynamicBuilders.buildCreateWithUser(<%= props.nameCamelCase %>Data, userRequestData<% if (props.tenantid) { %>, tenantid<% }%>);
 
         return this.<%= props.nameCamelCase %>Repository.createAndSave(builded<%= props.nameCamelCaseUpperFirst %>);
     }
@@ -35,7 +31,7 @@ export default class <%= props.nameCamelCaseUpperFirst %>Service {
         const finded<%= props.nameCamelCaseUpperFirst %> = await this.<%= props.nameCamelCase %>Repository.findById(id<% if (props.tenantid) { %>, tenantid<% }%>);
 
         if (!finded<%= props.nameCamelCaseUpperFirst %>) {
-            throw new HttpError(404, '<%= props.nameCamelCaseUpperFirst %> not found');
+            throw new libError.HttpError(404, '<%= props.nameCamelCaseUpperFirst %> not found');
         }
 
         return finded<%= props.nameCamelCaseUpperFirst %>;
@@ -79,7 +75,7 @@ export default class <%= props.nameCamelCaseUpperFirst %>Service {
 
         const updates = { ...find<%= props.nameCamelCaseUpperFirst %>, ...<%= props.nameCamelCase %>DataUpdates };
 
-        const buildUpdate<%= props.nameCamelCaseUpperFirst %> = buildUpdateWithUser(
+        const buildUpdate<%= props.nameCamelCaseUpperFirst %> = typeorm.dynamicBuilders.buildUpdateWithUser(
             updates,
             userRequestData,
             <%= props.nameCamelCase %>Id,
@@ -96,7 +92,7 @@ export default class <%= props.nameCamelCaseUpperFirst %>Service {
     ): Promise<<%= props.nameCamelCaseUpperFirst %>Interface> {
         await this.findById(<%= props.nameCamelCase %>Id<% if (props.tenantid) { %>, tenantid<% }%>);
 
-        const buildInactivate<%= props.nameCamelCaseUpperFirst %> = buildActivationWithUser(
+        const buildInactivate<%= props.nameCamelCaseUpperFirst %> = typeorm.dynamicBuilders.buildActivationWithUser(
             userRequestData,
             <%= props.nameCamelCase %>Id,
             <% if (props.tenantid) { %>tenantid,<% }%>
@@ -112,7 +108,7 @@ export default class <%= props.nameCamelCaseUpperFirst %>Service {
     ): Promise<<%= props.nameCamelCaseUpperFirst %>Interface> {
         await this.findById(<%= props.nameCamelCase %>Id<% if (props.tenantid) { %>, tenantid<% }%>);
 
-        const buildInactivate<%= props.nameCamelCaseUpperFirst %> = buildInactivationWithUser(
+        const buildInactivate<%= props.nameCamelCaseUpperFirst %> = typeorm.dynamicBuilders.buildInactivationWithUser(
             userRequestData,
             <%= props.nameCamelCase %>Id,
             <% if (props.tenantid) { %>tenantid,<% }%>

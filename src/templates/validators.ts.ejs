@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { getAllRequestSchema } from '../validation/common';
+import { validation } from '@seidor-cloud-produtos/lib-seidor-common';
 
 export const create<%= props.nameCamelCaseUpperFirst %>Schema = yup.object().shape({<% props.properties.original.strings.forEach((propertie) => { %>
     <%= propertie %>: yup
@@ -20,5 +20,5 @@ export const update<%= props.nameCamelCaseUpperFirst %>Schema = yup.object().sha
 export const getAll<%= props.nameCamelCaseUpperFirst %>Schema = yup.object().shape({<% props.properties.original.strings.forEach((propertie) => { %>
     <%= propertie %>: yup.string().strict(true),<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
     <%= propertie %>: yup.number().strict(true),<% }); %>
-    ...getAllRequestSchema.fields,
+    ...validation.commomValidators.getAllRequestSchema.fields,
 });

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { middleware } from '@seidor-cloud-produtos/lib-seidor-common';
+import { middleware, validation } from '@seidor-cloud-produtos/lib-seidor-common';
 
 import * as <%= props.nameCamelCaseUpperFirst %>Controller from '../controllers/<%= props.nameCamelCase %>Controller';
 import {
@@ -7,7 +7,6 @@ import {
     getAll<%= props.nameCamelCaseUpperFirst %>Schema,
     update<%= props.nameCamelCaseUpperFirst %>Schema,
 } from '../utils/<%= props.nameCamelCase %>/validators';
-import { idParamSchema, <% if (props.tenantid) { %>tenantidSchema<% } else{ %>userSchema<% } %> } from '../utils/validation/common';
 
 const router = Router();
 
@@ -46,7 +45,7 @@ const router = Router();
 
 router.post(
     '/',
-    middleware.validatorMiddleware({ body: create<%= props.nameCamelCaseUpperFirst %>Schema, headers: <% if (props.tenantid) { %>tenantidSchema<% } else{ %>userSchema<% } %> }),
+    middleware.validatorMiddleware({ body: create<%= props.nameCamelCaseUpperFirst %>Schema, headers: <% if (props.tenantid) { %>validation.commomValidators.tenantidSchema<% } else{ %>validation.commomValidators.userSchema<% } %> }),
     <%= props.nameCamelCaseUpperFirst %>Controller.create,
 );
 
@@ -83,7 +82,7 @@ router.post(
 
 router.get(
     '/:id',
-    middleware.validatorMiddleware({ params: idParamSchema, headers: <% if (props.tenantid) { %>tenantidSchema<% } else{ %>userSchema<% } %> }),
+    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: <% if (props.tenantid) { %>validation.commomValidators.tenantidSchema<% } else{ %>validation.commomValidators.userSchema<% } %> }),
     <%= props.nameCamelCaseUpperFirst %>Controller.findOne,
 );
 
@@ -181,7 +180,7 @@ router.get(
 
 router.get(
     '/',
-    middleware.validatorMiddleware({ headers: <% if (props.tenantid) { %>tenantidSchema<% } else{ %>userSchema<% } %>, query: getAll<%= props.nameCamelCaseUpperFirst %>Schema }),
+    middleware.validatorMiddleware({ headers: <% if (props.tenantid) { %>validation.commomValidators.tenantidSchema<% } else{ %>validation.commomValidators.userSchema<% } %>, query: getAll<%= props.nameCamelCaseUpperFirst %>Schema }),
     <%= props.nameCamelCaseUpperFirst %>Controller.findAll,
 );
 
@@ -227,8 +226,8 @@ router.put(
     '/:id',
     middleware.validatorMiddleware({
         body: update<%= props.nameCamelCaseUpperFirst %>Schema,
-        params: idParamSchema,
-        headers: <% if (props.tenantid) { %>tenantidSchema<% } else{ %>userSchema<% } %>,
+        params: validation.commomValidators.idParamSchema,
+        headers: <% if (props.tenantid) { %>validation.commomValidators.tenantidSchema<% } else{ %>validation.commomValidators.userSchema<% } %>,
     }),
     <%= props.nameCamelCaseUpperFirst %>Controller.update,
 );
@@ -262,7 +261,7 @@ router.put(
 
 router.post(
     '/activation/:id',
-    middleware.validatorMiddleware({ params: idParamSchema, headers: <% if (props.tenantid) { %>tenantidSchema<% } else{ %>userSchema<% } %> }),
+    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: <% if (props.tenantid) { %>validation.commomValidators.tenantidSchema<% } else{ %>validation.commomValidators.userSchema<% } %> }),
     <%= props.nameCamelCaseUpperFirst %>Controller.activation,
 );
 
@@ -295,7 +294,7 @@ router.post(
 
 router.post(
     '/inactivation/:id',
-    middleware.validatorMiddleware({ params: idParamSchema, headers: <% if (props.tenantid) { %>tenantidSchema<% } else{ %>userSchema<% } %> }),
+    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: <% if (props.tenantid) { %>validation.commomValidators.tenantidSchema<% } else{ %>validation.commomValidators.userSchema<% } %> }),
     <%= props.nameCamelCaseUpperFirst %>Controller.inactivation,
 );
 
