@@ -1,7 +1,7 @@
 import { typeorm } from '@seidor-cloud-produtos/lib-seidor-common';
-<% if (props.tenantid) { %>import { RelationalWithTenantidInterface } from './metadata/RelationalWithoutTenantid';<% } else{ %>import { RelationalWithoutTenantidInterface } from './metadata/RelationalWithoutTenantid';<% } %>
+<% if (props.tenantid) { %>import { RelationalTenantidInterface } from './metadata/RelationalTenantid';<% } else{ %>import { RelationalWithoutTenantidInterface } from './metadata/RelationalWithoutTenantid';<% } %>
 
-export interface <%= props.nameCamelCaseUpperFirst %>Interface extends <% if (props.tenantid) { %>RelationalWithTenantidInterface<% } else{ %>RelationalWithoutTenantidInterface<% } %> {<% props.properties.original.strings.forEach((propertie) => { %>
+export interface <%= props.nameCamelCaseUpperFirst %>Interface extends <% if (props.tenantid) { %>RelationalTenantidInterface<% } else{ %>RelationalWithoutTenantidInterface<% } %> {<% props.properties.original.strings.forEach((propertie) => { %>
     <%= propertie %>: string;<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
     <%= propertie %>: number;<% }); %>
 }

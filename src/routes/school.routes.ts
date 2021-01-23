@@ -45,7 +45,7 @@ const router = Router();
 
 router.post(
     '/',
-    middleware.validatorMiddleware({ body: createSchoolSchema, headers: validation.commomValidators.tenantidSchema }),
+    middleware.validatorMiddleware({ body: createSchoolSchema, headers: validation.commomValidators.userSchema }),
     SchoolController.create,
 );
 
@@ -82,7 +82,7 @@ router.post(
 
 router.get(
     '/:id',
-    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.tenantidSchema }),
+    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.userSchema }),
     SchoolController.findOne,
 );
 
@@ -186,7 +186,7 @@ router.get(
 
 router.get(
     '/',
-    middleware.validatorMiddleware({ headers: validation.commomValidators.tenantidSchema, query: getAllSchoolSchema }),
+    middleware.validatorMiddleware({ headers: validation.commomValidators.userSchema, query: getAllSchoolSchema }),
     SchoolController.findAll,
 );
 
@@ -233,7 +233,7 @@ router.put(
     middleware.validatorMiddleware({
         body: updateSchoolSchema,
         params: validation.commomValidators.idParamSchema,
-        headers: validation.commomValidators.tenantidSchema,
+        headers: validation.commomValidators.userSchema,
     }),
     SchoolController.update,
 );
@@ -267,7 +267,7 @@ router.put(
 
 router.post(
     '/activation/:id',
-    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.tenantidSchema }),
+    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.userSchema }),
     SchoolController.activation,
 );
 
@@ -300,7 +300,7 @@ router.post(
 
 router.post(
     '/inactivation/:id',
-    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.tenantidSchema }),
+    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.userSchema }),
     SchoolController.inactivation,
 );
 
