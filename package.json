@@ -1,12 +1,12 @@
 {
     "name": "node-crud-typeorm",
-    "version": "0.0.13",
+    "version": "0.0.14",
     "description": "node-crud-typeorm CLI",
     "bin": {
         "node-crud-typeorm": "bin/node-crud-typeorm"
     },
     "scripts": {
-        "clean-build": "rm -rf ./build",
+        "clean-build": "rm -rf ./dist",
         "compile": "tsc -p .",
         "copy-templates": "if [ -e ./src/templates ]; then cp -a ./src/templates ./build/; fi",
         "build": "yarn clean-build && yarn compile && yarn copy-templates-seidor",
