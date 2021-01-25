@@ -8,4 +8,4 @@ coverage/
 jest.config.js
 yarn.lock
 .git
-.src
+src
