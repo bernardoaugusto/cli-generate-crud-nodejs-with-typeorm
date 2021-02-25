@@ -3,22 +3,15 @@
 import connect from '../../database/connection/connection';
 import { <%= props.nameCamelCaseUpperFirst %>Interface } from '../../interfaces/<%= props.nameCamelCase %>';
 import <%= props.nameCamelCaseUpperFirst %>Repository from '../../repositories/<%= props.nameCamelCaseUpperFirst %>Repository';
-import { deleteFileDatabase } from '../deleteFileDatabase';
 import <%= props.nameCamelCaseUpperFirst %>Builder from '../testBuilders/<%= props.nameCamelCaseUpperFirst %>Builder';
 import makeSut from './makeSuts/<%= props.nameCamelCase %>';
 
 describe('<%= props.nameCamelCaseUpperFirst %> Repository context', () => {
     let <%= props.nameCamelCase %>Repository: <%= props.nameCamelCaseUpperFirst %>Repository;
 
-    const context = `${Date.now()}`;
-
     beforeAll(async () => {
-        await connect(true, context);
+        await connect(true);
         <%= props.nameCamelCase %>Repository = new <%= props.nameCamelCaseUpperFirst %>Repository();
-    });
-
-    afterAll(async () => {
-        await deleteFileDatabase(context);
     });
 
     it('should be able to insert a new <%= props.nameCamelCaseUpperFirst %>', async () => {
