@@ -17,7 +17,10 @@ describe('TableName Route context', () => {
     });
 
     it('should be call controller with TableName data and returns status 201', async () => {
+        const tenantid = uuid();
+
         const tableNameBuild = new TableNameBuilder()
+            .withTenantId(uuid())
             .withSettings('settings')
             .withUrl('url')
             .withCpf(123)
@@ -34,7 +37,7 @@ describe('TableName Route context', () => {
         const response = await request(app)
             .post('/api/table-name')
             .send(tableNameBuild)
-            .set({ ...userRequestData });
+            .set({ ...userRequestData, tenantid });
 
         expect(response.status).toBe(201);
         expect(response.body.id).toBe(tableNameBuild.id);
@@ -42,6 +45,7 @@ describe('TableName Route context', () => {
             tableNameServiceSpy.create.calledWithExactly(
                 tableNameBuild,
                 userRequestData,
+                tenantid,
             ),
         ).toBeTruthy();
     });
@@ -54,7 +58,7 @@ describe('TableName Route context', () => {
         expect(response.status).toBe(400);
         expect(
             validation.validationErrors.isParamsInValidationErrors(
-                ['settings', 'url', 'cpf', 'username', 'useremail'],
+                ['settings', 'url', 'cpf', 'username', 'useremail', 'tenantid'],
                 response.body.errors,
             ),
         ).toBeTruthy();
@@ -73,19 +77,21 @@ describe('TableName Route context', () => {
         expect(response.status).toBe(400);
         expect(
             validation.validationErrors.isParamsInValidationErrors(
-                ['settings', 'url', 'cpf', 'username', 'useremail'],
+                ['settings', 'url', 'cpf', 'username', 'useremail', 'tenantid'],
                 response.body.errors,
             ),
         ).toBeTruthy();
         expect(tableNameServiceSpy.create.notCalled).toBeTruthy();
     });
 
-    it('should be able to call controller findById with id returns status 200', async () => {
+    it('should be able to call controller findById with id and tenantid returns status 200', async () => {
         const tableNameId = uuid();
+        const tenantid = uuid();
 
         const userRequestData = {
             username: 'Teste',
             useremail: 'teste@teste.com.br',
+            tenantid,
         };
 
         tableNameServiceSpy.findById.resolves(<any>'tableNameData');
@@ -98,7 +104,7 @@ describe('TableName Route context', () => {
         expect(response.status).toBe(200);
         expect(response.body).toStrictEqual('tableNameData');
         expect(
-            tableNameServiceSpy.findById.calledWithExactly(tableNameId),
+            tableNameServiceSpy.findById.calledWithExactly(tableNameId, tenantid),
         ).toBeTruthy();
     });
 
@@ -110,7 +116,7 @@ describe('TableName Route context', () => {
         expect(response.status).toBe(400);
         expect(
             validation.validationErrors.isParamsInValidationErrors(
-                ['id', 'username', 'useremail'],
+                ['id', 'username', 'useremail', 'tenantid'],
                 response.body.errors,
             ),
         ).toBeTruthy();
@@ -118,12 +124,15 @@ describe('TableName Route context', () => {
         expect(tableNameServiceSpy.findById.notCalled).toBeTruthy();
     });
 
-    it('should be able to call controller getAll returns status 200', async () => {
+    it('should be able to call controller getAll with tenantid returns status 200', async () => {
+        const tenantid = uuid();
+
         const queryParams = { withPagination: 'true', showInactive: 'false' };
 
         const userRequestData = {
             username: 'Teste',
             useremail: 'teste@teste.com.br',
+            tenantid,
         };
 
         tableNameServiceSpy.getAll.resolves(<any>'tableNameData');
@@ -136,7 +145,14 @@ describe('TableName Route context', () => {
         expect(response.status).toBe(200);
 
         expect(response.body).toStrictEqual('tableNameData');
-        expect(tableNameServiceSpy.getAll.calledOnceWith(queryParams, true, false));
+        expect(
+            tableNameServiceSpy.getAll.calledOnceWith(
+                queryParams,
+                true,
+                false,
+                tenantid,
+            ),
+        );
     });
 
     it('should be able to call controller getAll return 400 when not send params', async () => {
@@ -149,7 +165,7 @@ describe('TableName Route context', () => {
 
         expect(
             validation.validationErrors.isParamsInValidationErrors(
-                ['username', 'useremail'],
+                ['username', 'useremail', 'tenantid'],
                 response.body.errors,
             ),
         ).toBeTruthy();
@@ -159,8 +175,10 @@ describe('TableName Route context', () => {
 
     it('should be able to call controller update with tableName id and tenantid and return 200', async () => {
         const tableNameId = uuid();
+        const tenantid = uuid();
 
         const tableName = new TableNameBuilder()
+            .withTenantId(uuid())
             .withSettings('update settings')
             .withUrl('update url')
             .withCpf(456)
@@ -177,7 +195,7 @@ describe('TableName Route context', () => {
         const response = await request(app)
             .put(`/api/table-name/${tableNameId}`)
             .send(tableName)
-            .set({ ...userRequestData });
+            .set({ ...userRequestData, tenantid });
 
         expect(response.status).toBe(200);
 
@@ -188,6 +206,7 @@ describe('TableName Route context', () => {
         const tableNameId = uuid();
 
         const tableName = new TableNameBuilder()
+            .withTenantId(uuid())
             .withSettings(<any>123)
             .withUrl(<any>123)
             .withCpf(<any>'invalid cpf')
@@ -204,7 +223,7 @@ describe('TableName Route context', () => {
 
         expect(
             validation.validationErrors.isParamsInValidationErrors(
-                ['settings', 'url', 'cpf', 'username', 'useremail'],
+                ['settings', 'url', 'cpf', 'username', 'useremail', 'tenantid'],
                 response.body.errors,
             ),
         ).toBeTruthy();
@@ -212,8 +231,9 @@ describe('TableName Route context', () => {
         expect(tableNameServiceSpy.update.notCalled).toBeTruthy();
     });
 
-    it('should be able to call controller inactive with tableName id and tenantid and return 204', async () => {
+    it('should be able to call controller inactivation with tableName id and tenantid and return 204', async () => {
         const tableNameId = uuid();
+        const tenantid = uuid();
 
         const userRequestData = {
             username: 'Teste',
@@ -225,7 +245,7 @@ describe('TableName Route context', () => {
 
         const response = await request(app)
             .post(`/api/table-name/inactivation/${tableNameId}`)
-            .set({ ...userRequestData });
+            .set({ ...userRequestData, tenantid });
 
         expect(response.status).toBe(204);
         expect(response.body).toStrictEqual({});
@@ -234,27 +254,70 @@ describe('TableName Route context', () => {
             tableNameServiceSpy.inactivation.calledWithExactly(
                 userRequestData,
                 tableNameId,
+                tenantid,
             ),
         ).toBeTruthy();
     });
 
-    it('should be able to call controller remove return 400 when not send params', async () => {
-        const tableNameId = uuid();
-
+    it('should be able to call controller inactivation return 400 when not send params', async () => {
         tableNameServiceSpy.inactivation.resolves();
         sinon.stub(container, 'resolve').returns(tableNameServiceSpy);
 
-        const response = await request(app).post(
-            `/api/table-name/inactivation/${tableNameId}`,
-        );
+        const response = await request(app).post(`/api/table-name/inactivation/123`);
 
         expect(response.status).toBe(400);
+        expect(tableNameServiceSpy.inactivation.notCalled).toBeTruthy();
+
         expect(
             validation.validationErrors.isParamsInValidationErrors(
-                ['username', 'useremail'],
+                ['id', 'username', 'useremail', 'tenantid'],
                 response.body.errors,
             ),
         ).toBeTruthy();
-        expect(tableNameServiceSpy.inactivation.notCalled).toBeTruthy();
+    });
+
+    it('should be able to call controller activation with tableName id and and tenantid and return 204', async () => {
+        const tableNameId = uuid();
+        const tenantid = uuid();
+
+        const userRequestData = {
+            username: 'Teste',
+            useremail: 'teste@teste.com.br',
+        };
+
+        tableNameServiceSpy.activation.resolves();
+        sinon.stub(container, 'resolve').returns(tableNameServiceSpy);
+
+        const response = await request(app)
+            .post(`/api/table-name/activation/${tableNameId}`)
+            .set({ ...userRequestData, tenantid });
+
+        expect(response.status).toBe(204);
+        expect(response.body).toStrictEqual({});
+
+        expect(
+            tableNameServiceSpy.activation.calledWithExactly(
+                userRequestData,
+                tableNameId,
+                tenantid,
+            ),
+        ).toBeTruthy();
+    });
+
+    it('should be able to call controller activation return 400 when not send params', async () => {
+        tableNameServiceSpy.activation.resolves();
+        sinon.stub(container, 'resolve').returns(tableNameServiceSpy);
+
+        const response = await request(app).post(`/api/table-name/activation/123`);
+
+        expect(response.status).toBe(400);
+        expect(tableNameServiceSpy.activation.notCalled).toBeTruthy();
+
+        expect(
+            validation.validationErrors.isParamsInValidationErrors(
+                ['id', 'username', 'useremail', 'tenantid'],
+                response.body.errors,
+            ),
+        ).toBeTruthy();
     });
 });
