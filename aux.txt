@@ -1,0 +1,166 @@
+
+
+
+
+
+
+
+
+    it('should be able to call controller findAll with id and tenantid returns status 200', async () => {
+        const tenantid = uuid();
+        const query = {
+            withPagination: true,
+            showInactive: false,
+        };
+
+        const queryParams = { withPagination: 'true' };
+
+        const userAndTenantId = {
+            username: 'Teste',
+            useremail: 'teste@teste.com.br',
+            tenantid,
+        };
+
+        <%= props.nameCamelCase %>ServiceSpy.findAll.resolves(<any>'<%= props.nameCamelCase %>Data');
+        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
+
+        const response = await request(app).get('/api/<%= props.tableName %>/').set(userAndTenantId);
+
+        expect(response.status).toBe(200);
+
+        expect(response.body).toStrictEqual('<%= props.nameCamelCase %>Data');
+        expect(<%= props.nameCamelCase %>ServiceSpy.findAll.calledOnceWith(tenantid, queryParams, query));
+    });
+
+    it('should be able to call controller findAll return 400 when not send params', async () => {
+        <%= props.nameCamelCase %>ServiceSpy.findAll.resolves(<any>'<%= props.nameCamelCase %>Data');
+        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
+
+        const response = await request(app).get('/api/<%= props.tableName %>/');
+
+        expect(response.status).toBe(400);
+
+        expect(
+            isParamsInValidationErrors(
+                ['tenantid', 'username', 'useremail'],
+                response.body.errors,
+            ),
+        ).toBeTruthy();
+
+        expect(<%= props.nameCamelCase %>ServiceSpy.findAll.notCalled).toBeTruthy();
+    });
+
+    it('should be able to call controller update with <%= props.nameCamelCase %> id and tenantid and return 200', async () => {
+        const <%= props.nameCamelCase %>_id = uuid();
+        const tenantid = uuid();
+
+        const <%= props.nameCamelCase %> = new <%= props.nameCamelCaseUpperFirst %>Builder()
+            .withTenantId(tenantid)
+            .withDescription('new <%= props.nameCamelCase %>')
+            .withCreatedByName('Create')
+            .withCreatedByEmail('test@create.com')
+            .withUpdatedByName('Update')
+            .withUpdatedByEmail('test@update.com.br')
+            .withLegacyId(uuid())
+            .withBranchId(uuid())
+            .withOpeningDate(new Date(2020, 4, 10))
+            .build();
+
+        const userAndTenantId = {
+            username: 'Teste',
+            useremail: 'teste@teste.com.br',
+            tenantid,
+        };
+
+        <%= props.nameCamelCase %>ServiceSpy.update.resolves(<any><%= props.nameCamelCase %>);
+        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
+
+        const response = await request(app)
+            .put(`/api/<%= props.tableName %>/${<%= props.nameCamelCase %>_id}`)
+            .send(<%= props.nameCamelCase %>)
+            .set(userAndTenantId);
+
+        expect(response.status).toBe(200);
+
+        expect(response.body.id).toBe(<%= props.nameCamelCase %>.id);
+    });
+
+    it('should be able to call controller update return 400 when not send params', async () => {
+        const <%= props.nameCamelCase %>_id = uuid();
+        const tenantid = uuid();
+
+        const <%= props.nameCamelCase %> = new <%= props.nameCamelCaseUpperFirst %>Builder()
+            .withTenantId(tenantid)
+            .withDescription('new <%= props.nameCamelCase %>')
+            .withCreatedByName('Create')
+            .withCreatedByEmail('test@create.com')
+            .withUpdatedByName('Update')
+            .withUpdatedByEmail('test@update.com.br')
+            .withLegacyId(uuid())
+            .withBranchId(uuid())
+            .withOpeningDate(new Date(2020, 4, 10))
+            .build();
+
+        <%= props.nameCamelCase %>ServiceSpy.update.resolves(<any><%= props.nameCamelCase %>);
+        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
+
+        const response = await request(app).put(`/api/<%= props.tableName %>/${<%= props.nameCamelCase %>_id}`).send(<%= props.nameCamelCase %>);
+
+        expect(response.status).toBe(400);
+
+        expect(
+            isParamsInValidationErrors(
+                ['tenantid', 'username', 'useremail'],
+                response.body.errors,
+            ),
+        ).toBeTruthy();
+
+        expect(<%= props.nameCamelCase %>ServiceSpy.update.notCalled).toBeTruthy();
+    });
+
+    it('should be able to call controller inactive with <%= props.nameCamelCase %> id and tenantid and return 204', async () => {
+        const <%= props.nameCamelCase %>_id = uuid();
+        const tenantid = uuid();
+
+        const userData = {
+            username: 'Teste',
+            useremail: 'teste@teste.com.br',
+        };
+
+        <%= props.nameCamelCase %>ServiceSpy.inactivation.resolves();
+        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
+
+        const response = await request(app)
+            .post(`/api/<%= props.tableName %>/inactivation/${<%= props.nameCamelCase %>_id}`)
+            .set({ username: 'Teste', useremail: 'teste@teste.com.br', tenantid });
+
+        expect(response.status).toBe(204);
+        expect(response.body).toStrictEqual({});
+
+        expect(
+            <%= props.nameCamelCase %>ServiceSpy.inactivation.calledWithExactly({
+                <%= props.nameCamelCase %>_id,
+                tenantid,
+                userData,
+            }),
+        ).toBeTruthy();
+    });
+
+    it('should be able to call controller remove return 400 when not send params', async () => {
+        const <%= props.nameCamelCase %>_id = uuid();
+
+        <%= props.nameCamelCase %>ServiceSpy.inactivation.resolves();
+        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
+
+        const response = await request(app).post(`/api/<%= props.tableName %>/inactivation/${<%= props.nameCamelCase %>_id}`);
+
+        expect(response.status).toBe(400);
+        expect(<%= props.nameCamelCase %>ServiceSpy.update.notCalled).toBeTruthy();
+
+        expect(
+            isParamsInValidationErrors(
+                ['tenantid', 'username', 'useremail'],
+                response.body.errors,
+            ),
+        ).toBeTruthy();
+    });

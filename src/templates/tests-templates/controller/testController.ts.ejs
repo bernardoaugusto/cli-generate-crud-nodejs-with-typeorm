@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import request from 'supertest';
 import { container } from 'tsyringe';
-<% if (props.tenantid) { %>import { uuid } from 'uuidv4';<% }%>
+import { uuid } from 'uuidv4';
 import { validation } from '@seidor-cloud-produtos/lib-seidor-common';
 
 import app from '../../app';
@@ -16,8 +16,8 @@ describe('<%= props.nameCamelCaseUpperFirst %> Route context', () => {
         <%= props.nameCamelCase %>ServiceSpy = sinon.createStubInstance(<%= props.nameCamelCaseUpperFirst %>Service);
     });
 
-    it('should be call controller with <%= props.nameCamelCase %> data and returns status 201', async () => {
-        const tenantid = uuid();
+    it('should be call controller with <%= props.nameCamelCaseUpperFirst %> data and returns status 201', async () => {
+        <% if (props.tenantid) { %>const tenantid = uuid();<% }%>
 
         const <%= props.nameCamelCase %>Build = new <%= props.nameCamelCaseUpperFirst %>Builder()<% if (props.tenantid) { %>
             .withTenantId(uuid())<% }%><% for(let i=0; i<props.properties.original.strings.length; i++) { %>
@@ -27,8 +27,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Route context', () => {
 
         const userAndTenantId = {
             username: 'Teste',
-            useremail: 'teste@teste.com.br',
-            tenantid,
+            useremail: 'teste@teste.com.br',<% if (props.tenantid) { %> tenantid,<% }%>
         };
 
         <%= props.nameCamelCase %>ServiceSpy.create.resolves(<any><%= props.nameCamelCase %>Build);
@@ -44,4 +43,74 @@ describe('<%= props.nameCamelCaseUpperFirst %> Route context', () => {
     });
 
 
+    it('should return 400 status when not sending params when creating the <%= props.nameCamelCase %> ', async () => {
+        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
+
+        const response = await request(app).post('/api/<%= props.tableName %>');
+
+        expect(response.status).toBe(400);
+        expect(
+            validation.validationErrors.isParamsInValidationErrors(
+                [<% props.properties.original.strings.forEach((propertie) => { %>'<%= propertie %>', <%}); %><% props.properties.original.numbers.forEach((propertie) => { %>'<%= propertie %>', <% }); %>'username', 'useremail'<% if (props.tenantid) { %>, 'tenantid'<% }%>],
+                response.body.errors,
+            ),
+        ).toBeTruthy();
+        expect(<%= props.nameCamelCase %>ServiceSpy.create.notCalled).toBeTruthy();
+    });
+
+    it('should be return status 400 when send invalid params when creating the <%= props.nameCamelCase %>', async () => {
+        const <%= props.nameCamelCase %>Data = new <%= props.nameCamelCaseUpperFirst %>Builder().build();
+
+        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
+
+        const response = await request(app).post('/api/<%= props.tableName %>').send(<%= props.nameCamelCase %>Data);
+
+        expect(response.status).toBe(400);
+        expect(
+            validation.validationErrors.isParamsInValidationErrors(
+                [<% props.properties.original.strings.forEach((propertie) => { %>'<%= propertie %>', <%}); %><% props.properties.original.numbers.forEach((propertie) => { %>'<%= propertie %>', <% }); %>'username', 'useremail'<% if (props.tenantid) { %>, 'tenantid'<% }%>],
+                response.body.errors,
+            ),
+        ).toBeTruthy();
+        expect(<%= props.nameCamelCase %>ServiceSpy.create.notCalled).toBeTruthy();
+    });
+
+    it('should be able to call controller findById with id and tenantid returns status 200', async () => {
+        const <%= props.nameCamelCase %>Id = uuid();
+        <% if (props.tenantid) { %>const tenantid = uuid();<% }%>
+
+        const userAndTenantId = {
+            username: 'Teste',
+            useremail: 'teste@teste.com.br',<% if (props.tenantid) { %> tenantid,<% }%>
+        };
+
+        <%= props.nameCamelCase %>ServiceSpy.findById.resolves(<any>'<%= props.nameCamelCase %>Data');
+        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
+
+        const response = await request(app)
+            .get(`/api/<%= props.tableName %>/${<%= props.nameCamelCase %>Id}`)
+            .set(userAndTenantId);
+
+        expect(response.status).toBe(200);
+        expect(response.body).toStrictEqual('<%= props.nameCamelCase %>Data');
+        expect(
+            <%= props.nameCamelCase %>ServiceSpy.findById.calledWithExactly(<%= props.nameCamelCase %>Id<% if (props.tenantid) { %>, tenantid<% }%>),
+        ).toBeTruthy();
+    });
+
+    it('should be able to  call controller findOne return status 400 when not send params', async () => {
+        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
+
+        const response = await request(app).get('/api/<%= props.tableName %>/123');
+
+        expect(response.status).toBe(400);
+        expect(
+            validation.validationErrors.isParamsInValidationErrors(
+                ['id', 'username', 'useremail'<% if (props.tenantid) { %>, 'tenantid'<% }%>],
+                response.body.errors,
+            ),
+        ).toBeTruthy();
+
+        expect(<%= props.nameCamelCase %>ServiceSpy.create.notCalled).toBeTruthy();
+    });
 });

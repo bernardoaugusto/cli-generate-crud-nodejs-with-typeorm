@@ -18,7 +18,7 @@ export const update<%= props.nameCamelCaseUpperFirst %>Schema = yup.object().sha
 });
 
 export const getAll<%= props.nameCamelCaseUpperFirst %>Schema = yup.object().shape({<% props.properties.original.strings.forEach((propertie) => { %>
+    ...validation.commomValidators.getAllRequestSchema.fields,
     <%= propertie %>: yup.string().strict(true),<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
     <%= propertie %>: yup.number().strict(true),<% }); %>
-    ...validation.commomValidators.getAllRequestSchema.fields,
 });
