@@ -45,7 +45,7 @@ const router = Router();
 
 router.post(
     '/',
-    middleware.validatorMiddleware({ body: createTableNameSchema, headers: validation.commomValidators.tenantidSchema }),
+    middleware.validatorMiddleware({ body: createTableNameSchema, headers: validation.commomValidators.userSchema }),
     TableNameController.create,
 );
 
@@ -82,7 +82,7 @@ router.post(
 
 router.get(
     '/:id',
-    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.tenantidSchema }),
+    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.userSchema }),
     TableNameController.findOne,
 );
 
@@ -183,7 +183,7 @@ router.get(
 
 router.get(
     '/',
-    middleware.validatorMiddleware({ headers: validation.commomValidators.tenantidSchema, query: getAllTableNameSchema }),
+    middleware.validatorMiddleware({ headers: validation.commomValidators.userSchema, query: getAllTableNameSchema }),
     TableNameController.findAll,
 );
 
@@ -230,7 +230,7 @@ router.put(
     middleware.validatorMiddleware({
         body: updateTableNameSchema,
         params: validation.commomValidators.idParamSchema,
-        headers: validation.commomValidators.tenantidSchema,
+        headers: validation.commomValidators.userSchema,
     }),
     TableNameController.update,
 );
@@ -264,7 +264,7 @@ router.put(
 
 router.post(
     '/activation/:id',
-    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.tenantidSchema }),
+    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.userSchema }),
     TableNameController.activation,
 );
 
@@ -297,7 +297,7 @@ router.post(
 
 router.post(
     '/inactivation/:id',
-    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.tenantidSchema }),
+    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.userSchema }),
     TableNameController.inactivation,
 );
 

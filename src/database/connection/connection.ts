@@ -4,16 +4,13 @@ import { createConnections, Connection } from 'typeorm';
 
 dotenv.config();
 
-export default async (
-    isTesting = false,
-    contextName = 'db',
-): Promise<Connection[]> => {
+export default async (isTesting = false): Promise<Connection[]> => {
     if (isTesting) {
         const connections = await createConnections([
             {
                 name: 'default',
                 type: 'sqlite',
-                database: path.resolve(__dirname, '..', `${contextName}.sqlite3`),
+                database: ':memory:',
                 migrationsRun: isTesting,
                 synchronize: isTesting,
                 entities: [`${path.resolve(__dirname, '../entities')}/*.{ts,js}`],
