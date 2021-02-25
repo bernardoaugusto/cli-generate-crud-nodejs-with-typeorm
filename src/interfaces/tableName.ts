@@ -1,7 +1,7 @@
 import { typeorm } from '@seidor-cloud-produtos/lib-seidor-common';
-import { RelationalWithoutTenantidInterface } from './metadata/RelationalWithoutTenantid';
+import { RelationalTenantidInterface } from './metadata/RelationalTenantid';
 
-export interface TableNameInterface extends RelationalWithoutTenantidInterface {
+export interface TableNameInterface extends RelationalTenantidInterface {
     settings: string;
     url: string;
     cpf: number;

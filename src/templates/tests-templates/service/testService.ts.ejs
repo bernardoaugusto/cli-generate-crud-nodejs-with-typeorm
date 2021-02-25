@@ -76,7 +76,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Service', () => {
         expect(<%= props.nameCamelCase %>Finded).toEqual(sut);
     });
 
-    it('Shoud return a <%= props.nameCamelCaseUpperFirst %> list without paginated', async () => {
+    it('should return a <%= props.nameCamelCaseUpperFirst %> list without paginated', async () => {
         const sut = await makeSut();
 
         const res = (await <%= props.nameCamelCase %>Service.getAll(
@@ -89,7 +89,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Service', () => {
         expect(res.findIndex(<%= props.nameCamelCase %> => <%= props.nameCamelCase %>.id === sut.id)).toBeGreaterThanOrEqual(0);
     });
 
-    it('Shoud return a <%= props.nameCamelCaseUpperFirst %> List with paged', async () => {
+    it('should return a <%= props.nameCamelCaseUpperFirst %> List with paged', async () => {
         const sut = await makeSut();
         const { data } = (await <%= props.nameCamelCase %>Service.getAll(
             {},
@@ -104,7 +104,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Service', () => {
         expect(data.findIndex(<%= props.nameCamelCase %> => <%= props.nameCamelCase %>.id === sut.id)).toBeGreaterThanOrEqual(0);
     });
 
-    it('Shoud return a update <%= props.nameCamelCaseUpperFirst %>', async () => {
+    it('should return a update <%= props.nameCamelCaseUpperFirst %>', async () => {
         const sut = await makeSut();
 
         const updates: <%= props.nameCamelCaseUpperFirst %>Interface = {

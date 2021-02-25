@@ -13,5 +13,6 @@ src/repositories/
 src/services/
 src/tests/repositories/
 src/tests/services/
+src/tests/controllers/
 src/tests/testBuilders/
 src/utils/
