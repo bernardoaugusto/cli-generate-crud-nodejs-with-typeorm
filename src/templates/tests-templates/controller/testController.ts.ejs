@@ -41,7 +41,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Route context', () => {
         expect(response.status).toBe(201);
         expect(response.body.id).toBe(<%= props.nameCamelCase %>Build.id);
         expect(
-            tableNameServiceSpy.create.calledWithExactly(tableNameBuild, userRequestData<% if (props.tenantid) { %>, tenantid<% }%>),
+            <%= props.nameCamelCase %>ServiceSpy.create.calledWithExactly(<%= props.nameCamelCase %>Build, userRequestData<% if (props.tenantid) { %>, tenantid<% }%>),
         ).toBeTruthy();
     });
 
