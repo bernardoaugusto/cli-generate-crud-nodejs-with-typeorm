@@ -4,11 +4,11 @@
             "id": {
                 "type": "string",
                 "example": "0874db54-4d61-49c8-a843-4cad584655be"
-            },
+            },<% if (props.tenantid) { %>
             "tenantid": {
                 "type": "string",
                 "example": "0874db54-4d61-49c8-a843-4cad584655be"
-            },<% props.properties.original.strings.forEach((propertie) => { %>
+            },<% }%><% props.properties.original.strings.forEach((propertie) => { %>
             "<%= propertie %>": {
                 "type": "string",
                 "example": "<%= propertie %>"
