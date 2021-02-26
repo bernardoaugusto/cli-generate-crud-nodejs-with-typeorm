@@ -5,10 +5,12 @@ export interface TableNameInterface extends RelationalTenantidInterface {
     settings: string;
     url: string;
     cpf: number;
+    oi: number;
 }
 
 export interface TableNameRequestGetAllInterface extends typeorm.RequestGetAllInterface {
     settings?: string;
     url?: string;
     cpf?: number;
+    oi?: number;
 }

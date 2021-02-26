@@ -1,0 +1,83 @@
+{
+    "<%= props.nameCamelCaseUpperFirst %>": {
+        "properties": {
+            "id": {
+                "type": "string",
+                "example": "0874db54-4d61-49c8-a843-4cad584655be"
+            },
+            "tenantid": {
+                "type": "string",
+                "example": "0874db54-4d61-49c8-a843-4cad584655be"
+            },<% props.properties.original.strings.forEach((propertie) => { %>
+            "<%= propertie %>": {
+                "type": "string",
+                "example": "<%= propertie %>"
+            },<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
+            "<%= propertie %>": {
+                "type": "number",
+                "example": 123
+            },<% }); %>
+            "created_at": {
+                "type": "string",
+                "example": "2020-08-28T13:52:40.476Z"
+            },
+            "created_by_name": {
+                "type": "string",
+                "example": "create user name"
+            },
+            "created_by_email": {
+                "type": "string",
+                "example": "create@teste.com.br"
+            },
+            "updated_at": {
+                "type": "string",
+                "example": "2020-08-28T13:52:40.476Z"
+            },
+            "updated_by_name": {
+                "type": "string",
+                "example": "update user name"
+            },
+            "updated_by_email": {
+                "type": "string",
+                "example": "updated@teste.com.br"
+            },
+            "active": {
+                "type": "boolean",
+                "example": false
+            },
+            "inactivation_date": {
+                "type": "string",
+                "example": "2020-08-28T13:52:40.476Z"
+            }
+        }
+    },
+    "<%= props.nameCamelCaseUpperFirst %>Create": {
+        "required": [
+        <% props.properties.original.strings.forEach((propertie) => { %>
+            "<%= propertie %>",<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
+            "<%= propertie %>",<% }); %>
+        ],
+        "properties": {<% props.properties.original.strings.forEach((propertie) => { %>
+            "<%= propertie %>": {
+                "type": "string",
+                "example": "<%= propertie %>"
+            },<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
+            "<%= propertie %>": {
+                "type": "number",
+                "example": 123
+            },<% }); %>
+        }
+    },
+    "<%= props.nameCamelCaseUpperFirst %>Update": {
+        "properties": {<% props.properties.original.strings.forEach((propertie) => { %>
+            "<%= propertie %>": {
+                "type": "string",
+                "example": "<%= propertie %>"
+            },<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
+            "<%= propertie %>": {
+                "type": "number",
+                "example": 123
+            },<% }); %>
+        }
+    }
+}

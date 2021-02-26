@@ -45,7 +45,10 @@ const router = Router();
 
 router.post(
     '/',
-    middleware.validatorMiddleware({ body: createTableNameSchema, headers: validation.commomValidators.tenantidSchema }),
+    middleware.validatorMiddleware({
+        body: createTableNameSchema,
+        headers: validation.commomValidators.tenantidSchema,
+    }),
     TableNameController.create,
 );
 
@@ -82,7 +85,10 @@ router.post(
 
 router.get(
     '/:id',
-    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.tenantidSchema }),
+    middleware.validatorMiddleware({
+        params: validation.commomValidators.idParamSchema,
+        headers: validation.commomValidators.tenantidSchema,
+    }),
     TableNameController.findOne,
 );
 
@@ -119,7 +125,7 @@ router.get(
  *       - in: query
  *         name: sortParam
  *         type: string
- *         enum: [ settings, url, cpf, created_at, created_by_name, created_by_email, updated_at, updated_by_name, updated_by_email ]
+ *         enum: [ settings, url, cpf, oi, created_at, created_by_name, created_by_email, updated_at, updated_by_name, updated_by_email ]
  *       - in: query
  *         name: sortOrder
  *         type: string
@@ -143,6 +149,9 @@ router.get(
  *         type: string
  *       - in: query
  *         name: cpf
+ *         type: number
+ *       - in: query
+ *         name: oi
  *         type: number
  *       - in: query
  *         name: created_by_name
@@ -183,7 +192,10 @@ router.get(
 
 router.get(
     '/',
-    middleware.validatorMiddleware({ headers: validation.commomValidators.tenantidSchema, query: getAllTableNameSchema }),
+    middleware.validatorMiddleware({
+        headers: validation.commomValidators.tenantidSchema,
+        query: getAllTableNameSchema,
+    }),
     TableNameController.findAll,
 );
 
@@ -264,7 +276,10 @@ router.put(
 
 router.post(
     '/activation/:id',
-    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.tenantidSchema }),
+    middleware.validatorMiddleware({
+        params: validation.commomValidators.idParamSchema,
+        headers: validation.commomValidators.tenantidSchema,
+    }),
     TableNameController.activation,
 );
 
@@ -297,7 +312,10 @@ router.post(
 
 router.post(
     '/inactivation/:id',
-    middleware.validatorMiddleware({ params: validation.commomValidators.idParamSchema, headers: validation.commomValidators.tenantidSchema }),
+    middleware.validatorMiddleware({
+        params: validation.commomValidators.idParamSchema,
+        headers: validation.commomValidators.tenantidSchema,
+    }),
     TableNameController.inactivation,
 );
 

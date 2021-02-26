@@ -1,0 +1,109 @@
+{
+    "TableName": {
+        "properties": {
+            "id": {
+                "type": "string",
+                "example": "0874db54-4d61-49c8-a843-4cad584655be"
+            },
+            "tenantid": {
+                "type": "string",
+                "example": "0874db54-4d61-49c8-a843-4cad584655be"
+            },
+            "settings": {
+                "type": "string",
+                "example": "settings"
+            },
+            "url": {
+                "type": "string",
+                "example": "url"
+            },
+            "cpf": {
+                "type": "number",
+                "example": 123
+            },
+            "oi": {
+                "type": "number",
+                "example": 123
+            },
+            "created_at": {
+                "type": "string",
+                "example": "2020-08-28T13:52:40.476Z"
+            },
+            "created_by_name": {
+                "type": "string",
+                "example": "create user name"
+            },
+            "created_by_email": {
+                "type": "string",
+                "example": "create@teste.com.br"
+            },
+            "updated_at": {
+                "type": "string",
+                "example": "2020-08-28T13:52:40.476Z"
+            },
+            "updated_by_name": {
+                "type": "string",
+                "example": "update user name"
+            },
+            "updated_by_email": {
+                "type": "string",
+                "example": "updated@teste.com.br"
+            },
+            "active": {
+                "type": "boolean",
+                "example": false
+            },
+            "inactivation_date": {
+                "type": "string",
+                "example": "2020-08-28T13:52:40.476Z"
+            }
+        }
+    },
+    "TableNameCreate": {
+        "required": [
+        
+            "settings",
+            "url",
+            "cpf",
+            "oi",
+        ],
+        "properties": {
+            "settings": {
+                "type": "string",
+                "example": "settings"
+            },
+            "url": {
+                "type": "string",
+                "example": "url"
+            },
+            "cpf": {
+                "type": "number",
+                "example": 123
+            },
+            "oi": {
+                "type": "number",
+                "example": 123
+            },
+        }
+    },
+    "TableNameUpdate": {
+        "properties": {
+            "settings": {
+                "type": "string",
+                "example": "settings"
+            },
+            "url": {
+                "type": "string",
+                "example": "url"
+            },
+            "cpf": {
+                "type": "number",
+                "example": 123
+            },
+            "oi": {
+                "type": "number",
+                "example": 123
+            },
+        }
+    }
+}

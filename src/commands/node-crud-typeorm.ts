@@ -149,6 +149,17 @@ const command: GluegunCommand = {
             },
         });
 
+        await template.generate({
+            template: 'doc.ts.ejs',
+            target: `src/routes/doc/definitionsData/${nameCamelCase}.json`,
+            props: {
+                nameCamelCase,
+                nameCamelCaseUpperFirst,
+                properties,
+                tenantid,
+            },
+        });
+
         print.success(`Successfully generated CRUD.`);
     },
 };
