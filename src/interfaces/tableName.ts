@@ -6,6 +6,7 @@ export interface TableNameInterface extends RelationalTenantidInterface {
     url: string;
     cpf: number;
     oi: number;
+    test_number: number;
 }
 
 export interface TableNameRequestGetAllInterface extends typeorm.RequestGetAllInterface {
@@ -13,4 +14,5 @@ export interface TableNameRequestGetAllInterface extends typeorm.RequestGetAllIn
     url?: string;
     cpf?: number;
     oi?: number;
+    test_number?: number;
 }

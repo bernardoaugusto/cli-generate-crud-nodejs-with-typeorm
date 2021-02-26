@@ -52,20 +52,19 @@
         }
     },
     "<%= props.nameCamelCaseUpperFirst %>Create": {
-        "required": [
-        <% props.properties.original.strings.forEach((propertie) => { %>
-            "<%= propertie %>",<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
-            "<%= propertie %>",<% }); %>
+        "required": [<% props.properties.original.strings.forEach((propertie) => { %>
+            "<%= propertie %>",<%}); %><% for(let i=0; i<props.properties.original.numbers.length; i++) { %>
+            "<%= props.properties.original.numbers[i] %>"<% if (i !== props.properties.original.numbers.length - 1) { %>,<% }%><%}; %>
         ],
         "properties": {<% props.properties.original.strings.forEach((propertie) => { %>
             "<%= propertie %>": {
                 "type": "string",
                 "example": "<%= propertie %>"
-            },<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
-            "<%= propertie %>": {
+            },<%}); %><% for(let i=0; i<props.properties.original.numbers.length; i++) { %>
+            "<%= props.properties.original.numbers[i] %>": {
                 "type": "number",
                 "example": 123
-            },<% }); %>
+            }<% if (i !== props.properties.original.numbers.length - 1) { %>,<% }%><%}; %>
         }
     },
     "<%= props.nameCamelCaseUpperFirst %>Update": {
@@ -73,11 +72,11 @@
             "<%= propertie %>": {
                 "type": "string",
                 "example": "<%= propertie %>"
-            },<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
-            "<%= propertie %>": {
+            },<%}); %><% for(let i=0; i<props.properties.original.numbers.length; i++) { %>
+            "<%= props.properties.original.numbers[i] %>": {
                 "type": "number",
                 "example": 123
-            },<% }); %>
+            }<% if (i !== props.properties.original.numbers.length - 1) { %>,<% }%><%}; %>
         }
     }
 }

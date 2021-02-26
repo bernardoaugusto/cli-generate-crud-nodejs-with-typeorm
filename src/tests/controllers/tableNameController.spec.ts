@@ -25,6 +25,7 @@ describe('TableName Route context', () => {
             .withUrl('url')
             .withCpf(123)
             .withOi(123)
+            .withTestNumber(123)
             .build();
 
         const userRequestData = {
@@ -56,7 +57,7 @@ describe('TableName Route context', () => {
         expect(response.status).toBe(400);
         expect(
             validation.validationErrors.isParamsInValidationErrors(
-                ['settings', 'url', 'cpf', 'oi', 'username', 'useremail', 'tenantid'],
+                ['settings', 'url', 'cpf', 'oi', 'test_number', 'username', 'useremail', 'tenantid'],
                 response.body.errors,
             ),
         ).toBeTruthy();
@@ -73,7 +74,7 @@ describe('TableName Route context', () => {
         expect(response.status).toBe(400);
         expect(
             validation.validationErrors.isParamsInValidationErrors(
-                ['settings', 'url', 'cpf', 'oi', 'username', 'useremail', 'tenantid'],
+                ['settings', 'url', 'cpf', 'oi', 'test_number', 'username', 'useremail', 'tenantid'],
                 response.body.errors,
             ),
         ).toBeTruthy();
@@ -173,6 +174,7 @@ describe('TableName Route context', () => {
             .withUrl('update url')
             .withCpf(456)
             .withOi(456)
+            .withTestNumber(456)
             .build();
 
         const userRequestData = {
@@ -202,6 +204,7 @@ describe('TableName Route context', () => {
             .withUrl(<any>123)
             .withCpf(<any>'invalid cpf')
             .withOi(<any>'invalid oi')
+            .withTestNumber(<any>'invalid test_number')
             .build();
 
         tableNameServiceSpy.update.resolves(<any>tableName);
@@ -213,7 +216,7 @@ describe('TableName Route context', () => {
 
         expect(
             validation.validationErrors.isParamsInValidationErrors(
-                ['settings', 'url', 'cpf', 'oi', 'username', 'useremail', 'tenantid'],
+                ['settings', 'url', 'cpf', 'oi', 'test_number', 'username', 'useremail', 'tenantid'],
                 response.body.errors,
             ),
         ).toBeTruthy();
