@@ -1,25 +1,14 @@
 # node-crud-typeorm CLI
-
-A CLI for node-crud-typeorm.
-
-## Customizing your CLI
-
-Check out the documentation at https://github.com/infinitered/gluegun/tree/master/docs.
-
-## Publishing to NPM
-
-To package your CLI up for NPM, do this:
+## Installation
 
 ```shell
-$ npm login
-$ npm whoami
-$ npm lint
-$ npm test
-(if typescript, run `npm run build` here)
-$ npm publish
+$ npm install -g node-crud-typeorm
 ```
+```shell
+$ yarn global add node-crud-typeorm
+```
+## Generate CRUD
 
-# License
-
-MIT - see LICENSE
-
+```shell
+node-crud-typeorm table-name --strings=name,cpf --numbers=test_number,code --tenantid=true
+```

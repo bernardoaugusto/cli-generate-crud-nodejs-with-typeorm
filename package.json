@@ -1,6 +1,6 @@
 {
     "name": "node-crud-typeorm",
-    "version": "0.0.18",
+    "version": "0.0.19",
     "description": "node-crud-typeorm CLI",
     "bin": {
         "node-crud-typeorm": "bin/node-crud-typeorm"
