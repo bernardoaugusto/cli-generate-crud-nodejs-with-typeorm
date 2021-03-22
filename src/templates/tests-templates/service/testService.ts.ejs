@@ -1,4 +1,5 @@
 import { uuid } from 'uuidv4';
+import { error as libError } from '@seidor-cloud-produtos/lib-seidor-common';
 
 import <%= props.nameCamelCaseUpperFirst %> from '../../database/entities/<%= props.nameCamelCaseUpperFirst %>';
 import <%= props.nameCamelCaseUpperFirst %>Service from '../../services/<%= props.nameCamelCaseUpperFirst %>Service';
@@ -71,9 +72,21 @@ describe('<%= props.nameCamelCaseUpperFirst %> Service', () => {
     it('Should be able to find a <%= props.nameCamelCaseUpperFirst %> by id', async () => {
         const sut = await makeSut();
 
-        const <%= props.nameCamelCase %>Finded = await <%= props.nameCamelCase %>Service.findById(sut.id!, <% if (props.tenantid) { %>sut.tenantid,<% }%>);
+        const <%= props.nameCamelCase %>Finded = await <%= props.nameCamelCase %>Service.findById(sut.id!<% if (props.tenantid) { %>, sut.tenantid<% }%>);
 
         expect(<%= props.nameCamelCase %>Finded).toEqual(sut);
+    });
+
+    it('Should not return a <%= props.nameCamelCaseUpperFirst %> by id - <%= props.nameCamelCaseUpperFirst %> not found', async () => {
+        expect.hasAssertions();
+
+        try {
+            await <%= props.nameCamelCase %>Service.findById(uuid()<% if (props.tenantid) { %>, uuid()<% }%>);
+        } catch (error) {
+            expect(error.code).toBe(404);
+            expect(error.message).toBe('<%= props.nameCamelCaseUpperFirst %> not found');
+            expect(error instanceof libError.HttpError).toBeTruthy();
+        }
     });
 
     it('should return a <%= props.nameCamelCaseUpperFirst %> list without paginated', async () => {
