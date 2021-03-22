@@ -17,8 +17,17 @@ export const update<%= props.nameCamelCaseUpperFirst %>Schema = yup.object().sha
     <%= propertie %>: yup.number().strict(true).optional(),<% }); %>
 });
 
-export const getAll<%= props.nameCamelCaseUpperFirst %>Schema = yup.object().shape({<% props.properties.original.strings.forEach((propertie) => { %>
-    ...validation.commomValidators.getAllRequestSchema.fields,
+export const getAll<%= props.nameCamelCaseUpperFirst %>Schema = yup.object().shape({
+    ...validation.commomValidators.getAllRequestSchema.fields,<% props.properties.original.strings.forEach((propertie) => { %>
     <%= propertie %>: yup.string().strict(true),<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
     <%= propertie %>: yup.number().strict(true),<% }); %>
+    dateFilter: yup
+        .string()
+        .strict(true)
+        .matches(/(created_at|updated_at|inactivation_date)/, {
+            excludeEmptyString: true,
+            message:
+                'Only available "created_at", "updated_at" and "inactivation_date" values.',
+        }),
+
 });

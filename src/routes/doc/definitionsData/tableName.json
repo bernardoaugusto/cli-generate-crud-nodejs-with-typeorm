@@ -9,25 +9,13 @@
                 "type": "string",
                 "example": "0874db54-4d61-49c8-a843-4cad584655be"
             },
-            "settings": {
+            "name": {
                 "type": "string",
-                "example": "settings"
-            },
-            "url": {
-                "type": "string",
-                "example": "url"
+                "example": "name"
             },
             "cpf": {
-                "type": "number",
-                "example": 123
-            },
-            "oi": {
-                "type": "number",
-                "example": 123
-            },
-            "test_number": {
-                "type": "number",
-                "example": 123
+                "type": "string",
+                "example": "cpf"
             },
             "created_at": {
                 "type": "string",
@@ -65,57 +53,30 @@
     },
     "TableNameCreate": {
         "required": [
-            "settings",
-            "url",
+            "name",
             "cpf",
-            "oi",
-            "test_number"
         ],
         "properties": {
-            "settings": {
+            "name": {
                 "type": "string",
-                "example": "settings"
-            },
-            "url": {
-                "type": "string",
-                "example": "url"
+                "example": "name"
             },
             "cpf": {
-                "type": "number",
-                "example": 123
+                "type": "string",
+                "example": "cpf"
             },
-            "oi": {
-                "type": "number",
-                "example": 123
-            },
-            "test_number": {
-                "type": "number",
-                "example": 123
-            }
         }
     },
     "TableNameUpdate": {
         "properties": {
-            "settings": {
+            "name": {
                 "type": "string",
-                "example": "settings"
-            },
-            "url": {
-                "type": "string",
-                "example": "url"
+                "example": "name"
             },
             "cpf": {
-                "type": "number",
-                "example": 123
+                "type": "string",
+                "example": "cpf"
             },
-            "oi": {
-                "type": "number",
-                "example": 123
-            },
-            "test_number": {
-                "type": "number",
-                "example": 123
-            }
         }
     }
 }
