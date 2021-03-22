@@ -119,7 +119,7 @@ router.get(
  *       - in: query
  *         name: sortParam
  *         type: string
- *         enum: [ name, cpf, created_at, created_by_name, created_by_email, updated_at, updated_by_name, updated_by_email ]
+ *         enum: [ name, cpf, test_number, number, created_at, created_by_name, created_by_email, updated_at, updated_by_name, updated_by_email ]
  *       - in: query
  *         name: sortOrder
  *         type: string
@@ -141,6 +141,12 @@ router.get(
  *       - in: query
  *         name: cpf
  *         type: string
+ *       - in: query
+ *         name: test_number
+ *         type: number
+ *       - in: query
+ *         name: number
+ *         type: number
  *       - in: query
  *         name: created_by_name
  *         type: string

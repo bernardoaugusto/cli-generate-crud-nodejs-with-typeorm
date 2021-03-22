@@ -63,10 +63,10 @@ describe('<%= props.nameCamelCaseUpperFirst %> Service', () => {
         } = await <%= props.nameCamelCase %>Service.create(sut, userRequestData<% if (props.tenantid) { %>, sut.tenantid!<% }%>);
 
         expect(entityProps).toEqual(expectedRes);
-        expect(id).not.toBeUndefined();
+        expect(id).toBeDefined();
         expect(active).toBe(true);
-        expect(created_at).not.toBeUndefined();
-        expect(updated_at).not.toBeUndefined();
+        expect(created_at).toBeDefined();
+        expect(updated_at).toBeDefined();
     });
 
     it('Should be able to find a <%= props.nameCamelCaseUpperFirst %> by id', async () => {
@@ -150,7 +150,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Service', () => {
         );
 
         expect(entityProps).toEqual(expectedRes);
-        expect(updated_at).not.toBeUndefined();
+        expect(updated_at).toBeDefined();
     });
 
     it('should update a <%= props.nameCamelCaseUpperFirst %> to active', async () => {
@@ -189,7 +189,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Service', () => {
         );
 
         expect(entityProps).toEqual(expectedRes);
-        expect(updated_at).not.toBeUndefined();
+        expect(updated_at).toBeDefined();
     });
 
     it('should update a <%= props.nameCamelCaseUpperFirst %> to inactivation', async () => {
@@ -215,7 +215,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Service', () => {
         } = await <%= props.nameCamelCase %>Service.inactivation(userRequestData, sut.id, <% if (props.tenantid) { %>sut.tenantid,<% }%>);
 
         expect(entityProps).toEqual(expectedRes);
-        expect(updated_at).not.toBeUndefined();
-        expect(inactivation_date).not.toBeUndefined();
+        expect(updated_at).toBeDefined();
+        expect(inactivation_date).toBeDefined();
     });
 });

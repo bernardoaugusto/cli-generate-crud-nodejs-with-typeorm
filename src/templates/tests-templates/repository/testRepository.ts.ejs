@@ -36,10 +36,10 @@ describe('<%= props.nameCamelCaseUpperFirst %> Repository context', () => {
 
         expect(entityProps).toEqual(<%= props.nameCamelCase %>Build);
         expect(active).toBe(true);
-        expect(id).not.toBeUndefined();
-        expect(inactivation_date).not.toBeUndefined();
-        expect(created_at).not.toBeUndefined();
-        expect(updated_at).not.toBeUndefined();
+        expect(id).toBeDefined();
+        expect(inactivation_date).toBeNull();
+        expect(created_at).toBeDefined();
+        expect(updated_at).toBeDefined();
     });
 
     it('Should be able to find a <%= props.nameCamelCaseUpperFirst %>', async () => {

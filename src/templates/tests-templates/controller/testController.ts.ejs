@@ -47,8 +47,6 @@ describe('<%= props.nameCamelCaseUpperFirst %> Route context', () => {
 
 
     it('should return 400 status when not sending params when creating the <%= props.nameCamelCase %> ', async () => {
-        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
-
         const response = await request(app).post('/api/<%= props.tableName %>');
 
         expect(response.status).toBe(400);
@@ -63,8 +61,6 @@ describe('<%= props.nameCamelCaseUpperFirst %> Route context', () => {
 
     it('should be return status 400 when send invalid params when creating the <%= props.nameCamelCase %>', async () => {
         const <%= props.nameCamelCase %>Data = new <%= props.nameCamelCaseUpperFirst %>Builder().build();
-
-        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
 
         const response = await request(app).post('/api/<%= props.tableName %>').send(<%= props.nameCamelCase %>Data);
 
@@ -102,8 +98,6 @@ describe('<%= props.nameCamelCaseUpperFirst %> Route context', () => {
     });
 
     it('should be able to  call controller findOne return status 400 when not send params', async () => {
-        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
-
         const response = await request(app).get('/api/<%= props.tableName %>/123');
 
         expect(response.status).toBe(400);
@@ -144,9 +138,6 @@ describe('<%= props.nameCamelCaseUpperFirst %> Route context', () => {
     });
 
     it('should be able to call controller getAll return 400 when not send params', async () => {
-        <%= props.nameCamelCase %>ServiceSpy.getAll.resolves(<any>'<%= props.nameCamelCase %>Data');
-        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
-
         const response = await request(app).get('/api/<%= props.tableName %>/');
 
         expect(response.status).toBe(400);
@@ -198,9 +189,6 @@ describe('<%= props.nameCamelCaseUpperFirst %> Route context', () => {
             .with<%= props.properties.camelCaseUpperFirst.numbers[i] %>(<any>'invalid <%= props.properties.original.numbers[i] %>')<%}; %>
             .build();
 
-        <%= props.nameCamelCase %>ServiceSpy.update.resolves(<any><%= props.nameCamelCase %>);
-        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
-
         const response = await request(app).put(`/api/<%= props.tableName %>/${<%= props.nameCamelCase %>Id}`).send(<%= props.nameCamelCase %>);
 
         expect(response.status).toBe(400);
@@ -243,9 +231,6 @@ describe('<%= props.nameCamelCaseUpperFirst %> Route context', () => {
     });
 
     it('should be able to call controller inactivation return 400 when not send params', async () => {
-        <%= props.nameCamelCase %>ServiceSpy.inactivation.resolves();
-        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
-
         const response = await request(app).post(`/api/<%= props.tableName %>/inactivation/123`);
 
         expect(response.status).toBe(400);
@@ -287,9 +272,6 @@ describe('<%= props.nameCamelCaseUpperFirst %> Route context', () => {
     });
 
     it('should be able to call controller activation return 400 when not send params', async () => {
-        <%= props.nameCamelCase %>ServiceSpy.activation.resolves();
-        sinon.stub(container, 'resolve').returns(<%= props.nameCamelCase %>ServiceSpy);
-
         const response = await request(app).post(`/api/<%= props.tableName %>/activation/123`);
 
         expect(response.status).toBe(400);

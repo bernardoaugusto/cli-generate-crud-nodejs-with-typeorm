@@ -4,9 +4,13 @@ import { RelationalTenantidInterface } from './metadata/RelationalTenantid';
 export interface TableNameInterface extends RelationalTenantidInterface {
     name: string;
     cpf: string;
+    test_number: number;
+    number: number;
 }
 
 export interface TableNameRequestGetAllInterface extends typeorm.RequestGetAllInterface {
     name?: string;
     cpf?: string;
+    test_number?: number;
+    number?: number;
 }

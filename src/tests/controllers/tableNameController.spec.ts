@@ -23,6 +23,8 @@ describe('TableName Route context', () => {
             .withTenantId(uuid())
             .withName('name')
             .withCpf('cpf')
+            .withTestNumber(123)
+            .withNumber(123)
             .build();
 
         const userRequestData = {
@@ -47,14 +49,12 @@ describe('TableName Route context', () => {
 
 
     it('should return 400 status when not sending params when creating the tableName ', async () => {
-        sinon.stub(container, 'resolve').returns(tableNameServiceSpy);
-
         const response = await request(app).post('/api/table-name');
 
         expect(response.status).toBe(400);
         expect(
             validation.validationErrors.isParamsInValidationErrors(
-                ['name', 'cpf', 'username', 'useremail', 'tenantid'],
+                ['name', 'cpf', 'test_number', 'number', 'username', 'useremail', 'tenantid'],
                 response.body.errors,
             ),
         ).toBeTruthy();
@@ -64,14 +64,12 @@ describe('TableName Route context', () => {
     it('should be return status 400 when send invalid params when creating the tableName', async () => {
         const tableNameData = new TableNameBuilder().build();
 
-        sinon.stub(container, 'resolve').returns(tableNameServiceSpy);
-
         const response = await request(app).post('/api/table-name').send(tableNameData);
 
         expect(response.status).toBe(400);
         expect(
             validation.validationErrors.isParamsInValidationErrors(
-                ['name', 'cpf', 'username', 'useremail', 'tenantid'],
+                ['name', 'cpf', 'test_number', 'number', 'username', 'useremail', 'tenantid'],
                 response.body.errors,
             ),
         ).toBeTruthy();
@@ -102,8 +100,6 @@ describe('TableName Route context', () => {
     });
 
     it('should be able to  call controller findOne return status 400 when not send params', async () => {
-        sinon.stub(container, 'resolve').returns(tableNameServiceSpy);
-
         const response = await request(app).get('/api/table-name/123');
 
         expect(response.status).toBe(400);
@@ -144,9 +140,6 @@ describe('TableName Route context', () => {
     });
 
     it('should be able to call controller getAll return 400 when not send params', async () => {
-        tableNameServiceSpy.getAll.resolves(<any>'tableNameData');
-        sinon.stub(container, 'resolve').returns(tableNameServiceSpy);
-
         const response = await request(app).get('/api/table-name/');
 
         expect(response.status).toBe(400);
@@ -169,6 +162,8 @@ describe('TableName Route context', () => {
             .withTenantId(uuid())
             .withName('update name')
             .withCpf('update cpf')
+            .withTestNumber(456)
+            .withNumber(456)
             .build();
 
         const userRequestData = {
@@ -196,10 +191,9 @@ describe('TableName Route context', () => {
             .withTenantId(uuid())
             .withName(<any>123)
             .withCpf(<any>123)
+            .withTestNumber(<any>'invalid test_number')
+            .withNumber(<any>'invalid number')
             .build();
-
-        tableNameServiceSpy.update.resolves(<any>tableName);
-        sinon.stub(container, 'resolve').returns(tableNameServiceSpy);
 
         const response = await request(app).put(`/api/table-name/${tableNameId}`).send(tableName);
 
@@ -207,7 +201,7 @@ describe('TableName Route context', () => {
 
         expect(
             validation.validationErrors.isParamsInValidationErrors(
-                ['name', 'cpf', 'username', 'useremail', 'tenantid'],
+                ['name', 'cpf', 'test_number', 'number', 'username', 'useremail', 'tenantid'],
                 response.body.errors,
             ),
         ).toBeTruthy();
@@ -243,9 +237,6 @@ describe('TableName Route context', () => {
     });
 
     it('should be able to call controller inactivation return 400 when not send params', async () => {
-        tableNameServiceSpy.inactivation.resolves();
-        sinon.stub(container, 'resolve').returns(tableNameServiceSpy);
-
         const response = await request(app).post(`/api/table-name/inactivation/123`);
 
         expect(response.status).toBe(400);
@@ -287,9 +278,6 @@ describe('TableName Route context', () => {
     });
 
     it('should be able to call controller activation return 400 when not send params', async () => {
-        tableNameServiceSpy.activation.resolves();
-        sinon.stub(container, 'resolve').returns(tableNameServiceSpy);
-
         const response = await request(app).post(`/api/table-name/activation/123`);
 
         expect(response.status).toBe(400);

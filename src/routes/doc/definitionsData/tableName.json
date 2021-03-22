@@ -17,6 +17,14 @@
                 "type": "string",
                 "example": "cpf"
             },
+            "test_number": {
+                "type": "number",
+                "example": 123
+            },
+            "number": {
+                "type": "number",
+                "example": 123
+            },
             "created_at": {
                 "type": "string",
                 "example": "2020-08-28T13:52:40.476Z"
@@ -55,6 +63,8 @@
         "required": [
             "name",
             "cpf",
+            "test_number",
+            "number"
         ],
         "properties": {
             "name": {
@@ -65,6 +75,14 @@
                 "type": "string",
                 "example": "cpf"
             },
+            "test_number": {
+                "type": "number",
+                "example": 123
+            },
+            "number": {
+                "type": "number",
+                "example": 123
+            }
         }
     },
     "TableNameUpdate": {
@@ -77,6 +95,14 @@
                 "type": "string",
                 "example": "cpf"
             },
+            "test_number": {
+                "type": "number",
+                "example": 123
+            },
+            "number": {
+                "type": "number",
+                "example": 123
+            }
         }
     }
 }
