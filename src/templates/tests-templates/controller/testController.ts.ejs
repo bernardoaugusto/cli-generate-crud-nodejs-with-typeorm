@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 import request from 'supertest';
 import { container } from 'tsyringe';
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 import { validation } from '@seidor-cloud-produtos/lib-seidor-common';
 
 import app from '../../app';

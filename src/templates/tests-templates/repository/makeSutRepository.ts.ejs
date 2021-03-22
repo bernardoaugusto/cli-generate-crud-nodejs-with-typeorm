@@ -1,4 +1,4 @@
-<% if (props.tenantid) { %>import { uuid } from 'uuidv4';<% }%>
+<% if (props.tenantid) { %>import { v4 as uuid } from 'uuid';<% }%>
 
 import <%= props.nameCamelCaseUpperFirst %> from '../../../database/entities/<%= props.nameCamelCaseUpperFirst %>';
 import { <%= props.nameCamelCaseUpperFirst %>Interface } from '../../../interfaces/<%= props.nameCamelCase %>';

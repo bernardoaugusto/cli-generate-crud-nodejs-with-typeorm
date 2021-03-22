@@ -36,7 +36,7 @@ const router = Router();
  *            $ref: '#/definitions/TableNameCreate'
  *     responses:
  *       201:
- *         description: Successfull
+ *         description: Successful
  *         content:
  *           application/json:
  *             schema:
@@ -73,7 +73,7 @@ router.post(
  *         required: true
  *     responses:
  *       200:
- *         description: Successfull
+ *         description: Successful
  *         content:
  *           application/json:
  *             schema:
@@ -119,14 +119,14 @@ router.get(
  *       - in: query
  *         name: sortParam
  *         type: string
- *         enum: [ name, cpf, test_number, number, created_at, created_by_name, created_by_email, updated_at, updated_by_name, updated_by_email ]
+ *         enum: [ name, cpf, test_number, number, created_at, created_by_name, created_by_email, updated_at, updated_by_name, updated_by_email, active, inactivation_date ]
  *       - in: query
  *         name: sortOrder
  *         type: string
  *         enum: [asc, desc, ASC, DESC]
  *       - in: query
  *         name: dateFilter
- *         type: enum [created_at, updated_at]
+ *         type: enum [created_at, updated_at, inactivation_date]
  *       - in: query
  *         name: startDateFilter
  *         type: string
@@ -159,9 +159,12 @@ router.get(
  *       - in: query
  *         name: updated_by_email
  *         type: string
+ *       - in: query
+ *         name: active
+ *         type: boolean
  *     responses:
  *       200:
- *         description: Successfull
+ *         description: Successful
  *         content:
  *           application/json:
  *             schema:
@@ -220,8 +223,8 @@ router.get(
  *          $ref: '#/definitions/TableNameUpdate'
  *
  *     responses:
- *       201:
- *         description: Successfull
+ *       200:
+ *         description: Successful
  *         content:
  *           application/json:
  *             schema:
@@ -262,7 +265,7 @@ router.put(
  *         required: true
  *     responses:
  *       204:
- *         description: Successfull
+ *         description: Successful
  */
 
 router.post(
@@ -295,7 +298,7 @@ router.post(
  *         required: true
  *     responses:
  *       204:
- *         description: Successfull
+ *         description: Successful
  */
 
 router.post(
