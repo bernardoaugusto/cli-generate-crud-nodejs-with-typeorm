@@ -126,7 +126,8 @@ router.get(
  *         enum: [asc, desc, ASC, DESC]
  *       - in: query
  *         name: dateFilter
- *         type: enum [created_at, updated_at, inactivation_date]
+ *         type: string
+ *         enum: [created_at, updated_at, inactivation_date]
  *       - in: query
  *         name: startDateFilter
  *         type: string

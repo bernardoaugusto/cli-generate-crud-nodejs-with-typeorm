@@ -22,12 +22,13 @@ export const getAll<%= props.nameCamelCaseUpperFirst %>Schema = yup.object().sha
     <%= propertie %>: yup.string().strict(true),<%}); %><% props.properties.original.numbers.forEach((propertie) => { %>
     <%= propertie %>: yup.number().strict(true),<% }); %>
     dateFilter: yup
-        .string()
-        .strict(true)
-        .matches(/(created_at|updated_at|inactivation_date)/, {
-            excludeEmptyString: true,
-            message:
-                'Only available "created_at", "updated_at" and "inactivation_date" values.',
-        }),
+       .string()
+       .strict(true)
+       .matches(/^(created_at|updated_at|inactivation_date)$/, {
+           excludeEmptyString: true,
+           message:
+               'Only available "created_at", "updated_at" and "inactivation_date" values.',
+       }),
+
 
 });
