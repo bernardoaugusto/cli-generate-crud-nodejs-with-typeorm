@@ -500,7 +500,7 @@
   dependencies:
     yup "^0.29.3"
 
-"@seidor-cloud-produtos/lib-seidor-common@^0.0.6":
+"@seidor-cloud-produtos/lib-seidor-common@0.0.6":
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/@seidor-cloud-produtos/lib-seidor-common/-/lib-seidor-common-0.0.6.tgz#aa5140cacdc318a21283808461f50daaaacdbf3e"
   integrity sha512-5FBS71X17/oMlrkr6zKGKq804iBa0P6YxV0s+fP5UDozzLLFHVCI9XbE2/8KoZOeE2L4Vq5Kef6/gxYXtAViuA==
@@ -524,6 +524,14 @@
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@seidor-cloud-produtos/typeorm/-/typeorm-0.0.2.tgz#10d324a491595bd13011c31b1f5711fb9cf39b09"
   integrity sha512-76PnH9M7lMiOj9hXev4GBDw2Zm6DvvsnVjV7VRIE6OAEV2IViOvwnQrKxePm5wEI9PDmMG/6kWUcULc+KqEMKw==
+  dependencies:
+    moment "^2.29.1"
+    typeorm "^0.2.28"
+
+"@seidor-cloud-produtos/typeorm@0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@seidor-cloud-produtos/typeorm/-/typeorm-0.0.4.tgz#89da61b6032987c93c6e4d2e8b6cd1fb2753d14a"
+  integrity sha512-y8qgeJMydiQi2HTEMu9p3oPkmbnezDsWcXJlcESwK0x30zWFbK6AIWRVxtApt9+3lUiwljckYLMSY6xx/lGY+g==
   dependencies:
     moment "^2.29.1"
     typeorm "^0.2.28"

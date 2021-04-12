@@ -48,19 +48,25 @@ export default class <%= props.nameCamelCaseUpperFirst %>Service {
               data: <%= props.nameCamelCaseUpperFirst %>[];
           } & PaginateResponseProperties)
     > {
-        const options = typeorm.formatParamsToTypeOrmOptionsWithPaginate(
-            queryParams,
-            showInactive,
-            <% if (props.tenantid) { %>tenantid,<% }%>
-        );
-
         if (withPagination) {
+            const options = typeorm.formatParamsToTypeOrmOptionsWithPaginate(
+                queryParams,
+                showInactive,
+                <% if (props.tenantid) { %>tenantid,<% }%>
+            );
+
             const array<%= props.nameCamelCaseUpperFirst %> = await this.<%= props.nameCamelCase %>Repository.getAllWithPagination(
                 options,
             );
 
             return typeorm.formatPaginateDataToResponse(queryParams, array<%= props.nameCamelCaseUpperFirst %>);
         }
+
+        const options = typeorm.formatParamsToTypeOrmOptionsWithoutPaginate(
+            queryParams,
+            showInactive,
+            <% if (props.tenantid) { %>tenantid,<% }%>
+        );
 
         return this.<%= props.nameCamelCase %>Repository.getAllWithoutPagination(options);
     }

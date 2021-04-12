@@ -21,7 +21,7 @@
                 "type": "number",
                 "example": 123
             },
-            "number": {
+            "code": {
                 "type": "number",
                 "example": 123
             },
@@ -64,7 +64,7 @@
             "name",
             "cpf",
             "test_number",
-            "number"
+            "code"
         ],
         "properties": {
             "name": {
@@ -79,7 +79,7 @@
                 "type": "number",
                 "example": 123
             },
-            "number": {
+            "code": {
                 "type": "number",
                 "example": 123
             }
@@ -99,7 +99,7 @@
                 "type": "number",
                 "example": 123
             },
-            "number": {
+            "code": {
                 "type": "number",
                 "example": 123
             }

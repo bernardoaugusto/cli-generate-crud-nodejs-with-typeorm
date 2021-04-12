@@ -39,14 +39,14 @@ export default class Fake<%= props.nameCamelCaseUpperFirst %>Repository implemen
     public async getAllWithoutPagination(
         options: typeorm.OptionsTypeOrmGetAllWithoutPagination,
     ): Promise<<%= props.nameCamelCaseUpperFirst %>[]> {
-        return this.array<%= props.nameCamelCaseUpperFirst %>;
+        return this.array<%= props.nameCamelCaseUpperFirst %>.filter(<%= props.nameCamelCase %> => <%= props.nameCamelCase %>.tenantid === options.where.tenantid);
     }
 
     public async getAllWithPagination(
         options: typeorm.OptionsTypeOrmGetAllWithPagination,
     ): Promise<{ data: <%= props.nameCamelCaseUpperFirst %>[]; count: number }> {
-        const { array<%= props.nameCamelCaseUpperFirst %> } = this;
+        const array = this.array<%= props.nameCamelCaseUpperFirst %>.filter(<%= props.nameCamelCase %> => <%= props.nameCamelCase %>.tenantid === options.where.tenantid);
 
-        return { data: array<%= props.nameCamelCaseUpperFirst %>, count: array<%= props.nameCamelCaseUpperFirst %>.length };
+        return { data: array, count: array.length };
     }
 }
