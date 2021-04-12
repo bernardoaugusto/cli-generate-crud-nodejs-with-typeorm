@@ -19,8 +19,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Route context', () => {
     it('should be call controller with <%= props.nameCamelCaseUpperFirst %> data and returns status 201', async () => {
         <% if (props.tenantid) { %>const tenantid = uuid();<% }%>
 
-        const <%= props.nameCamelCase %>Build = new <%= props.nameCamelCaseUpperFirst %>Builder()<% if (props.tenantid) { %>
-            .withTenantId(uuid())<% }%><% for(let i=0; i<props.properties.original.strings.length; i++) { %>
+        const <%= props.nameCamelCase %>Build = new <%= props.nameCamelCaseUpperFirst %>Builder()<% for(let i=0; i<props.properties.original.strings.length; i++) { %>
             .with<%= props.properties.camelCaseUpperFirst.strings[i] %>('<%= props.properties.original.strings[i] %>')<%}; %><% for(let i=0; i<props.properties.original.numbers.length; i++) { %>
             .with<%= props.properties.camelCaseUpperFirst.numbers[i] %>(123)<%}; %>
             .build();
@@ -156,8 +155,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Route context', () => {
         const <%= props.nameCamelCase %>Id = uuid();
         <% if (props.tenantid) { %>const tenantid = uuid();<% }%>
 
-        const <%= props.nameCamelCase %> = new <%= props.nameCamelCaseUpperFirst %>Builder()<% if (props.tenantid) { %>
-            .withTenantId(uuid())<% }%><% for(let i=0; i<props.properties.original.strings.length; i++) { %>
+        const <%= props.nameCamelCase %> = new <%= props.nameCamelCaseUpperFirst %>Builder()<% for(let i=0; i<props.properties.original.strings.length; i++) { %>
             .with<%= props.properties.camelCaseUpperFirst.strings[i] %>('update <%= props.properties.original.strings[i] %>')<%}; %><% for(let i=0; i<props.properties.original.numbers.length; i++) { %>
             .with<%= props.properties.camelCaseUpperFirst.numbers[i] %>(456)<%}; %>
             .build();
@@ -183,8 +181,7 @@ describe('<%= props.nameCamelCaseUpperFirst %> Route context', () => {
     it('should be able to call controller update return 400 when send invalid params', async () => {
         const <%= props.nameCamelCase %>Id = uuid();
 
-        const <%= props.nameCamelCase %> = new <%= props.nameCamelCaseUpperFirst %>Builder()<% if (props.tenantid) { %>
-            .withTenantId(uuid())<% }%><% for(let i=0; i<props.properties.original.strings.length; i++) { %>
+        const <%= props.nameCamelCase %> = new <%= props.nameCamelCaseUpperFirst %>Builder()<% for(let i=0; i<props.properties.original.strings.length; i++) { %>
             .with<%= props.properties.camelCaseUpperFirst.strings[i] %>(<any>123)<%}; %><% for(let i=0; i<props.properties.original.numbers.length; i++) { %>
             .with<%= props.properties.camelCaseUpperFirst.numbers[i] %>(<any>'invalid <%= props.properties.original.numbers[i] %>')<%}; %>
             .build();
